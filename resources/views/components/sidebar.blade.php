@@ -3,7 +3,7 @@
 
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
-        <a class="header-logo" href="index.html">
+        <a class="header-logo" href="{{ route("dashboard") }}">
             <img alt="logo" class="desktop-logo" src="{{ asset("images/brand-logos/logo.png") }}">
             <img alt="logo" class="toggle-logo" src="{{ asset("images/brand-logos/icon.png") }}">
             <img alt="logo" class="desktop-dark" src="{{ asset("images/brand-logos/logo-darkmode.png") }}">

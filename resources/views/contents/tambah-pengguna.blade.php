@@ -28,15 +28,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row gy-4">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                <p class="mb-2 text-muted">Basic Input:</p>
-                                <input class="form-control" id="input" type="text">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                <label class="form-label" for="input-placeholder">Form Input With Placeholder</label>
+                                <input class="form-control" id="input-placeholder" placeholder="Placeholder" type="text">
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                <label class="form-label" for="input-label">Form Input With Label</label>
-                                <input class="form-control" id="input-label" type="text">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                <label class="form-label" for="input-placeholder">Form Input With Placeholder</label>
+                                <input class="form-control" id="input-placeholder" placeholder="Placeholder" type="text">
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label class="form-label" for="input-placeholder">Form Input With Placeholder</label>
                                 <input class="form-control" id="input-placeholder" placeholder="Placeholder" type="text">
                             </div>
