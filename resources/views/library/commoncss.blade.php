@@ -11,7 +11,6 @@
 <link href="{{ asset("libs/choices.js/public/assets/styles/choices.min.css") }}" rel="stylesheet">
 <link href="{{ asset("libs/jsvectormap/css/jsvectormap.min.css") }}" rel="stylesheet">
 <link href="{{ asset("libs/swiper/swiper-bundle.min.css") }}" rel="stylesheet">
-
-<link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap5.min.css" rel="stylesheet">
+<link href="{{ asset("libs/datatables/css/dataTables.bootstrap5.min.css") }}" rel="stylesheet">
+<link href="{{ asset("libs/datatables/css/responsive.bootstrap.min.css") }}" rel="stylesheet">
+<link href="{{ asset("libs/datatables/css/buttons.bootstrap5.min.js") }}" rel="stylesheet">
