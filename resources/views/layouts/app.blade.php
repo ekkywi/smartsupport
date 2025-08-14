@@ -7,7 +7,7 @@
     <meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <title>@yield("title")</title>
-    @include("library.commoncss")
+    @yield("styles")
 </head>
 
 <body>
@@ -25,5 +25,5 @@
         @include("components.footer")
     </div>
 
-    @include("library.commonjs")
+    @yield("scripts")
 </body>

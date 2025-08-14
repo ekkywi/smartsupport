@@ -14,5 +14,6 @@ Route::get('/reset-password', [AuthController::class, 'showResetPasswordForm'])-
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/data-pengguna', [UserController::class, 'index'])->name('data-pengguna');
-Route::get('/tambah-pengguna', [UserController::class, 'showAddUserForm'])->name('tambah-pengguna');
+Route::get('/pengguna', [UserController::class, 'index'])->name('users');
+Route::get('/pengguna/tambah', [UserController::class, 'showAddUserForm'])->name('users.add');
+Route::post('/pengguna/tambah', [UserController::class, 'store'])->name('users.store');

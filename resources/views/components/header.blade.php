@@ -10,11 +10,11 @@
              <!-- Start::header-element -->
              <div class="header-element">
                  <div class="horizontal-logo">
-                     <a class="header-logo" href="index.html">
-                         <img alt="logo" class="desktop-logo" src="../assets/images/brand-logos/desktop-logo.png">
-                         <img alt="logo" class="toggle-logo" src="../assets/images/brand-logos/toggle-logo.png">
-                         <img alt="logo" class="desktop-dark" src="../assets/images/brand-logos/desktop-dark.png">
-                         <img alt="logo" class="toggle-dark" src="../assets/images/brand-logos/toggle-dark.png">
+                     <a class="header-logo" href="{{ route("dashboard") }}">
+                         <img alt="logo" class="desktop-logo" src="{{ asset("images/brand-logos/logo.png") }}">
+                         <img alt="logo" class="toggle-logo" src="{{ asset("images/brand-logos/icon.png") }}">
+                         <img alt="logo" class="desktop-dark" src="{{ asset("images/brand-logos/logo-darkmode.png") }}">
+                         <img alt="logo" class="toggle-dark" src="{{ asset("images/brand-logos/icon-darkmode.png") }}">
                      </a>
                  </div>
              </div>
@@ -85,7 +85,7 @@
                      <ul class="list-unstyled mb-0" id="header-cart-items-scroll">
                          <li class="dropdown-item">
                              <div class="d-flex align-items-start cart-dropdown-item">
-                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="../assets/images/ecommerce/jpg/1.jpg">
+                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="{{ asset("images/ecommerce/jpg/1.jpg") }}">
                                  <div class="flex-grow-1">
                                      <div class="d-flex align-items-start justify-content-between mb-0">
                                          <div class="mb-0 fs-13 text-dark fw-semibold">
@@ -107,7 +107,7 @@
                          </li>
                          <li class="dropdown-item">
                              <div class="d-flex align-items-start cart-dropdown-item">
-                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="../assets/images/ecommerce/jpg/3.jpg">
+                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="{{ asset("images/ecommerce/jpg/3.jpg") }}">
                                  <div class="flex-grow-1">
                                      <div class="d-flex align-items-start justify-content-between mb-0">
                                          <div class="mb-0 fs-13 text-dark fw-semibold">
@@ -129,7 +129,7 @@
                          </li>
                          <li class="dropdown-item">
                              <div class="d-flex align-items-start cart-dropdown-item">
-                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="../assets/images/ecommerce/jpg/5.jpg">
+                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="{{ asset("images/ecommerce/jpg/5.jpg") }}">
                                  <div class="flex-grow-1">
                                      <div class="d-flex align-items-start justify-content-between mb-0">
                                          <div class="mb-0 fs-13 text-dark fw-semibold">
@@ -150,7 +150,7 @@
                          </li>
                          <li class="dropdown-item">
                              <div class="d-flex align-items-start cart-dropdown-item">
-                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="../assets/images/ecommerce/jpg/4.jpg">
+                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="{{ asset("images/ecommerce/jpg/4.jpg") }}">
                                  <div class="flex-grow-1">
                                      <div class="d-flex align-items-start justify-content-between mb-0">
                                          <div class="mb-0 fs-13 text-dark fw-semibold">
@@ -172,7 +172,7 @@
                          </li>
                          <li class="dropdown-item">
                              <div class="d-flex align-items-start cart-dropdown-item">
-                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="../assets/images/ecommerce/jpg/6.jpg">
+                                 <img alt="img" class="avatar avatar-sm avatar-rounded br-5 me-3" src="{{ asset("images/ecommerce/jpg/6.jpg") }}">
                                  <div class="flex-grow-1">
                                      <div class="d-flex align-items-start justify-content-between mb-0">
                                          <div class="mb-0 fs-13 text-dark fw-semibold">
@@ -351,7 +351,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/figma.png">
+                                             <img alt="" src="{{ asset("images/apps/figma.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Figma</span>
                                      </div>
@@ -361,7 +361,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/microsoft-powerpoint.png">
+                                             <img alt="" src="{{ asset("images/apps/microsoft-powerpoint.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Power Point</span>
                                      </div>
@@ -371,7 +371,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/microsoft-word.png">
+                                             <img alt="" src="{{ asset("images/apps/microsoft-word.png") }}">
                                          </span>
                                          <span class="d-block fs-12">MS Word</span>
                                      </div>
@@ -381,7 +381,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/calender.png">
+                                             <img alt="" src="{{ asset("images/apps/calender.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Calendar</span>
                                      </div>
@@ -391,7 +391,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/sketch.png">
+                                             <img alt="" src="{{ asset("images/apps/sketch.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Sketch</span>
                                      </div>
@@ -401,7 +401,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/google-docs.png">
+                                             <img alt="" src="{{ asset("images/apps/google-docs.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Docs</span>
                                      </div>
@@ -411,7 +411,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/google.png">
+                                             <img alt="" src="{{ asset("images/apps/google.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Google</span>
                                      </div>
@@ -421,7 +421,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/translate.png">
+                                             <img alt="" src="{{ asset("images/apps/translate.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Translate</span>
                                      </div>
@@ -431,7 +431,7 @@
                                  <a href="javascript:void(0);">
                                      <div class="text-center p-3 related-app">
                                          <span class="avatar avatar-sm avatar-rounded">
-                                             <img alt="" src="../assets/images/apps/google-sheets.png">
+                                             <img alt="" src="{{ asset("images/apps/google-sheets.png") }}">
                                          </span>
                                          <span class="d-block fs-12">Sheets</span>
                                      </div>
@@ -466,7 +466,7 @@
                  <a aria-expanded="false" class="header-link dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown" href="#" id="mainHeaderProfile">
                      <div class="d-flex align-items-center">
                          <div class="me-sm-2 me-0">
-                             <img alt="img" class="rounded-circle" height="32" src="../assets/images/faces/9.jpg" width="32">
+                             <img alt="img" class="rounded-circle" height="32" src="{{ asset("images/faces/9.jpg") }}" width="32">
                          </div>
                          <div class="d-sm-block d-none">
                              <p class="fw-semibold mb-0 lh-1">Json Taylor</p>

@@ -11,12 +11,16 @@
                 <nav>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item">Menu Utama</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("data-pengguna") }}">Data Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users") }}">Data Pengguna</a></li>
                     </ol>
                 </nav>
             </div>
         </div>
-
+        <div class="mb-3">
+            <a class="btn btn-success" href="{{ route("users.add") }}">
+                <i class="fa fa-plus"></i> Tambah Pengguna
+            </a>
+        </div>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
@@ -65,5 +69,6 @@
         </div>
 
     </div>
+
 
 @endsection

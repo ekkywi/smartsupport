@@ -33,8 +33,8 @@
                 </li>
 
                 <li class="slide__category"><span class="category-name">Management</span></li>
-                <li class="slide has-sub {{ request()->routeIs("data-pengguna", "tambah-pengguna") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("data-pengguna", "tambah-pengguna") ? "active" : "" }}" href="javascript:void(0);">
+                <li class="slide has-sub {{ request()->routeIs("users", "users.add") ? "open" : "" }}">
+                    <a class="side-menu__item {{ request()->routeIs("users", "users.add") ? "active" : "" }}" href="javascript:void(0);">
                         <i class="bx bx-user side-menu__icon"></i>
                         <span class="side-menu__label">Pengguna</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -44,10 +44,7 @@
                             <a href="javascript:void(0)">Pengguna</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("data-pengguna") ? "active" : "" }}" href="{{ route("data-pengguna") }}">Data Pengguna</a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("tambah-pengguna") ? "active" : "" }}" href="{{ route("tambah-pengguna") }}">Tambah Pengguna</a>
+                            <a class="side-menu__item {{ request()->routeIs("users", "users.add") ? "active" : "" }}" href="{{ route("users") }}">Data Pengguna</a>
                         </li>
                         <li class="slide">
                             <a class="side-menu__item" href="#">Token</a>

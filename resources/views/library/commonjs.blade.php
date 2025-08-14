@@ -30,3 +30,34 @@
  <script src="{{ asset("libs/pdfmake/vfs_fonts.js") }}"></script>
  <script src="{{ asset("libs/datatables/js/buttons.html5.min.js") }}"></script>
  <script src="{{ asset("libs/jszip/jszip.min.js") }}"></script>
+ <script src="{{ asset("js/show-password.js") }}"></script>
+ <script src="{{ asset("libs/sweetalert2/sweetalert2.all.min.js") }}"></script>
+
+ @if (session("success"))
+     <script>
+         Swal.fire({
+             icon: 'success',
+             title: 'Berhasil!',
+             text: '{{ session("success") }}',
+         });
+     </script>
+ @endif
+ @if (session("error"))
+     <script>
+         Swal.fire({
+             icon: 'error',
+             title: 'Gagal!',
+             text: '{{ session("error") }}',
+         });
+     </script>
+ @endif
+ @if ($errors->any())
+     <script>
+         Swal.fire({
+             icon: 'error',
+             title: 'Gagal!',
+             html: `{!! implode("<br>", $errors->all()) !!}`,
+             confirmButtonText: 'OK'
+         });
+     </script>
+ @endif
