@@ -2,26 +2,6 @@
 
 @section("title", "SmartSupport - Tambah Pengguna")
 
-@section("styles")
-    <link href="{{ asset("images/brand-logos/favicon.ico") }}" rel="icon" type="image/x-icon">
-    <script src="{{ asset("libs/choices.js/public/assets/scripts/choices.min.js") }}"></script>
-    <script src="{{ asset("js/main.js") }}"></script>
-    <link href="{{ asset("libs/bootstrap/css/bootstrap.min.css") }}" id="style" rel="stylesheet">
-    <link href="{{ asset("css/styles.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("css/icons.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/node-waves/waves.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/simplebar/simplebar.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/flatpickr/flatpickr.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/@simonwep/pickr/themes/nano.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/choices.js/public/assets/styles/choices.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/jsvectormap/css/jsvectormap.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/swiper/swiper-bundle.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/datatables/css/dataTables.bootstrap5.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/datatables/css/responsive.bootstrap.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("libs/datatables/css/buttons.bootstrap5.min.js") }}" rel="stylesheet">
-
-@endsection
-
 @section("content")
 
     <div class="container-fluid">
@@ -171,9 +151,13 @@
                                         document.getElementById('password').value = password;
                                         document.getElementById('password_confirmation').value = password;
                                     }
+
+                                    function goToIndex() {
+                                        window.location.href = "{{ route("users") }}";
+                                    }
                                 </script>
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                                    <button class="btn btn-danger" onclick="resetFormInputs()" type="button">Batal</button>
+                                    <button class="btn btn-danger" onclick="goToIndex()" type="button">Batal</button>
                                     <button class="btn btn-secondary" onclick="clearFormInputs()" type="button">Hapus</button>
                                     <button class="btn btn-primary" type="submit">Simpan</button>
                                     <script>
@@ -193,72 +177,5 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-@section("scripts")
-    <div class="scrollToTop">
-        <span class="arrow"><i class="ri-arrow-up-s-fill fs-20"></i></span>
-    </div>
-    <div id="responsive-overlay"></div>
-
-    <script src="{{ asset("libs/@popperjs/core/umd/popper.min.js") }}"></script>
-    <script src="{{ asset("libs/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
-    <script src="{{ asset("js/defaultmenu.min.js") }}"></script>
-    <script src="{{ asset("libs/node-waves/waves.min.js") }}"></script>
-    <script src="{{ asset("js/sticky.js") }}"></script>
-    <script src="{{ asset("libs/simplebar/simplebar.min.js") }}"></script>
-    <script src="{{ asset("js/simplebar.js") }}"></script>
-    <script src="{{ asset("libs/@simonwep/pickr/pickr.es5.min.js") }}"></script>
-    <script src="{{ asset("libs/jsvectormap/js/jsvectormap.min.js") }}"></script>
-    <script src="{{ asset("libs/jsvectormap/maps/world-merc.js") }}"></script>
-    <script src="{{ asset("libs/apexcharts/apexcharts.min.js") }}"></script>
-    <script src="{{ asset("libs/chart.js/chart.min.js") }}"></script>
-    <script src="{{ asset("js/crm-dashboard.js") }}"></script>
-    <script src="{{ asset("js/custom-switcher.min.js") }}"></script>
-    <script src="{{ asset("js/custom.js") }}"></script>
-    <script src="{{ asset("js/datatables.js") }}"></script>
-    <script src="{{ asset("js/custom.js") }}"></script>
-    <script src="{{ asset("libs/jquery/jquery-3.6.1.min.js") }}"></script>
-    <script src="{{ asset("libs/datatables/js/jquery.dataTables.min.js") }}"></script>
-    <script src="{{ asset("libs/datatables/js/dataTables.bootstrap5.min.js") }}"></script>
-    <script src="{{ asset("libs/datatables/js/dataTables.responsive.min.js") }}"></script>
-    <script src="{{ asset("libs/datatables/js/dataTables.buttons.min.js") }}"></script>
-    <script src="{{ asset("libs/datatables/js/buttons.print.min.js") }}"></script>
-    <script src="{{ asset("libs/pdfmake/pdfmake.min.js") }}"></script>
-    <script src="{{ asset("libs/pdfmake/vfs_fonts.js") }}"></script>
-    <script src="{{ asset("libs/datatables/js/buttons.html5.min.js") }}"></script>
-    <script src="{{ asset("libs/jszip/jszip.min.js") }}"></script>
-    <script src="{{ asset("js/show-password.js") }}"></script>
-    <script src="{{ asset("libs/sweetalert2/sweetalert2.all.min.js") }}"></script>
-
-    @if (session("success"))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session("success") }}',
-            });
-        </script>
-    @endif
-    @if (session("error"))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal!',
-                text: '{{ session("error") }}',
-            });
-        </script>
-    @endif
-    @if ($errors->any())
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal!',
-                html: `{!! implode("<br>", $errors->all()) !!}`,
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
 
 @endsection
