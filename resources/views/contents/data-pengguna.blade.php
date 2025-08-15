@@ -26,7 +26,7 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item">Menu Utama</li>
+                        <li class="breadcrumb-item">Management</li>
                         <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users") }}">Data Pengguna</a></li>
                     </ol>
                 </nav>
@@ -42,7 +42,7 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Responsive Datatable
+                            Data Pengguna Aplikasi
                         </div>
                     </div>
                     <div class="card-body">

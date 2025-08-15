@@ -26,7 +26,7 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item">Menu Utama</li>
+                        <li class="breadcrumb-item">Management</li>
                         <li aria-current="page" class="breadcrumb-item active"><span>Aktivasi Pengguna</span></li>
                     </ol>
                 </nav>

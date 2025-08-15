@@ -23,7 +23,7 @@
                 <nav>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item">Management</li>
-                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("users") }}">Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("users") }}">Data Pengguna</a></li>
                         <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.edit", $user->id) }}">Edit Pengguna</a></li>
                     </ol>
                 </nav>

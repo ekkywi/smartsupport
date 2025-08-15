@@ -75,7 +75,7 @@ class UserController extends Controller
         return redirect()->route('users')->with('success', 'Pengguna berhasil dihapus.');
     }
 
-    public function showActivationForm()
+    public function showActivation()
     {
         $users = User::all();
         return view('contents.aktivasi-pengguna', compact('users'));

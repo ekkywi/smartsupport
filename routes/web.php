@@ -20,5 +20,5 @@ Route::post('/pengguna/tambah', [UserController::class, 'store'])->name('users.s
 Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('users.delete');
 Route::get('/pengguna/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('users.update');
-Route::get('/pengguna/aktivasi', [UserController::class, 'showActivationForm'])->name('users.activation');
+Route::get('/pengguna/aktivasi', [UserController::class, 'showActivation'])->name('users.activation');
 Route::patch('/pengguna/aktivasi/{id}', [UserController::class, 'activate'])->name('users.activation.toggle');
