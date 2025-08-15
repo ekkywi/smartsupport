@@ -48,6 +48,14 @@
                     <div class="card-body">
                         <table class="table table-bordered text-nowrap" id="responsiveDataTable" style="width:100%">
                             <thead>
+                                <tr id="filters">
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
                                 <tr>
                                     <th>Nama</th>
                                     <th>Jabatan</th>
@@ -120,9 +128,33 @@
     {{-- custom scripts --}}
     <script>
         $(document).ready(function() {
-            // ✅ BARIS INI YANG AKAN MENAMBAHKAN SEARCH DAN PAGINATION
             $('#responsiveDataTable').DataTable({
-                responsive: true
+                responsive: true,
+                // ⚙️ SESUAIKAN KODE initComplete INI
+                initComplete: function() {
+                    this.api().columns().every(function() {
+                        let column = this;
+                        let title = $(column.header()).text();
+
+                        // Menargetkan sel di baris filter berdasarkan urutan kolom
+                        let cell = $('#filters th').eq(column.index());
+
+                        // Lewati kolom "Aksi"
+                        if (title === 'Aksi') {
+                            cell.html('');
+                            return;
+                        }
+
+                        // Buat input field dan letakkan di sel header yang baru
+                        let input = $('<input type="text" class="form-control form-control-sm" placeholder="Filter ' + title + '" />')
+                            .appendTo(cell) // Tidak perlu .empty() karena sel sudah kosong
+                            .on('keyup change clear', function() {
+                                if (column.search() !== this.value) {
+                                    column.search(this.value).draw();
+                                }
+                            });
+                    });
+                }
             });
 
             // Kode SweetAlert Anda yang sudah ada sebelumnya
