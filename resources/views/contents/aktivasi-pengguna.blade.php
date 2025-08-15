@@ -1,6 +1,6 @@
 @extends("layouts.app")
 
-@section("title", "SmartSupport — Data Pengguna")
+@section("title", "SmartSupport — Aktivasi Pengguna")
 
 @section("styles")
     {{-- main styles --}}
@@ -22,27 +22,22 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Data Pengguna</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Aktivasi Pengguna</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item">Menu Utama</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users") }}">Data Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item active"><span>Aktivasi Pengguna</span></li>
                     </ol>
                 </nav>
             </div>
-        </div>
-        <div class="mb-3">
-            <a class="btn btn-success" href="{{ route("users.add") }}">
-                <i class="fa fa-plus"></i> Tambah Pengguna
-            </a>
         </div>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Responsive Datatable
+                            Daftar Status Aktivasi Pengguna
                         </div>
                     </div>
                     <div class="card-body">
@@ -72,12 +67,19 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route("users.edit", $user->id) }}">Edit</a>
-                                            <form action="{{ route("users.delete", $user->id) }}" id="delete-form-{{ $user->id }}" method="POST" style="display: inline">
-                                                @csrf @method("DELETE")
-                                                <button class="btn btn-sm btn-danger delete-btn" data-user-id="{{ $user->id }}" type="button">
-                                                    Hapus
-                                                </button>
+                                            {{-- Form untuk toggle aktivasi --}}
+                                            <form action="{{ route("users.activation.toggle", ["id" => $user->id]) }}" id="toggle-form-{{ $user->id }}" method="POST" style="display: inline">
+                                                @csrf
+                                                @method("PATCH")
+                                                @if ($user->is_active)
+                                                    <button class="btn btn-sm btn-danger toggle-activation-btn" data-action="Nonaktifkan" data-user-id="{{ $user->id }}" type="button">
+                                                        Nonaktifkan
+                                                    </button>
+                                                @else
+                                                    <button class="btn btn-sm btn-success toggle-activation-btn" data-action="Aktifkan" data-user-id="{{ $user->id }}" type="button">
+                                                        Aktifkan
+                                                    </button>
+                                                @endif
                                             </form>
                                         </td>
                                     </tr>
@@ -116,37 +118,38 @@
     <script src="{{ asset("libs/pdfmake/vfs_fonts.js") }}"></script>
     <script src="{{ asset("libs/datatables/js/buttons.html5.min.js") }}"></script>
     <script src="{{ asset("libs/jszip/jszip.min.js") }}"></script>
-
     {{-- custom scripts --}}
     <script>
         $(document).ready(function() {
-            // ✅ BARIS INI YANG AKAN MENAMBAHKAN SEARCH DAN PAGINATION
-            $('#responsiveDataTable').DataTable({
-                responsive: true
-            });
+            // Inisialisasi DataTable
+            $('#responsiveDataTable').DataTable();
 
-            // Kode SweetAlert Anda yang sudah ada sebelumnya
-            $(document).on('click', '.delete-btn', function(e) {
+            // Event listener untuk tombol aktivasi/nonaktivasi
+            $(document).on('click', '.toggle-activation-btn', function(e) {
                 e.preventDefault();
                 var userId = $(this).data('user-id');
+                var action = $(this).data('action');
+                var confirmButtonColor = (action === 'Aktifkan') ? '#28a745' : '#d33';
+
                 Swal.fire({
                     title: "Apakah Anda yakin?",
-                    text: "Data yang dihapus tidak dapat dipulihkan!",
+                    text: "Anda akan " + action.toLowerCase() + " pengguna ini.",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#d33",
+                    confirmButtonColor: confirmButtonColor,
                     cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Hapus",
+                    confirmButtonText: "Ya, " + action + "!",
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        document.getElementById("delete-form-" + userId).submit();
+                        // Submit form yang sesuai jika dikonfirmasi
+                        document.getElementById("toggle-form-" + userId).submit();
                     }
                 });
             });
         });
     </script>
-
+    {{-- Script untuk notifikasi dari session --}}
     @if (session("success"))
         <script>
             Swal.fire({

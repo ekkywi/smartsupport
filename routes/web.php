@@ -17,3 +17,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/pengguna', [UserController::class, 'index'])->name('users');
 Route::get('/pengguna/tambah', [UserController::class, 'showAddUserForm'])->name('users.add');
 Route::post('/pengguna/tambah', [UserController::class, 'store'])->name('users.store');
+Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('users.delete');
+Route::get('/pengguna/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('users.update');
+Route::get('/pengguna/aktivasi', [UserController::class, 'showActivationForm'])->name('users.activation');
+Route::patch('/pengguna/aktivasi/{id}', [UserController::class, 'activate'])->name('users.activation.toggle');
