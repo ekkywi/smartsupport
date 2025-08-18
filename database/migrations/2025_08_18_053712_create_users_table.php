@@ -15,8 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->unique()->nullable();
-            $table->string('position')->nullable();
-            $table->string('section')->nullable();
+            $table->uuid('position')->nullable();
+            $table->uuid('section')->nullable();
             $table->string('username')->unique();
             $table->string('role')->nullable();
             $table->string('password');
@@ -24,6 +24,10 @@ return new class extends Migration
             $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->rememberToken();
+
+            $table->foreign('position')->references('id')->on('positions')->onDelete('cascade');
+            $table->foreign('section')->references('id')->on('sections')->onDelete('cascade');
+            $table->foreign('role')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 

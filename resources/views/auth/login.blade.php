@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <title> Login &mdash; SmartSupport </title>
+    <title> Login — SmartSupport </title>
 
     <link href="{{ asset("images/brand-logos/favicon.ico") }}" rel="icon" type="image/x-icon">
     <script src="{{ asset("js/authentication-main.js") }}"></script>
@@ -18,7 +18,6 @@
 
 <body>
 
-    {{-- container --}}
     <div class="container">
         <div class="row justify-content-center align-items-center authentication authentication-basic h-100">
             <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-6 col-sm-8 col-12">
@@ -36,12 +35,12 @@
                             <div class="row gy-3">
                                 <div class="col-xl-12">
                                     <label class="form-label text-default fw-semibold" for="username">Username</label>
-                                    <input autocomplete="new-username" class="form-control form-control-lg" id="username" placeholder="username" type="text">
+                                    <input autocomplete="username" class="form-control form-control-lg" id="username" placeholder="username" type="text">
                                 </div>
                                 <div class="col-xl-12 mb-2">
-                                    <label class="form-label text-default d-block fw-semibold" for="password">Password</label>
+                                    <label class="form-label text-default d-block fw-semibold" for="password">Password<a class="float-end text-danger" href="#">Lupa password ?</a></label>
                                     <div class="input-group">
-                                        <input autocomplete="new-password" class="form-control form-control-lg" id="password" placeholder="********" type="password">
+                                        <input autocomplete="current-password" class="form-control form-control-lg" id="password" placeholder="********" type="password">
                                         <button class="btn btn-light" id="button-addon-password" onclick="createpassword('password',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
                                     </div>
                                     <div class="mt-2">
@@ -54,11 +53,12 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-12 d-grid mt-2">
-                                    <a class="btn btn-lg btn-primary" href="{{ route("dashboard") }}">Masuk</a>
+                                    <button class="btn btn-lg btn-primary" type="submit">Masuk</button>
                                 </div>
                             </div>
                             <div class="text-center">
-                                <p class="fs-12 text-muted mt-3">Lupa password anda ? <a class="text-danger" href="{{ route("reset-password") }}">Reset password</a></p>
+                                <p class="fs-12 text-muted mt-3">Tidak punya akun? <a class="text-primary" href="#">Daftar</a></p>
+                                <p class="fs-12 text-muted mt-3">Akun anda belum aktif? <a class="text-primary" href="#">Aktivasi Akun</a></p>
                             </div>
                         </form>
                     </div>
@@ -69,6 +69,26 @@
 
     <script src="{{ asset("libs/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
     <script src="{{ asset("js/show-password.js") }}"></script>
+    <script src="{{ asset("libs/sweetalert2/sweetalert2.all.min.js") }}"></script>
+
+    @if (session("success"))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session("success") }}',
+            });
+        </script>
+    @endif
+    @if (session("error"))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session("error") }}',
+            });
+        </script>
+    @endif
 
 </body>
 
