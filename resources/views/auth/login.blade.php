@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <title> Login — SmartSupport </title>
+    <title>Login — SmartSupport </title>
 
     <link href="{{ asset("images/brand-logos/favicon.ico") }}" rel="icon" type="image/x-icon">
     <script src="{{ asset("js/authentication-main.js") }}"></script>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <p class="fs-12 text-muted mt-3">Tidak punya akun? <a class="text-primary" href="#">Daftar</a></p>
+                                <p class="fs-12 text-muted mt-3">Tidak punya akun? <a class="text-primary" href="{{ route("register") }}">Daftar</a></p>
                                 <p class="fs-12 text-muted mt-3">Akun anda belum aktif? <a class="text-primary" href="#">Aktivasi Akun</a></p>
                             </div>
                         </form>

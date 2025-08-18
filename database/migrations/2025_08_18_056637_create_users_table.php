@@ -18,9 +18,8 @@ return new class extends Migration
             $table->uuid('position')->nullable();
             $table->uuid('section')->nullable();
             $table->string('username')->unique();
-            $table->string('role')->nullable();
+            $table->uuid('role')->nullable();
             $table->string('password');
-            $table->string('token');
             $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->rememberToken();

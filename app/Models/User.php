@@ -8,19 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Support\Facades\Hash;
+use App\Models\UserToken;
 
 
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasUuids;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'id',
         'name',
@@ -33,36 +29,32 @@ class User extends Authenticatable
         'is_active',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
-        'token',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'token' => 'hashed',
             'is_active' => 'boolean',
         ];
     }
 
     protected static function booted(): void
     {
-        static::creating(function (self $user) {
-            $user->token = Str::random(10);
+        static::created(function (self $user) {
+            $plainToken = Str::random(64);
+            $hashedToken = Hash::make($plainToken);
+
+            UserToken::create([
+                'user_id' => $user->id,
+                'token' => $hashedToken,
+                'type' => 'Aktivasi',
+                'is_used' => false,
+                'expired_at' => now()->addMinutes(30),
+            ]);
         });
     }
 }

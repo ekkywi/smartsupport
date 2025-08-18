@@ -1,19 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\User\UserController;
+use Illuminate\Auth\Events\Login;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::get('/reset-password', [AuthController::class, 'showResetPasswordForm'])->name('reset-password');
+// Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
+// Register
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
+
+// Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+// User
 Route::get('/pengguna', [UserController::class, 'index'])->name('users');
 Route::get('/pengguna/tambah', [UserController::class, 'showAddUserForm'])->name('users.add');
 Route::post('/pengguna/tambah', [UserController::class, 'store'])->name('users.store');
