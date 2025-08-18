@@ -23,16 +23,16 @@ class RegisterController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
-            'section' => 'nullable|string|max:255',
-            'position' => 'nullable|string|max:255',
+            'section' => 'nullable|uuid|exists:sections,id',
+            'position' => 'nullable|uuid|exists:positions,id',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
-            'section' => $request->section,
-            'position' => $request->position,
+            'section_id' => $request->section,
+            'position_id' => $request->position,
             'password' => $request->password,
         ]);
 

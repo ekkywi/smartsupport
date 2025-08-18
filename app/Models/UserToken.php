@@ -11,7 +11,6 @@ class UserToken extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'user_id',
         'token',
         'type',
         'is_used',
@@ -26,4 +25,9 @@ class UserToken extends Model
         'is_used' => 'boolean',
         'expired_at' => 'datetime'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 };

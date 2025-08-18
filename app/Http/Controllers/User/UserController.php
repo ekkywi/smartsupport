@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::with(['position', 'section', 'role'])->get();
 
         return view('contents.data-pengguna', compact('users'));
     }

@@ -15,4 +15,9 @@ class Position extends Model
     ];
 
     protected $hidden = [];
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'id');
+    }
 }

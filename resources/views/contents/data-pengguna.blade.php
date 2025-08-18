@@ -69,9 +69,9 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->name }}</td>
-                                        <td>{{ $user->position ?? "-" }}</td>
-                                        <td>{{ $user->section ?? "-" }}</td>
-                                        <td>{{ $user->role ?? "-" }}</td>
+                                        <td>{{ $user->position->name ?? "-" }}</td>
+                                        <td>{{ $user->section->name ?? "-" }}</td>
+                                        <td>{{ $user->role->name ?? "-" }}</td>
                                         <td>
                                             @if ($user->is_active)
                                                 <span class="badge bg-success">Aktif</span>

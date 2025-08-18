@@ -18,7 +18,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasUuids;
 
     protected $fillable = [
-        'id',
         'name',
         'email',
         'position',
@@ -56,5 +55,25 @@ class User extends Authenticatable
                 'expired_at' => now()->addMinutes(30),
             ]);
         });
+    }
+
+    public function tokens()
+    {
+        return $this->hasMany(UserToken::class, 'user_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'id');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'id');
     }
 }
