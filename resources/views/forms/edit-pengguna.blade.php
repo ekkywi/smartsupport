@@ -1,3 +1,4 @@
+{{-- @dd($user) --}}
 @extends("layouts.app")
 
 @section("title", "SmartSupport - Edit Pengguna")
@@ -23,8 +24,8 @@
                 <nav>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item">Management</li>
-                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("users") }}">Data Pengguna</a></li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.edit", $user->id) }}">Edit Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("users.index") }}">Data Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">Edit Pengguna</li>
                     </ol>
                 </nav>
             </div>
@@ -51,70 +52,21 @@
                                     <input class="form-control" id="email" name="email" placeholder="user@example.com" type="email" value="{{ old("email", $user->email) }}">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="position">Jabatan</label>
-                                    <select aria-label="position" class="form-select text-muted" id="position" name="position">
-                                        <option {{ old("position", $user->position) ? "" : "selected" }} class="text-muted" disabled value="">Pilih Jabatan</option>
-                                        <option {{ old("position", $user->position) == "manager" ? "selected" : "" }} class="text-muted" value="manager">Manager</option>
-                                        <option {{ old("position", $user->position) == "kabag" ? "selected" : "" }} class="text-muted" value="kabag">Kepala Bagian</option>
-                                        <option {{ old("position", $user->position) == "supervisor" ? "selected" : "" }} class="text-muted" value="supervisor">Supervisor</option>
-                                        <option {{ old("position", $user->position) == "staff" ? "selected" : "" }} class="text-muted" value="staff">Staff</option>
-                                        <option {{ old("position", $user->position) == "support" ? "selected" : "" }} class="text-muted" value="support">Support</option>
+                                    <label class="form-label text-default fw-semibold" for="position_id">Jabatan</label>
+                                    <select aria-label="position" class="form-select text-muted" id="position_id" name="position_id">
+                                        <option class="text-muted" disabled value="">Pilih Jabatan</option>
+                                        @foreach ($positions as $position)
+                                            <option {{ old("position_id", $user->position_id) == $position->id ? "selected" : "" }} value="{{ $position->id }}">{{ $position->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="section">Bagian</label>
-                                    <select aria-label="section" class="form-select text-muted" id="section" name="section">
-                                        <option {{ old("section", $user->section) ? "" : "selected" }} class="text-muted" disabled value="">Pilih Bagian</option>
-                                        <optgroup label="Marketing">
-                                            <option {{ old("section", $user->section) == "MSL" ? "selected" : "" }} class="text-muted" value="MSL">Sales</option>
-                                            <option {{ old("section", $user->section) == "MMS" ? "selected" : "" }} class="text-muted" value="MMS">Marketing Support</option>
-                                            <option {{ old("section", $user->section) == "MBD" ? "selected" : "" }} class="text-muted" value="MBD">Business Development</option>
-                                        </optgroup>
-                                        <optgroup label="Information Technology">
-                                            <option {{ old("section", $user->section) == "INC" ? "selected" : "" }} class="text-muted" value="INC">IT Non Cellular</option>
-                                            <option {{ old("section", $user->section) == "ITC" ? "selected" : "" }} class="text-muted" value="ITC">IT Cellular</option>
-                                            <option {{ old("section", $user->section) == "ITS" ? "selected" : "" }} class="text-muted" value="ITS">IT Support</option>
-                                            <option {{ old("section", $user->section) == "IMS" ? "selected" : "" }} class="text-muted" value="IMS">Information Management System</option>
-                                        </optgroup>
-                                        <optgroup label="Finance and Accounting">
-                                            <option {{ old("section", $user->section) == "FCL" ? "selected" : "" }} class="text-muted" value="FCL">Calculation</option>
-                                            <option {{ old("section", $user->section) == "FCC" ? "selected" : "" }} class="text-muted" value="FCC">Cost Control</option>
-                                            <option {{ old("section", $user->section) == "FAC" ? "selected" : "" }} class="text-muted" value="FAC">Accounting</option>
-                                            <option {{ old("section", $user->section) == "FEF" ? "selected" : "" }} class="text-muted" value="FEF">Efficiency</option>
-                                        </optgroup>
-                                        <optgroup label="Procurement">
-                                            <option {{ old("section", $user->section) == "FPR" ? "selected" : "" }} class="text-muted" value="FPR">Procurement</option>
-                                        </optgroup>
-                                        <optgroup label="PPIC">
-                                            <option {{ old("section", $user->section) == "LPP" ? "selected" : "" }} class="text-muted" value="LPP">Production Planning</option>
-                                            <option {{ old("section", $user->section) == "LIC" ? "selected" : "" }} class="text-muted" value="LIC">Inventory Control</option>
-                                            <option {{ old("section", $user->section) == "LSH" ? "selected" : "" }} class="text-muted" value="LSH">Shipment</option>
-                                        </optgroup>
-                                        <optgroup label="Production">
-                                            <option {{ old("section", $user->section) == "PPR" ? "selected" : "" }} class="text-muted" value="PPR">Printing</option>
-                                            <option {{ old("section", $user->section) == "PLM" ? "selected" : "" }} class="text-muted" value="PLM">Lamination</option>
-                                            <option {{ old("section", $user->section) == "PIS" ? "selected" : "" }} class="text-muted" value="PIS">Inspection</option>
-                                            <option {{ old("section", $user->section) == "PME" ? "selected" : "" }} class="text-muted" value="PME">Module Embedding</option>
-                                            <option {{ old("section", $user->section) == "PRS" ? "selected" : "" }} class="text-muted" value="PRS">Perso Celullar</option>
-                                            <option {{ old("section", $user->section) == "PRN" ? "selected" : "" }} class="text-muted" value="PRN">Perso Non Celullar</option>
-                                            <option {{ old("section", $user->section) == "PPP" ? "selected" : "" }} class="text-muted" value="PPP">Packing</option>
-                                        </optgroup>
-                                        <optgroup label="Quality Assurance">
-                                            <option {{ old("section", $user->section) == "QPE" ? "selected" : "" }} class="text-muted" value="QPE">Product Engineering</option>
-                                            <option {{ old("section", $user->section) == "QLC" ? "selected" : "" }} class="text-muted" value="QLC">Quality Control</option>
-                                        </optgroup>
-                                        <optgroup label="Technic">
-                                            <option {{ old("section", $user->section) == "TEC" ? "selected" : "" }} class="text-muted" value="TEC">Technic</option>
-                                        </optgroup>
-                                        <optgroup label="Humman Resource and General Affair">
-                                            <option {{ old("section", $user->section) == "HHR" ? "selected" : "" }} class="text-muted" value="HHR">Human Resource</option>
-                                            <option {{ old("section", $user->section) == "HGA" ? "selected" : "" }} class="text-muted" value="HGA">General Affairs</option>
-                                            <option {{ old("section", $user->section) == "HLG" ? "selected" : "" }} class="text-muted" value="HLG">Legal</option>
-                                            <option {{ old("section", $user->section) == "SSI" ? "selected" : "" }} class="text-muted" value="SSI">Internal Security</option>
-                                        </optgroup>
-                                        <optgroup label="Quality Management System">
-                                            <option {{ old("section", $user->section) == "QMS" ? "selected" : "" }} class="text-muted" value="QMS">Quality Management System</option>
-                                        </optgroup>
+                                    <label class="form-label text-default fw-semibold" for="section_id">Bagian</label>
+                                    <select aria-label="section" class="form-select text-muted" id="section_id" name="section_id">
+                                        <option class="text-muted" disabled value="">Pilih Bagian</option>
+                                        @foreach ($sections as $section)
+                                            <option {{ old("section_id", $user->section_id) == $section->id ? "selected" : "" }} value="{{ $section->id }}">{{ $section->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="card-header justify-content-between">
@@ -127,16 +79,30 @@
                                     <input autocomplete="new-username" class="form-control text-muted" id="username" name="username" placeholder="Username" type="text" value="{{ old("username", $user->username) }}">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="role">Hak Akses</label>
-                                    <select aria-label="role" class="form-select text-muted" id="role" name="role">
-                                        <option {{ old("role", $user->role) ? "" : "selected" }} class="text-muted" disabled value="">Pilih Hak Akses</option>
-                                        <option {{ old("role", $user->role) == "pengguna" ? "selected" : "" }} class="text-muted" value="pengguna">Pengguna</option>
-                                        <option {{ old("role", $user->role) == "editor" ? "selected" : "" }} class="text-muted" value="editor">Editor</option>
-                                        <option {{ old("role", $user->role) == "administrator" ? "selected" : "" }} class="text-muted" value="administrator">Administrator</option>
+                                    <label class="form-label text-default fw-semibold" for="role_id">Hak Akses</label>
+                                    <select aria-label="role" class="form-select text-muted" id="role_id" name="role_id">
+                                        <option class="text-muted" disabled value="">Pilih Hak Akses</option>
+                                        @foreach ($roles as $role)
+                                            <option {{ old("role_id", $user->role_id) == $role->id ? "selected" : "" }} value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                    <label class="form-label" for="password">Password</label>
+                                    <div class="input-group">
+                                        <input autocomplete="password" class="form-control form-control-lg" id="password" name="password" placeholder="********" type="password">
+                                        <button class="btn btn-light" id="button-addon-password" onclick="createpassword('password',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                    <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
+                                    <div class="input-group">
+                                        <input autocomplete="password" class="form-control form-control-lg" id="password_confirmation" name="password_confirmation" placeholder="********" type="password">
+                                        <button class="btn btn-light" id="button-addon-password-confirmation" onclick="createpassword('password_confirmation',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
+                                    </div>
+                                </div>
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                                    <a class="btn btn-danger" href="{{ route("users") }}">Batal</a>
+                                    <a class="btn btn-danger" href="{{ route("users.index") }}">Batal</a>
                                     <button class="btn btn-primary" type="submit">Simpan</button>
                                 </div>
                             </form>

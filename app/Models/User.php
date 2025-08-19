@@ -20,10 +20,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'position',
-        'section',
+        'position_id',
+        'section_id',
         'username',
-        'role',
+        'role_id',
         'password',
         'is_active',
     ];
@@ -59,21 +59,21 @@ class User extends Authenticatable
 
     public function tokens()
     {
-        return $this->hasMany(UserToken::class, 'user_id');
+        return $this->hasMany(UserToken::class);
     }
 
     public function position()
     {
-        return $this->belongsTo(Position::class, 'id');
+        return $this->belongsTo(Position::class);
     }
 
     public function section()
     {
-        return $this->belongsTo(Section::class, 'id');
+        return $this->belongsTo(Section::class);
     }
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'id');
+        return $this->belongsTo(Role::class);
     }
 }

@@ -35,12 +35,12 @@
                             <div class="row gy-3">
                                 <div class="col-xl-12">
                                     <label class="form-label text-default fw-semibold" for="username">Username</label>
-                                    <input autocomplete="username" class="form-control form-control-lg" id="username" placeholder="username" type="text">
+                                    <input autocomplete="username" class="form-control form-control-lg" id="username" name="username" placeholder="username" type="text">
                                 </div>
                                 <div class="col-xl-12 mb-2">
                                     <label class="form-label text-default d-block fw-semibold" for="password">Password<a class="float-end text-danger" href="#">Lupa password ?</a></label>
                                     <div class="input-group">
-                                        <input autocomplete="current-password" class="form-control form-control-lg" id="password" placeholder="********" type="password">
+                                        <input autocomplete="current-password" class="form-control form-control-lg" id="password" name="password" placeholder="********" type="password">
                                         <button class="btn btn-light" id="button-addon-password" onclick="createpassword('password',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
                                     </div>
                                     <div class="mt-2">
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <p class="fs-12 text-muted mt-3">Tidak punya akun? <a class="text-primary" href="{{ route("register") }}">Daftar</a></p>
+                                <p class="fs-12 text-muted mt-3">Tidak punya akun? <a class="text-primary" href="{{ route("register.store") }}">Daftar</a></p>
                                 <p class="fs-12 text-muted mt-3">Akun anda belum aktif? <a class="text-primary" href="#">Aktivasi Akun</a></p>
                             </div>
                         </form>

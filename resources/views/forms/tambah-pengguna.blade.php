@@ -23,8 +23,8 @@
                 <nav>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item">Management</li>
-                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("users") }}">Data Pengguna</a></li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.add") }}">Tambah Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("users.index") }}">Data Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.create") }}">Tambah Pengguna</a></li>
                     </ol>
                 </nav>
             </div>
@@ -51,69 +51,20 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label class="form-label text-default fw-semibold" for="position">Jabatan</label>
-                                    <select aria-label="position" class="form-select text-muted" id="position" name="position">
+                                    <select aria-label="position_id" class="form-select text-muted" id="position_id" name="position_id">
                                         <option class="text-muted" disabled selected value="">Pilih Jabatan</option>
-                                        <option class="text-muted" value="manager">Manager</option>
-                                        <option class="text-muted" value="kabag">Kepala Bagian</option>
-                                        <option class="text-muted" value="supervisor">Supervisor</option>
-                                        <option class="text-muted" value="staff">Staff</option>
-                                        <option class="text-muted" value="support">Support</option>
+                                        @foreach ($positions as $position)
+                                            <option class="text-muted" value="{{ $position->id }}">{{ $position->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label class="form-label text-default fw-semibold" for="section">Bagian</label>
-                                    <select aria-label="section" class="form-select text-muted" id="section" name="section">
+                                    <select aria-label="section_id" class="form-select text-muted" id="section_id" name="section_id">
                                         <option class="text-muted" disabled selected value="">Pilih Bagian</option>
-                                        <optgroup label="Marketing">
-                                            <option class="text-muted" value="MSL">Sales</option>
-                                            <option class="text-muted" value="MMS">Marketing Support</option>
-                                            <option class="text-muted" value="MBD">Business Development</option>
-                                        </optgroup>
-                                        <optgroup label="Information Technology">
-                                            <option class="text-muted" value="INC">IT Non Cellular</option>
-                                            <option class="text-muted" value="ITC">IT Cellular</option>
-                                            <option class="text-muted" value="ITS">IT Support</option>
-                                            <option class="text-muted" value="IMS">Information Management System</option>
-                                        </optgroup>
-                                        <optgroup label="Finance and Accounting">
-                                            <option class="text-muted" value="FCL">Calculation</option>
-                                            <option class="text-muted" value="FCC">Cost Control</option>
-                                            <option class="text-muted" value="FAC">Accounting</option>
-                                            <option class="text-muted" value="FEF">Efficiency</option>
-                                        </optgroup>
-                                        <optgroup label="Procurement">
-                                            <option class="text-muted" value="FPR">Procurement</option>
-                                        </optgroup>
-                                        <optgroup label="PPIC">
-                                            <option class="text-muted" value="LPP">Production Planning</option>
-                                            <option class="text-muted" value="LIC">Inventory Control</option>
-                                            <option class="text-muted" value="LSH">Shipment</option>
-                                        </optgroup>
-                                        <optgroup label="Production">
-                                            <option class="text-muted" value="PPR">Printing</option>
-                                            <option class="text-muted" value="PLM">Lamination</option>
-                                            <option class="text-muted" value="PIS">Inspection</option>
-                                            <option class="text-muted" value="PME">Module Embedding</option>
-                                            <option class="text-muted" value="PRS">Perso Celullar</option>
-                                            <option class="text-muted" value="PRN">Perso Non Celullar</option>
-                                            <option class="text-muted" value="PPP">Packing</option>
-                                        </optgroup>
-                                        <optgroup label="Quality Assurance">
-                                            <option class="text-muted" value="QPE">Product Engineering</option>
-                                            <option class="text-muted" value="QLC">Quality Control</option>
-                                        </optgroup>
-                                        <optgroup label="Technic">
-                                            <option class="text-muted" value="TEC">Technic</option>
-                                        </optgroup>
-                                        <optgroup label="Humman Resource and General Affair">
-                                            <option class="text-muted" value="HHR">Human Resource</option>
-                                            <option class="text-muted" value="HGA">General Affairs</option>
-                                            <option class="text-muted" value="HLG">Legal</option>
-                                            <option class="text-muted" value="SSI">Internal Security</option>
-                                        </optgroup>
-                                        <optgroup label="Quality Management System">
-                                            <option class="text-muted" value="QMS">Quality Management System</option>
-                                        </optgroup>
+                                        @foreach ($sections as $section)
+                                            <option class="text-muted" value="{{ $section->id }}">{{ $section->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="card-header justify-content-between">
@@ -127,11 +78,11 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label class="form-label text-default fw-semibold" for="role">Hak Akses</label>
-                                    <select aria-label="role" class="form-select text-muted" id="role" name="role">
+                                    <select aria-label="role_id" class="form-select text-muted" id="role_id" name="role_id">
                                         <option class="text-muted" disabled selected value="">Pilih Hak Akses</option>
-                                        <option class="text-muted" value="pengguna">Pengguna</option>
-                                        <option class="text-muted" value="editor">Editor</option>
-                                        <option class="text-muted" value="administrator">Administrator</option>
+                                        @foreach ($roles as $role)
+                                            <option class="text-muted" value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
@@ -195,7 +146,7 @@
         }
 
         function goToIndex() {
-            window.location.href = "{{ route("users") }}";
+            window.location.href = "{{ route("users.index") }}";
         }
     </script>
     <script>

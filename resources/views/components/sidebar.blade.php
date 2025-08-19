@@ -33,8 +33,8 @@
                 </li>
 
                 <li class="slide__category"><span class="category-name">Management</span></li>
-                <li class="slide has-sub {{ request()->routeIs("users", "users.add", "users.edit", "users.activation") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("users", "users.add", "users.edit", "users.activation") ? "active" : "" }}" href="javascript:void(0);">
+                <li class="slide has-sub {{ request()->routeIs("users.index", "users.create", "users.edit", "users.activation") ? "open" : "" }}">
+                    <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit", "users.activation") ? "active" : "" }}" href="javascript:void(0);">
                         <i class="bx bx-user side-menu__icon"></i>
                         <span class="side-menu__label">Pengguna</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -44,10 +44,10 @@
                             <a href="javascript:void(0)">Pengguna</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("users", "users.add", "users.edit") ? "active" : "" }}" href="{{ route("users") }}">Data Pengguna</a>
+                            <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit") ? "active" : "" }}" href="{{ route("users.index") }}">Data Pengguna</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("users.activation") ? "active" : "" }}" href="{{ route("users.activation") }}">Aktivasi Pengguna</a>
+                            <a class="side-menu__item {{ request()->routeIs("users.activation") ? "active" : "" }}" href="#">Aktivasi Pengguna</a>
                         </li>
                         <li class="slide">
                             <a class="side-menu__item" href="#">Token</a>

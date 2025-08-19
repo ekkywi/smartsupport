@@ -12,21 +12,23 @@ Route::get('/', function () {
 });
 
 // Login
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+// Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Register
-Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
+Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // User
-Route::get('/pengguna', [UserController::class, 'index'])->name('users');
-Route::get('/pengguna/tambah', [UserController::class, 'showAddUserForm'])->name('users.add');
-Route::post('/pengguna/tambah', [UserController::class, 'store'])->name('users.store');
-Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('users.delete');
-Route::get('/pengguna/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::get('/pengguna', [UserController::class, 'index'])->name('users.index');
+Route::get('/pengguna/tambah', [UserController::class, 'create'])->name('users.create');
+Route::post('/pengguna', [UserController::class, 'store'])->name('users.store');
+Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('users.update');
-Route::get('/pengguna/aktivasi', [UserController::class, 'showActivation'])->name('users.activation');
-Route::patch('/pengguna/aktivasi/{id}', [UserController::class, 'activate'])->name('users.activation.toggle');
+Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('users.destroy');

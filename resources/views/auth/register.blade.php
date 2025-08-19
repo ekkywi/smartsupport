@@ -30,7 +30,7 @@
                     <div class="card-body p-5">
                         <p class="h5 fw-bold mb-2 text-center">Register</p>
                         <p class="mb-4 text-muted op-7 fw-normal text-center">Daftarkan akun Anda</p>
-                        <form action="{{ route("register") }}" method="POST">
+                        <form action="{{ route("register.store") }}" method="POST">
                             @csrf
                             <div class="row gy-3">
                                 <div class="col-xl-12">
@@ -42,8 +42,8 @@
                                     <input autocomplete="username" class="form-control form-control-lg" id="username" name="username" placeholder="Masukan username anda" required type="text">
                                 </div>
                                 <div class="col-xl-12">
-                                    <label class="form-label text-default fw-semibold" for="section">Bagian</label>
-                                    <select aria-label="bagian" class="form-select text-muted form-select-lg" id="section" name="section" required>
+                                    <label class="form-label text-default fw-semibold" for="section_id">Bagian</label>
+                                    <select aria-label="section_id" class="form-select text-muted form-select-lg" id="section_id" name="section_id" required>
                                         <option class="text-muted" disabled selected value="">Pilih bagian anda</option>
                                         @foreach ($sections as $section)
                                             <option class="text-muted" value="{{ $section->id }}">{{ $section->name }}</option>
@@ -51,8 +51,8 @@
                                     </select>
                                 </div>
                                 <div class="col-xl-12">
-                                    <label class="form-label text-default fw-semibold" for="position">Jabatan</label>
-                                    <select aria-label="jabatan" class="form-select text-muted form-select-lg" id="position" name="position" required>
+                                    <label class="form-label text-default fw-semibold" for="position_id">Jabatan</label>
+                                    <select aria-label="position_id" class="form-select text-muted form-select-lg" id="position_id" name="position_id" required>
                                         <option class="text-muted" disabled selected value="">Pilih jabatan anda</option>
                                         @foreach ($positions as $position)
                                             <option class="text-muted" value="{{ $position->id }}">{{ $position->name }}</option>
@@ -104,7 +104,7 @@
         <script>
             Swal.fire({
                 icon: 'error',
-                title: 'Gagal!',
+                title: 'Terjadi Kesalahan!',
                 text: '{{ session("error") }}',
             });
         </script>
@@ -113,8 +113,12 @@
         <script>
             Swal.fire({
                 icon: 'error',
-                title: 'Gagal!',
-                html: `{!! implode("<br>", $errors->all()) !!}`,
+                title: 'Registerasi Gagal!',
+                html: `<div class="text-center">
+                           @foreach ($errors->all() as $error)
+                               <div>{{ $error }}</div>
+                           @endforeach
+                       </div>`,
                 confirmButtonText: 'OK'
             });
         </script>

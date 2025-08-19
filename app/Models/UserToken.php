@@ -11,6 +11,7 @@ class UserToken extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
+        'user_id',
         'token',
         'type',
         'is_used',

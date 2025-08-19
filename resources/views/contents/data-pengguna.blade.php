@@ -27,13 +27,13 @@
                 <nav>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item">Management</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users") }}">Data Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.index") }}">Data Pengguna</a></li>
                     </ol>
                 </nav>
             </div>
         </div>
         <div class="mb-3">
-            <a class="btn btn-success" href="{{ route("users.add") }}">
+            <a class="btn btn-success" href="{{ route("users.create") }}">
                 <i class="fa fa-plus"></i> Tambah Pengguna
             </a>
         </div>
@@ -81,7 +81,7 @@
                                         </td>
                                         <td>
                                             <a class="btn btn-sm btn-primary" href="{{ route("users.edit", $user->id) }}">Edit</a>
-                                            <form action="{{ route("users.delete", $user->id) }}" id="delete-form-{{ $user->id }}" method="POST" style="display: inline">
+                                            <form action="{{ route("users.destroy", $user->id) }}" id="delete-form-{{ $user->id }}" method="POST" style="display: inline">
                                                 @csrf @method("DELETE")
                                                 <button class="btn btn-sm btn-danger delete-btn" data-user-id="{{ $user->id }}" type="button">
                                                     Hapus
