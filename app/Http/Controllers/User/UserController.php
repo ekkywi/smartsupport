@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['position', 'section', 'role'])->latest()->get();
-        return view('contents.data-pengguna', compact('users'));
+        return view('contents.user-data', compact('users'));
     }
 
     public function create()
@@ -22,7 +22,7 @@ class UserController extends Controller
         $positions = Position::with('users')->get();
         $sections = Section::with('users')->get();
         $roles = Role::with('users')->get();
-        return view('forms.tambah-pengguna', compact('positions', 'sections', 'roles'));
+        return view('forms.user-add', compact('positions', 'sections', 'roles'));
     }
 
     public function store(Request $request)
@@ -38,6 +38,8 @@ class UserController extends Controller
                 'password' => 'required|string|min:8|confirmed'
             ],
             [
+                'name.required' => 'Kolom nama wajib diisi.',
+                'username.required' => 'Kolom username wajib diisi.',
                 'email.unique' => 'Email sudah terdaftar, gunakan email lain.',
                 'username.unique' => 'Username sudah terdaftar, gunakan username lain.',
                 'section_id.exists' => 'Bagian yang dipilih tidak valid.',
@@ -75,7 +77,7 @@ class UserController extends Controller
         $positions = Position::all();
         $sections = Section::all();
         $roles = Role::all();
-        return view('forms.edit-pengguna', compact('user', 'positions', 'sections', 'roles'));
+        return view('forms.user-edit', compact('user', 'positions', 'sections', 'roles'));
     }
 
     public function update(Request $request, string $id)

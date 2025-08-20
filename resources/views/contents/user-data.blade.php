@@ -1,6 +1,6 @@
 @extends("layouts.app")
 
-@section("title", "SmartSupport — Aktivasi Pengguna")
+@section("title", "SmartSupport — Data Pengguna")
 
 @section("styles")
     {{-- main styles --}}
@@ -22,22 +22,27 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Aktivasi Pengguna</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Data Pengguna</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item">Management</li>
-                        <li aria-current="page" class="breadcrumb-item active"><span>Aktivasi Pengguna</span></li>
+                    <ol class="breadcrumb breadcrumb-style2 mb-0">
+                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.index") }}"><i class="ti ti-users me-1 fs-15 d-inline-block"></i>Data Pengguna</a></li>
                     </ol>
                 </nav>
             </div>
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-success" href="{{ route("users.create") }}">
+                <i class="fa fa-plus"></i> Tambah Pengguna
+            </a>
         </div>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Daftar Status Aktivasi Pengguna
+                            Data Pengguna Aplikasi
                         </div>
                     </div>
                     <div class="card-body">
@@ -64,9 +69,9 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->name }}</td>
-                                        <td>{{ $user->position ?? "-" }}</td>
-                                        <td>{{ $user->section ?? "-" }}</td>
-                                        <td>{{ $user->role ?? "-" }}</td>
+                                        <td>{{ $user->position->name ?? "-" }}</td>
+                                        <td>{{ $user->section->name ?? "-" }}</td>
+                                        <td>{{ $user->role->name ?? "-" }}</td>
                                         <td>
                                             @if ($user->is_active)
                                                 <span class="badge bg-success">Aktif</span>
@@ -75,19 +80,12 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{-- Form untuk toggle aktivasi --}}
-                                            <form action="{{ route("users.activation.toggle", ["id" => $user->id]) }}" id="toggle-form-{{ $user->id }}" method="POST" style="display: inline">
-                                                @csrf
-                                                @method("PATCH")
-                                                @if ($user->is_active)
-                                                    <button class="btn btn-sm btn-danger toggle-activation-btn" data-action="Nonaktifkan" data-user-id="{{ $user->id }}" type="button">
-                                                        Nonaktifkan
-                                                    </button>
-                                                @else
-                                                    <button class="btn btn-sm btn-success toggle-activation-btn" data-action="Aktifkan" data-user-id="{{ $user->id }}" type="button">
-                                                        Aktifkan
-                                                    </button>
-                                                @endif
+                                            <a class="btn btn-sm btn-primary" href="{{ route("users.edit", $user->id) }}">Edit</a>
+                                            <form action="{{ route("users.destroy", $user->id) }}" id="delete-form-{{ $user->id }}" method="POST" style="display: inline">
+                                                @csrf @method("DELETE")
+                                                <button class="btn btn-sm btn-danger delete-btn" data-user-id="{{ $user->id }}" type="button">
+                                                    Hapus
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
@@ -126,6 +124,7 @@
     <script src="{{ asset("libs/pdfmake/vfs_fonts.js") }}"></script>
     <script src="{{ asset("libs/datatables/js/buttons.html5.min.js") }}"></script>
     <script src="{{ asset("libs/jszip/jszip.min.js") }}"></script>
+
     {{-- custom scripts --}}
     <script>
         $(document).ready(function() {
@@ -158,38 +157,36 @@
                 }
             });
 
-            // Event listener untuk tombol aktivasi/nonaktivasi
-            $(document).on('click', '.toggle-activation-btn', function(e) {
+            // Kode SweetAlert Anda yang sudah ada sebelumnya
+            $(document).on('click', '.delete-btn', function(e) {
                 e.preventDefault();
                 var userId = $(this).data('user-id');
-                var action = $(this).data('action');
-                var confirmButtonColor = (action === 'Aktifkan') ? '#28a745' : '#d33';
-
                 Swal.fire({
                     title: "Apakah Anda yakin?",
-                    text: "Anda akan " + action.toLowerCase() + " pengguna ini.",
+                    text: "Data yang dihapus tidak dapat dipulihkan!",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: confirmButtonColor,
+                    confirmButtonColor: "#d33",
                     cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Ya, " + action + "!",
+                    confirmButtonText: "Hapus",
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Submit form yang sesuai jika dikonfirmasi
-                        document.getElementById("toggle-form-" + userId).submit();
+                        document.getElementById("delete-form-" + userId).submit();
                     }
                 });
             });
         });
     </script>
-    {{-- Script untuk notifikasi dari session --}}
+
     @if (session("success"))
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session("success") }}',
+                timer: 2500,
+                showConfirmButton: false
             });
         </script>
     @endif

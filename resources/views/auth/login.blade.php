@@ -6,10 +6,9 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <title>Login — SmartSupport </title>
+    <title>Login &mdash; SmartSupport</title>
 
     <link href="{{ asset("images/brand-logos/favicon.ico") }}" rel="icon" type="image/x-icon">
-    <script src="{{ asset("js/authentication-main.js") }}"></script>
     <link href="{{ asset("libs/bootstrap/css/bootstrap.min.css") }}" id="style" rel="stylesheet">
     <link href="{{ asset("css/styles.min.css") }}" rel="stylesheet">
     <link href="{{ asset("css/icons.min.css") }}" rel="stylesheet">
@@ -30,7 +29,7 @@
                     <div class="card-body p-5">
                         <p class="h5 fw-bold mb-2 text-center">Log In</p>
                         <p class="mb-4 text-muted op-7 fw-normal text-center">Selamat datang kembali !</p>
-                        <form action="{{ route("login") }}" method="POST">
+                        <form action="{{ route("login") }}" id="login-form" method="POST">
                             @csrf
                             <div class="row gy-3">
                                 <div class="col-xl-12">
@@ -58,7 +57,7 @@
                             </div>
                             <div class="text-center">
                                 <p class="fs-12 text-muted mt-3">Tidak punya akun? <a class="text-primary" href="{{ route("register.store") }}">Daftar</a></p>
-                                <p class="fs-12 text-muted mt-3">Akun anda belum aktif? <a class="text-primary" href="#">Aktivasi Akun</a></p>
+                                <p class="fs-12 text-muted mt-3">Akun anda belum aktif? <a class="text-primary" href="{{ route("activation.index") }}">Aktivasi Akun</a></p>
                             </div>
                         </form>
                     </div>
@@ -67,6 +66,8 @@
         </div>
     </div>
 
+    <script src="{{ asset("libs/jquery/jquery-3.6.1.min.js") }}"></script>
+    <script src="{{ asset("js/authentication-main.js") }}"></script>
     <script src="{{ asset("libs/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
     <script src="{{ asset("js/show-password.js") }}"></script>
     <script src="{{ asset("libs/sweetalert2/sweetalert2.all.min.js") }}"></script>
@@ -77,6 +78,8 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session("success") }}',
+                timer: 2500,
+                showConfirmButton: false
             });
         </script>
     @endif
@@ -86,9 +89,54 @@
                 icon: 'error',
                 title: 'Gagal!',
                 text: '{{ session("error") }}',
+                timer: 1800,
+                showConfirmButton: false
             });
         </script>
     @endif
+    <script>
+        $(document).ready(function() {
+            $('#login-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = $(this).serialize();
+                let formUrl = $(this).attr('action');
+
+                $.ajax({
+                    type: 'POST',
+                    url: formUrl,
+                    data: formData,
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: response.message,
+                                timer: 1800,
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.href = response.redirect;
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Login Gagal',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        let error = xhr.responseJSON;
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Gagal',
+                            text: error ? error.message : 'Terjadi kesalahan pada server.'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

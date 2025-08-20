@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <title>Register — SmartSupport</title>
+    <title>Register &mdash; SmartSupport</title>
 
     <link href="{{ asset("images/brand-logos/favicon.ico") }}" rel="icon" type="image/x-icon">
     <script src="{{ asset("js/authentication-main.js") }}"></script>
@@ -97,6 +97,8 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session("success") }}',
+                timer: 2500,
+                showConfirmButton: false
             });
         </script>
     @endif
