@@ -25,9 +25,9 @@
             <h1 class="page-title fw-semibold fs-18 mb-0">Aktivasi Pengguna</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item">Management</li>
-                        <li aria-current="page" class="breadcrumb-item active"><span>Aktivasi Pengguna</span></li>
+                    <ol class="breadcrumb breadcrumb-style2 mb-0">
+                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.activation.index") }}"><i class="ti ti-list me-1 fs-15 d-inline-block"></i>Data Aktivasi Pengguna</a></li>
                     </ol>
                 </nav>
             </div>
@@ -37,7 +37,7 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Daftar Status Aktivasi Pengguna
+                            Status Aktivasi Pengguna
                         </div>
                     </div>
                     <div class="card-body">
@@ -64,9 +64,9 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->name }}</td>
-                                        <td>{{ $user->position ?? "-" }}</td>
-                                        <td>{{ $user->section ?? "-" }}</td>
-                                        <td>{{ $user->role ?? "-" }}</td>
+                                        <td>{{ $user->position->name ?? "-" }}</td>
+                                        <td>{{ $user->section->name ?? "-" }}</td>
+                                        <td>{{ $user->role->name ?? "-" }}</td>
                                         <td>
                                             @if ($user->is_active)
                                                 <span class="badge bg-success">Aktif</span>
@@ -76,7 +76,7 @@
                                         </td>
                                         <td>
                                             {{-- Form untuk toggle aktivasi --}}
-                                            <form action="{{ route("users.activation.toggle", ["id" => $user->id]) }}" id="toggle-form-{{ $user->id }}" method="POST" style="display: inline">
+                                            <form action="{{ route("users.activation.toggle", $user->id) }}" id="toggle-form-{{ $user->id }}" method="POST" style="display: inline">
                                                 @csrf
                                                 @method("PATCH")
                                                 @if ($user->is_active)

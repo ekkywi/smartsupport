@@ -1,9 +1,9 @@
 <!-- Footer Start -->
 <footer class="footer mt-auto py-3 bg-white text-center">
     <div class="container">
-        <span class="text-muted"> Copyright © <span id="year"></span> <a class="text-dark fw-semibold" href="javascript:void(0);">Ynex</a>.
+        <span class="text-muted"> Copyright © <span id="year">2025</span> <a class="text-dark fw-semibold" href="javascript:void(0);">SmartSupport</a>.
             Designed with <span class="bi bi-heart-fill text-danger"></span> by <a href="javascript:void(0);">
-                <span class="fw-semibold text-primary text-decoration-underline">Spruko</span>
+                <span class="fw-semibold text-primary text-decoration-underline">ITS</span>
             </a> All
             rights
             reserved

@@ -3,12 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Events\Login;
 use PHPUnit\Framework\Attributes\Group;
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ActivationController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\User\UserActivationController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -39,4 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Activation
+    Route::get('/activation', [UserActivationController::class, 'index'])->name('users.activation.index');
+    Route::patch('/activation/{user}', [UserActivationController::class, 'toggleActivation'])->name('users.activation.toggle');
 });

@@ -47,7 +47,7 @@
                             <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit") ? "active" : "" }}" href="{{ route("users.index") }}">Data Pengguna</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("users.activation") ? "active" : "" }}" href="#">Aktivasi Pengguna</a>
+                            <a class="side-menu__item {{ request()->routeIs("users.activation.index") ? "active" : "" }}" href="{{ route("users.activation.index") }}">Aktivasi Pengguna</a>
                         </li>
                         <li class="slide">
                             <a class="side-menu__item" href="#">Token</a>
