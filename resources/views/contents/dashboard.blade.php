@@ -1,6 +1,8 @@
 @extends("layouts.app")
 
-@section("title", "SmartSupport — Dashboard")
+@section("title")
+    SmartSupport &mdash; Dashboard
+@endsection
 
 @section("styles")
     {{-- main styles --}}
@@ -16,7 +18,6 @@
 @endsection
 
 @section("content")
-
 @endsection
 
 @section("scripts")

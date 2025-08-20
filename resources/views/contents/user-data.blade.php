@@ -1,6 +1,8 @@
 @extends("layouts.app")
 
-@section("title", "SmartSupport — Data Pengguna")
+@section("title")
+    SmartSupport &mdash; Data Pengguna
+@endsection
 
 @section("styles")
     {{-- main styles --}}

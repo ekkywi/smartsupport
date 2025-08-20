@@ -24,7 +24,9 @@ class UserToken extends Model
 
     protected $casts = [
         'is_used' => 'boolean',
-        'expired_at' => 'datetime'
+        'expired_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
 
     public function user()

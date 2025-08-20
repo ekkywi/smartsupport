@@ -16,6 +16,11 @@ class Position extends Model
 
     protected $hidden = [];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
     public function users()
     {
         return $this->hasMany(User::class, 'id');

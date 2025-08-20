@@ -1,7 +1,9 @@
 {{-- @dd($user) --}}
 @extends("layouts.app")
 
-@section("title", "SmartSupport - Edit Pengguna")
+@section("title")
+    SmartSupport &mdash; Edit Pengguna
+@endsection
 
 @section("styles")
     {{-- main styles --}}

@@ -16,24 +16,27 @@ class ActivationController extends Controller
 
     public function activation(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string|exists:users,username',
-            'token' => 'required|string',
-        ], [
-            'username.required' => 'Username harus diisi.',
-            'token.required' => 'Token harus diisi.',
-            'username.exists' => 'Username tidak ditemukan.',
-        ]);
+        $request->validate(
+            [
+                'username' => 'required|string|exists:users,username',
+                'token' => 'required|string',
+            ],
+            [
+                'username.exists' => 'Username tidak ditemukan.',
+            ]
+        );
 
         $userToken = UserToken::where('type', 'Aktivasi')
             ->where('is_used', false)
             ->whereHas('user', function ($query) use ($request) {
-                $query->where('username', $request->username);
+                $query->where('username', '=>', $request->username);
             })
             ->first();
 
         if ($userToken && Hash::check($request->token, $userToken->token)) {
-            if (now()->isAfter($userToken->expire_at)) {
+
+            // Perbaiki salah ketik di sini
+            if ($userToken->expired_at && $userToken->expired_at->isPast()) {
                 return back()->with('error', 'Token aktivasi sudah kadaluwarsa.');
             }
 

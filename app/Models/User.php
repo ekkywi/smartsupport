@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\UserToken;
 
 
@@ -38,6 +39,8 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime'
         ];
     }
 
@@ -75,5 +78,12 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    protected function latestToken(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->tokens()->latest('created_at')->first(),
+        );
     }
 }
