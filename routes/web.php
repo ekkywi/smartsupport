@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\ActivationController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserActivationController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\User\UserTokenController;
 
 // Home
@@ -29,6 +30,10 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 // Activation
 Route::get('/aktivasi', [ActivationController::class, 'index'])->name('activation.index');
 Route::post('/aktivasi', [ActivationController::class, 'activation'])->name('activation');
+
+// Reset Password
+Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('reset-password.index');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('reset-password');
 
 Route::middleware('auth')->group(function () {
 

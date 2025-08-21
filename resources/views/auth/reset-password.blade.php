@@ -36,31 +36,31 @@
                             <div class="row gy-3">
                                 <div class="col-xl-12">
                                     <label class="form-label text-default fw-semibold" for="username">Username</label>
-                                    <input autocomplete="username" class="form-control form-control-lg" id="username" placeholder="username" required type="text">
+                                    <input autocomplete="username" class="form-control form-control-lg" id="username" name="username" placeholder="username" required type="text">
                                 </div>
                                 <div class="col-xl-12 mb-2">
                                     <label class="form-label text-default d-block fw-semibold" for="token">Token</label>
                                     <div class="input-group">
-                                        <input autocomplete="new-password" class="form-control form-control-lg" id="token" placeholder="Masukan token anda" required type="password">
+                                        <input autocomplete="new-password" class="form-control form-control-lg" id="token" name="token" placeholder="Masukan token anda" required type="password">
                                         <button class="btn btn-light" id="button-addon-token" onclick="createpassword('token',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <label class="form-label text-default fw-semibold" for="password">Password</label>
                                     <div class="input-group">
-                                        <input autocomplete="new-password" class="form-control form-control-lg" id="password" placeholder="Masukan password anda" required type="password">
+                                        <input autocomplete="new-password" class="form-control form-control-lg" id="password" name="password" placeholder="Masukan password anda" required type="password">
                                         <button class="btn btn-light" id="button-addon-password" onclick="createpassword('password',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 mb-2">
                                     <label class="form-label text-default fw-semibold" for="confirm-password">Konfirmasi Password</label>
                                     <div class="input-group">
-                                        <input autocomplete="new-password" class="form-control form-control-lg" id="confirm-password" placeholder="Masukan konfirmasi password anda" type="password">
+                                        <input autocomplete="new-password" class="form-control form-control-lg" id="confirm-password" name="password_confirmation" placeholder="Masukan konfirmasi password anda" type="password">
                                         <button class="btn btn-light" id="button-addon-confirm-password" onclick="createpassword('confirm-password',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 d-grid mt-2">
-                                    <a class="btn btn-lg btn-primary" href="index.html">Reset Password</a>
+                                    <button class="btn btn-lg btn-primary" type="submit">Reset Password</button>
                                 </div>
                             </div>
                             <div class="text-center">
@@ -76,6 +76,42 @@
     <script src="{{ asset("js/authentication-main.js") }}"></script>
     <script src="{{ asset("libs/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
     <script src="{{ asset("js/show-password.js") }}"></script>
+    <script src="{{ asset("libs/sweetalert2/sweetalert2.all.min.js") }}"></script>
+
+    @if (session("success"))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session("success") }}',
+                timer: 2500,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+    @if (session("error"))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan!',
+                text: '{{ session("error") }}',
+            });
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Registerasi Gagal!',
+                html: `<div class="text-center">
+                           @foreach ($errors->all() as $error)
+                               <div>{{ $error }}</div>
+                           @endforeach
+                       </div>`,
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 
 </body>
 

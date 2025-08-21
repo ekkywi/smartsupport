@@ -37,7 +37,7 @@
                                     <input autocomplete="username" class="form-control form-control-lg" id="username" name="username" placeholder="username" type="text">
                                 </div>
                                 <div class="col-xl-12 mb-2">
-                                    <label class="form-label text-default d-block fw-semibold" for="password">Password<a class="float-end text-danger" href="#">Lupa password ?</a></label>
+                                    <label class="form-label text-default d-block fw-semibold" for="password">Password<a class="float-end text-danger" href="{{ route("reset-password.index") }}">Lupa password ?</a></label>
                                     <div class="input-group">
                                         <input autocomplete="current-password" class="form-control form-control-lg" id="password" name="password" placeholder="********" type="password">
                                         <button class="btn btn-light" id="button-addon-password" onclick="createpassword('password',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
