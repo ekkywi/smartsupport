@@ -36,7 +36,7 @@
         </div>
         <div class="mb-3">
             <a class="btn btn-success" href="{{ route("users.create") }}">
-                <i class="fa fa-plus"></i> Tambah Pengguna
+                <i class="ti ti-plus"></i> Tambah Pengguna
             </a>
         </div>
         <div class="row">
@@ -82,10 +82,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route("users.edit", $user->id) }}">Edit</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route("users.edit", $user->id) }}"><i class="ti ti-pencil me-1"></i>Edit</a>
                                             <form action="{{ route("users.destroy", $user->id) }}" id="delete-form-{{ $user->id }}" method="POST" style="display: inline">
                                                 @csrf @method("DELETE")
-                                                <button class="btn btn-sm btn-danger delete-btn" data-user-id="{{ $user->id }}" type="button">
+                                                <button class="btn btn-sm btn-danger delete-btn" data-user-id="{{ $user->id }}" type="button"><i class="ti ti-trash me-1"></i>
                                                     Hapus
                                                 </button>
                                             </form>

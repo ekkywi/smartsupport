@@ -29,7 +29,7 @@
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.activation.index") }}"><i class="ti ti-list me-1 fs-15 d-inline-block"></i>Data Aktivasi Pengguna</a></li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.activation.index") }}"><i class="ti ti-checkbox me-1 fs-15 d-inline-block"></i>Data Aktivasi Pengguna</a></li>
                     </ol>
                 </nav>
             </div>

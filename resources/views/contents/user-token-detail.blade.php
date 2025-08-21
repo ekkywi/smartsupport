@@ -46,17 +46,17 @@
                         @csrf
                         <input name="type" type="hidden" value="Aktivasi">
                         <button class="btn btn-sm btn-success generate-token-btn" data-type="Aktivasi" type="button">
-                            <i class="ti ti-key me-1"></i> Generate Token Aktivasi
+                            <i class="ti ti-checkbox me-1"></i> Generate Token Aktivasi
                         </button>
                     </form>
                     <form action="{{ route("users.token.generate", $user->id) }}" id="generate-reset-form" method="POST">
                         @csrf
                         <input name="type" type="hidden" value="Reset">
                         <button class="btn btn-sm btn-warning generate-token-btn" data-type="Reset" type="button">
-                            <i class="ti ti-reload me-1"></i> Generate Token Reset
+                            <i class="ti ti-refresh me-1"></i> Generate Token Reset
                         </button>
                     </form>
-                    <a class="btn btn-sm btn-secondary ms-auto" href="{{ route("users.token.index") }}">Kembali</a>
+                    <a class="btn btn-sm btn-secondary ms-auto" href="{{ route("users.token.index") }}"><i class="ti ti-arrow-left me-1"></i>Kembali</a>
                 </div>
             </div>
             <div class="card-body">

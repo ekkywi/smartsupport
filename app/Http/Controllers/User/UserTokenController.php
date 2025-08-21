@@ -34,7 +34,7 @@ class UserTokenController extends Controller
         $user->tokens()
             ->where('type', $tokenType)
             ->where('is_used', false)
-            ->update(['expired_at' => now()]);
+            ->update(['expired_at' => now(), 'is_used' => true]);
 
         $plainToken = Str::random(64);
         $hashedToken = Hash::make($plainToken);

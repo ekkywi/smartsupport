@@ -68,7 +68,9 @@
                                         @if ($user->latest_token)
                                             <td>{{ $user->latest_token->type }}</td>
                                             <td>
-                                                @if ($user->latest_token->expired_at && $user->latest_token->expired_at->isPast())
+                                                @if ($user->latest_token->is_used)
+                                                    <span class="badge bg-danger">Kadaluarsa</span>
+                                                @elseif ($user->latest_token->expired_at && $user->latest_token->expired_at->isPast())
                                                     <span class="badge bg-danger">Kadaluarsa</span>
                                                 @else
                                                     <span class="badge bg-success">Berlaku</span>
