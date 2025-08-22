@@ -63,9 +63,6 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //

@@ -11,7 +11,9 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserActivationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\User\UserTokenController;
+use App\Http\Controllers\Token\TokenController;
+use App\Http\Controllers\Organization\SectionController;
+use App\Http\Controllers\Organization\PositionController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -53,7 +55,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/aktivasi-pengguna/{user}', [UserActivationController::class, 'toggleActivation'])->name('users.activation.toggle');
 
     // User Token
-    Route::get('/token-pengguna', [UserTokenController::class, 'index'])->name('users.token.index');
-    Route::get('/token-pengguna/{user}/tokens', [UserTokenController::class, 'show'])->name('users.token.show');
-    Route::post('/token-pengguna/{user}/tokens/generate', [UserTokenController::class, 'generateToken'])->name('users.token.generate');
+    Route::get('/token-pengguna', [TokenController::class, 'index'])->name('users.token.index');
+    Route::get('/token-pengguna/{user}/tokens', [TokenController::class, 'show'])->name('users.token.show');
+    Route::post('/token-pengguna/{user}/tokens/generate', [TokenController::class, 'generateToken'])->name('users.token.generate');
+
+    // Section
+    Route::get('/bagian', [SectionController::class, 'index'])->name('sections.index');
+
+    // Position
+    Route::get('/jabatan', [PositionController::class, 'index'])->name('positions.index');
 });

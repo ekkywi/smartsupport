@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Token Pengguna
+    SmartSupport &mdash; Data Jabatan
 @endsection
 
 @section("styles")
@@ -24,22 +24,28 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Data Token</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Data Jabatan</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="#"><i class="ti ti-key me-1 fs-15 d-inline-block"></i>Data Token</a></li>
+                        <li class="breadcrumb-item"><i class="bx bxs-business me-1 fs-15 d-inline-block"></i>Organisasi</li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="#"><i class="bx bx-briefcase me-1 fs-15 d-inline-block"></i>Data Jabatan</a></li>
                     </ol>
                 </nav>
             </div>
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-success" href="#">
+                <i class="ti ti-plus"></i> Tambah Jabatan
+            </a>
         </div>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Data Token Pengguna
+                            Data Jabatan
                         </div>
                     </div>
                     <div class="card-body">
@@ -49,47 +55,27 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Tipe Token Terakhir</th>
-                                    <th>Status Token Terakhir</th>
-                                    <th>Tanggal Kadaluarsa</th>
+                                    <th>Kode Jabatan</th>
+                                    <th>Jumlah Pengguna</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($positions as $position)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
-
-                                        @if ($user->latest_token)
-                                            <td>{{ $user->latest_token->type }}</td>
-                                            <td>
-                                                @if ($user->latest_token->is_used)
-                                                    <span class="badge bg-danger">Kadaluarsa</span>
-                                                @elseif ($user->latest_token->expired_at && $user->latest_token->expired_at->isPast())
-                                                    <span class="badge bg-danger">Kadaluarsa</span>
-                                                @else
-                                                    <span class="badge bg-success">Berlaku</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{ $user->latest_token->expired_at ? $user->latest_token->expired_at->format("d F Y H:i") : "-" }}
-                                            </td>
-                                        @else
-                                            <td class="text-center text-muted" colspan="3">Belum ada token</td>
-                                        @endif
-
+                                        <td>{{ $position->name }}</td>
+                                        <td>{{ $position->position_code }}</td>
+                                        <td>{{ $position->users_count }} </td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" href="{{ route("users.token.show", $user->id) }}">
-                                                <i class="ti ti-eye"></i> Detail
-                                            </a>
+                                            <a class="btn btn-sm btn-primary" href="#"><i class="ti ti-pencil"></i> Edit</a>
+                                            <a class="btn btn-sm btn-danger" href="#"><i class="ti ti-trash"></i> Hapus</a>
                                         </td>
                                     </tr>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>

@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Data Pengguna
+    SmartSupport &mdash; Token Pengguna
 @endsection
 
 @section("styles")
@@ -24,28 +24,23 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Data Pengguna</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Data Token</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li class="breadcrumb-item"><i class="ti ti-user me-1 fs-15 d-inline-block"></i>Pengguna</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.index") }}"><i class="ti ti-users me-1 fs-15 d-inline-block"></i>Data Pengguna</a></li>
+                        <li class="breadcrumb-item"><i class="bx bxs-key me-1 fs-15 d-inline-block"></i>Token</li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="#"><i class="ti ti-key me-1 fs-15 d-inline-block"></i>Data Token</a></li>
                     </ol>
                 </nav>
             </div>
-        </div>
-        <div class="mb-3">
-            <a class="btn btn-success" href="{{ route("users.create") }}">
-                <i class="ti ti-plus"></i> Tambah Pengguna
-            </a>
         </div>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Data Pengguna Aplikasi
+                            Data Token Pengguna
                         </div>
                     </div>
                     <div class="card-body">
@@ -57,14 +52,12 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Jabatan</th>
-                                    <th>Bagian</th>
-                                    <th>Hak Akses</th>
-                                    <th>Status Aktivasi</th>
+                                    <th>Tipe Token Terakhir</th>
+                                    <th>Status Token Terakhir</th>
+                                    <th>Tanggal Kadaluarsa</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -72,24 +65,29 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->name }}</td>
-                                        <td>{{ $user->position->name ?? "-" }}</td>
-                                        <td>{{ $user->section->name ?? "-" }}</td>
-                                        <td>{{ $user->role->name ?? "-" }}</td>
+
+                                        @if ($user->latest_token)
+                                            <td>{{ $user->latest_token->type }}</td>
+                                            <td>
+                                                @if ($user->latest_token->is_used)
+                                                    <span class="badge bg-danger">Kadaluarsa</span>
+                                                @elseif ($user->latest_token->expired_at && $user->latest_token->expired_at->isPast())
+                                                    <span class="badge bg-danger">Kadaluarsa</span>
+                                                @else
+                                                    <span class="badge bg-success">Berlaku</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ $user->latest_token->expired_at ? $user->latest_token->expired_at->format("d F Y H:i") : "-" }}
+                                            </td>
+                                        @else
+                                            <td class="text-center text-muted" colspan="3">Belum ada token</td>
+                                        @endif
+
                                         <td>
-                                            @if ($user->is_active)
-                                                <span class="badge bg-success">Aktif</span>
-                                            @else
-                                                <span class="badge bg-danger">Tidak Aktif</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route("users.edit", $user->id) }}"><i class="ti ti-pencil me-1"></i>Edit</a>
-                                            <form action="{{ route("users.destroy", $user->id) }}" id="delete-form-{{ $user->id }}" method="POST" style="display: inline">
-                                                @csrf @method("DELETE")
-                                                <button class="btn btn-sm btn-danger delete-btn" data-user-id="{{ $user->id }}" type="button"><i class="ti ti-trash me-1"></i>
-                                                    Hapus
-                                                </button>
-                                            </form>
+                                            <a class="btn btn-sm btn-info" href="{{ route("users.token.show", $user->id) }}">
+                                                <i class="ti ti-eye"></i> Detail
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -127,30 +125,24 @@
     <script src="{{ asset("libs/pdfmake/vfs_fonts.js") }}"></script>
     <script src="{{ asset("libs/datatables/js/buttons.html5.min.js") }}"></script>
     <script src="{{ asset("libs/jszip/jszip.min.js") }}"></script>
-
     {{-- custom scripts --}}
     <script>
         $(document).ready(function() {
             $('#responsiveDataTable').DataTable({
                 responsive: true,
-                // ⚙️ SESUAIKAN KODE initComplete INI
                 initComplete: function() {
                     this.api().columns().every(function() {
                         let column = this;
                         let title = $(column.header()).text();
-
-                        // Menargetkan sel di baris filter berdasarkan urutan kolom
                         let cell = $('#filters th').eq(column.index());
 
-                        // Lewati kolom "Aksi"
                         if (title === 'Aksi') {
                             cell.html('');
                             return;
                         }
 
-                        // Buat input field dan letakkan di sel header yang baru
                         let input = $('<input type="text" class="form-control form-control-sm" placeholder="Filter ' + title + '" />')
-                            .appendTo(cell) // Tidak perlu .empty() karena sel sudah kosong
+                            .appendTo(cell)
                             .on('keyup change clear', function() {
                                 if (column.search() !== this.value) {
                                     column.search(this.value).draw();
@@ -159,29 +151,8 @@
                     });
                 }
             });
-
-            // Kode SweetAlert Anda yang sudah ada sebelumnya
-            $(document).on('click', '.delete-btn', function(e) {
-                e.preventDefault();
-                var userId = $(this).data('user-id');
-                Swal.fire({
-                    title: "Apakah Anda yakin?",
-                    text: "Data yang dihapus tidak dapat dipulihkan!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#d33",
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Hapus",
-                    cancelButtonText: "Batal",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById("delete-form-" + userId).submit();
-                    }
-                });
-            });
         });
     </script>
-
     @if (session("success"))
         <script>
             Swal.fire({
