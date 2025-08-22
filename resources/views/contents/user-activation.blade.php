@@ -82,11 +82,11 @@
                                                 @csrf
                                                 @method("PATCH")
                                                 @if ($user->is_active)
-                                                    <button class="btn btn-sm btn-danger toggle-activation-btn" data-action="Nonaktifkan" data-user-id="{{ $user->id }}" type="button">
+                                                    <button class="btn btn-sm btn-danger toggle-activation-btn" data-action="Nonaktifkan" data-user-id="{{ $user->id }}" type="button"><i class="bx bx-user-x"></i>
                                                         Nonaktifkan
                                                     </button>
                                                 @else
-                                                    <button class="btn btn-sm btn-success toggle-activation-btn" data-action="Aktifkan" data-user-id="{{ $user->id }}" type="button">
+                                                    <button class="btn btn-sm btn-success toggle-activation-btn" data-action="Aktifkan" data-user-id="{{ $user->id }}" type="button"><i class="bx bx-user-check"></i>
                                                         Aktifkan
                                                     </button>
                                                 @endif
