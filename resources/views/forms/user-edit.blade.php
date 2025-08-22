@@ -105,8 +105,8 @@
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                                    <a class="btn btn-danger" href="{{ route("users.index") }}">Batal</a>
-                                    <button class="btn btn-primary" type="submit">Simpan</button>
+                                    <a class="btn btn-danger" href="{{ route("users.index") }}"><i class="ti ti-x"></i> Batal</a>
+                                    <button class="btn btn-primary" type="submit"><i class="ti ti-check"></i> Simpan</button>
                                 </div>
                             </form>
                         </div>

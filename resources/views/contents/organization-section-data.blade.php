@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <a class="btn btn-success" href="#">
+            <a class="btn btn-success" href="{{ route("sections.create") }}">
                 <i class="ti ti-plus"></i> Tambah Bagian
             </a>
         </div>
@@ -70,12 +70,17 @@
                                         <td>{{ $section->section_code }}</td>
                                         <td>{{ $section->users_count }} </td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="#"><i class="ti ti-pencil"></i> Edit</a>
-                                            <a class="btn btn-sm btn-danger" href="#"><i class="ti ti-trash"></i> Hapus</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route("sections.edit", $section->id) }}"><i class="ti ti-pencil"></i> Edit</a>
+                                            <button class="btn btn-sm btn-danger delete-btn" data-section-id="{{ $section->id }}" type="button"><i class="ti ti-trash me-1"></i>
+                                                Hapus
+                                            </button>
+                                            <form action="{{ route("sections.destroy", $section->id) }}" id="delete-form-{{ $section->id }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method("DELETE")
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
@@ -134,6 +139,26 @@
                                 }
                             });
                     });
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var sectionId = $(this).data('section-id');
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data yang dihapus tidak dapat dipulihkan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Hapus",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("delete-form-" + sectionId).submit();
                 }
             });
         });

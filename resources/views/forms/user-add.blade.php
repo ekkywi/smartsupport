@@ -106,9 +106,9 @@
                                     <button class="btn btn-success w-100" onclick="generateRandomPassword()" type="button">Generate Password</button>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                                    <button class="btn btn-danger" onclick="goToIndex()" type="button">Batal</button>
-                                    <button class="btn btn-secondary" onclick="clearFormInputs()" type="button">Hapus</button>
-                                    <button class="btn btn-primary" type="submit">Simpan</button>
+                                    <button class="btn btn-danger" onclick="goToIndex()" type="button"><i class="ti ti-x"></i> Batal</button>
+                                    <button class="btn btn-secondary" onclick="clearFormInputs()" type="button"><i class="ti ti-trash"></i> Hapus</button>
+                                    <button class="btn btn-primary" type="submit"><i class="ti ti-check"></i> Simpan</button>
                                 </div>
                             </form>
                         </div>

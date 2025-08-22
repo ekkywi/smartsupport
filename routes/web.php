@@ -61,7 +61,17 @@ Route::middleware('auth')->group(function () {
 
     // Section
     Route::get('/bagian', [SectionController::class, 'index'])->name('sections.index');
+    Route::get('/bagian/tambah', [SectionController::class, 'create'])->name('sections.create');
+    Route::post('/bagian', [SectionController::class, 'store'])->name('sections.store');
+    Route::get('/bagian/{id}/edit', [SectionController::class, 'edit'])->name('sections.edit');
+    Route::put('/bagian/{id}', [SectionController::class, 'update'])->name('sections.update');
+    Route::delete('/bagian/{id}', [SectionController::class, 'destroy'])->name('sections.destroy');
 
     // Position
     Route::get('/jabatan', [PositionController::class, 'index'])->name('positions.index');
+    Route::get('/jabatan/tambah', [PositionController::class, 'create'])->name('positions.create');
+    Route::post('/jabatan', [PositionController::class, 'store'])->name('positions.store');
+    Route::get('/jabatan/{id}/edit', [PositionController::class, 'edit'])->name('positions.edit');
+    Route::put('/jabatan/{id}', [PositionController::class, 'update'])->name('positions.update');
+    Route::delete('/jabatan/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
 });

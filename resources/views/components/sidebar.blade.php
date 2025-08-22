@@ -68,8 +68,8 @@
                     </ul>
                 </li>
 
-                <li class="slide has-sub {{ request()->routeIs("sections.index", "positions.index") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("sections.index", "positions.index") ? "active" : "" }}" href="javascript:void(0);">
+                <li class="slide has-sub {{ request()->routeIs("sections.index", "positions.index", "sections.create", "sections.edit", "positions.create", "positions.edit") ? "open" : "" }}">
+                    <a class="side-menu__item {{ request()->routeIs("sections.index", "positions.index", "sections.create", "sections.edit", "positions.create", "positions.edit") ? "active" : "" }}" href="javascript:void(0);">
                         <i class="bx bxs-business side-menu__icon"></i>
                         <span class="side-menu__label">Organisasi</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -79,10 +79,10 @@
                             <a href="javascript:void(0)">Organisasi</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("sections.index") ? "active" : "" }}" href="{{ route("sections.index") }}">Bagian</a>
+                            <a class="side-menu__item {{ request()->routeIs("sections.index", "sections.create", "sections.edit") ? "active" : "" }}" href="{{ route("sections.index") }}">Bagian</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("positions.index") ? "active" : "" }}" href="{{ route("positions.index") }}">Jabatan</a>
+                            <a class="side-menu__item {{ request()->routeIs("positions.index", "positions.create", "positions.edit") ? "active" : "" }}" href="{{ route("positions.index") }}">Jabatan</a>
                         </li>
                     </ul>
                 </li>
