@@ -1,4 +1,3 @@
-<!-- Footer Start -->
 <footer class="footer mt-auto py-3 bg-white text-center">
     <div class="container">
         <span class="text-muted"> Copyright © <span id="year">2025</span> <a class="text-dark fw-semibold" href="javascript:void(0);">SmartSupport</a>.
@@ -10,4 +9,3 @@
         </span>
     </div>
 </footer>
-<!-- Footer End -->

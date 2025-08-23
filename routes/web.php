@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Token\TokenController;
 use App\Http\Controllers\Organization\SectionController;
 use App\Http\Controllers\Organization\PositionController;
+use App\Http\Controllers\Administration\RoleController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -74,4 +75,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/jabatan/{id}/edit', [PositionController::class, 'edit'])->name('positions.edit');
     Route::put('/jabatan/{id}', [PositionController::class, 'update'])->name('positions.update');
     Route::delete('/jabatan/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
+
+    // Role
+    Route::get('/peran', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/peran/tambah', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/peran', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/peran/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/peran/{id}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/peran/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
 });

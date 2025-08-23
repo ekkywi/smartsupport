@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Aktivasi Pengguna
+    SmartSupport &mdash; Data Peran
 @endsection
 
 @section("styles")
@@ -24,22 +24,28 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Aktivasi Pengguna</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Data Bagian</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.activation.index") }}"><i class="ti ti-checkbox me-1 fs-15 d-inline-block"></i>Data Aktivasi Pengguna</a></li>
+                        <li class="breadcrumb-item"><i class="ti ti-settings me-1 fs-15 d-inline-block"></i>Administrasi</li>
+                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("roles.index") }}"><i class="ti ti-briefcase me-1 fs-15 d-inline-block"></i>Data Peran</a></li>
                     </ol>
                 </nav>
             </div>
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-success" href="{{ route("roles.create") }}">
+                <i class="ti ti-plus"></i> Tambah Peran
+            </a>
         </div>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Status Aktivasi Pengguna
+                            Data Peran
                         </div>
                     </div>
                     <div class="card-body">
@@ -49,47 +55,28 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Jabatan</th>
-                                    <th>Bagian</th>
-                                    <th>Peran</th>
-                                    <th>Status Aktivasi</th>
+                                    <th>Kode Peran</th>
+                                    <th>Jumlah Pengguna</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($roles as $role)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->position->name ?? "-" }}</td>
-                                        <td>{{ $user->section->name ?? "-" }}</td>
-                                        <td>{{ $user->role->name ?? "-" }}</td>
+                                        <td>{{ $role->name }}</td>
+                                        <td>{{ $role->role_code }}</td>
+                                        <td>{{ $role->users_count }} </td>
                                         <td>
-                                            @if ($user->is_active)
-                                                <span class="badge bg-success">Aktif</span>
-                                            @else
-                                                <span class="badge bg-danger">Tidak Aktif</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{-- Form untuk toggle aktivasi --}}
-                                            <form action="{{ route("users.activation.toggle", $user->id) }}" id="toggle-form-{{ $user->id }}" method="POST" style="display: inline">
+                                            <a class="btn btn-sm btn-primary" href="{{ route("roles.edit", $role->id) }}"><i class="ti ti-pencil"></i> Edit</a>
+                                            <button class="btn btn-sm btn-danger delete-btn" data-role-id="{{ $role->id }}" type="button"><i class="ti ti-trash me-1"></i>
+                                                Hapus
+                                            </button>
+                                            <form action="{{ route("roles.destroy", $role->id) }}" id="delete-form-{{ $role->id }}" method="POST" style="display: none;">
                                                 @csrf
-                                                @method("PATCH")
-                                                @if ($user->is_active)
-                                                    <button class="btn btn-sm btn-danger toggle-activation-btn" data-action="Nonaktifkan" data-user-id="{{ $user->id }}" type="button"><i class="bx bx-user-x"></i>
-                                                        Nonaktifkan
-                                                    </button>
-                                                @else
-                                                    <button class="btn btn-sm btn-success toggle-activation-btn" data-action="Aktifkan" data-user-id="{{ $user->id }}" type="button"><i class="bx bx-user-check"></i>
-                                                        Aktifkan
-                                                    </button>
-                                                @endif
+                                                @method("DELETE")
                                             </form>
                                         </td>
                                     </tr>
@@ -133,24 +120,19 @@
         $(document).ready(function() {
             $('#responsiveDataTable').DataTable({
                 responsive: true,
-                // ⚙️ SESUAIKAN KODE initComplete INI
                 initComplete: function() {
                     this.api().columns().every(function() {
                         let column = this;
                         let title = $(column.header()).text();
-
-                        // Menargetkan sel di baris filter berdasarkan urutan kolom
                         let cell = $('#filters th').eq(column.index());
 
-                        // Lewati kolom "Aksi"
                         if (title === 'Aksi') {
                             cell.html('');
                             return;
                         }
 
-                        // Buat input field dan letakkan di sel header yang baru
                         let input = $('<input type="text" class="form-control form-control-sm" placeholder="Filter ' + title + '" />')
-                            .appendTo(cell) // Tidak perlu .empty() karena sel sudah kosong
+                            .appendTo(cell)
                             .on('keyup change clear', function() {
                                 if (column.search() !== this.value) {
                                     column.search(this.value).draw();
@@ -159,39 +141,36 @@
                     });
                 }
             });
-
-            // Event listener untuk tombol aktivasi/nonaktivasi
-            $(document).on('click', '.toggle-activation-btn', function(e) {
-                e.preventDefault();
-                var userId = $(this).data('user-id');
-                var action = $(this).data('action');
-                var confirmButtonColor = (action === 'Aktifkan') ? '#28a745' : '#d33';
-
-                Swal.fire({
-                    title: "Apakah Anda yakin?",
-                    text: "Anda akan " + action.toLowerCase() + " pengguna ini.",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: confirmButtonColor,
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Ya, " + action + "!",
-                    cancelButtonText: "Batal",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Submit form yang sesuai jika dikonfirmasi
-                        document.getElementById("toggle-form-" + userId).submit();
-                    }
-                });
+        });
+    </script>
+    <script>
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var roleId = $(this).data('role-id');
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data yang dihapus tidak dapat dipulihkan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Hapus",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("delete-form-" + roleId).submit();
+                }
             });
         });
     </script>
-    {{-- Script untuk notifikasi dari session --}}
     @if (session("success"))
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session("success") }}',
+                timer: 2500,
+                showConfirmButton: false
             });
         </script>
     @endif

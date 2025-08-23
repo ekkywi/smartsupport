@@ -80,9 +80,9 @@
                                     <input autocomplete="new-username" class="form-control" id="username" name="username" placeholder="Username" type="text">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="role">Hak Akses</label>
+                                    <label class="form-label text-default fw-semibold" for="role">Peran</label>
                                     <select aria-label="role_id" class="form-select text-muted" id="role_id" name="role_id">
-                                        <option class="text-muted" disabled selected value="">Pilih Hak Akses</option>
+                                        <option class="text-muted" disabled selected value="">Pilih Peran</option>
                                         @foreach ($roles as $role)
                                             <option class="text-muted" value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach

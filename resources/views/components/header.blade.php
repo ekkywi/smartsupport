@@ -469,8 +469,8 @@
                              <img alt="img" class="rounded-circle" height="32" src="{{ asset("images/faces/9.jpg") }}" width="32">
                          </div>
                          <div class="d-sm-block d-none">
-                             <p class="fw-semibold mb-0 lh-1">{{ Auth::user()->name ?? "" }}</p>
-                             <span class="op-7 fw-normal d-block fs-11">{{ Auth::user()->section->name ?? "" }}</span>
+                             <p class="fw-bold mb-0 lh-1">{{ Auth::user()->name ?? "" }}</p>
+                             <span class="op-7 fw-semibold d-block fs-11">{{ Auth::user()->section->name ?? "" }} &mdash; {{ Auth::user()->role->name ?? "" }}</span>
                          </div>
                      </div>
                  </a>

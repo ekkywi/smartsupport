@@ -56,6 +56,8 @@ class SectionController extends Controller
                 'section_code' => 'required|string|max:255|unique:sections,section_code,' . $id,
             ],
             [
+                'section_name.required' => 'Nama bagian harus diisi.',
+                'section_code.required' => 'Kode bagian harus diisi.',
                 'section_name.unique' => 'Nama bagian sudah terdaftar.',
                 'section_code.unique' => 'Kode bagian sudah terdaftar.',
             ]
