@@ -91,6 +91,9 @@
                         <li class="slide">
                             <a class="side-menu__item" href="#">Izin Akses</a>
                         </li>
+                        <li class="slide">
+                            <a class="side-menu__item" href="#">Jenis Askes</a>
+                        </li>
                     </ul>
                 </li>
 
