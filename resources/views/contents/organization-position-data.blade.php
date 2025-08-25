@@ -28,9 +28,9 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li class="breadcrumb-item"><i class="bx bxs-business me-1 fs-15 d-inline-block"></i>Organisasi</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("positions.index") }}"><i class="bx bx-briefcase me-1 fs-15 d-inline-block"></i>Data Jabatan</a></li>
+                        <li class="breadcrumb-item">Management</li>
+                        <li class="breadcrumb-item">Organisasi</li>
+                        <li aria-current="page" class="breadcrumb-item active">Data Jabatan</li>
                     </ol>
                 </nav>
             </div>
@@ -70,11 +70,11 @@
                                         <td>{{ $position->position_code }}</td>
                                         <td>{{ $position->users_count }} </td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route("positions.edit", $position->id) }}"><i class="ti ti-pencil"></i> Edit</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route("positions.edit", $position) }}"><i class="ti ti-pencil"></i> Edit</a>
                                             <button class="btn btn-sm btn-danger delete-btn" data-position-id="{{ $position->id }}" type="button"><i class="ti ti-trash me-1"></i>
                                                 Hapus
                                             </button>
-                                            <form action="{{ route("positions.destroy", $position->id) }}" id="delete-form-{{ $position->id }}" method="POST" style="display: none;">
+                                            <form action="{{ route("positions.destroy", $position) }}" id="delete-form-{{ $position->id }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>

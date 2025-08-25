@@ -42,18 +42,17 @@ class PositionController extends Controller
         return redirect()->route('positions.index')->with('success', 'Jabatan berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(Position $position)
     {
-        $position = Position::findOrFail($id);
         return view('forms.organization-position-edit', compact('position'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Position $position)
     {
         $request->validate(
             [
-                'position_name' => 'required|string|max:255|unique:positions,name,' . $id,
-                'position_code' => 'required|string|max:255|unique:positions,position_code,' . $id,
+                'position_name' => 'required|string|max:255|unique:positions,name,' . $position->id,
+                'position_code' => 'required|string|max:255|unique:positions,position_code,' . $position->id,
             ],
             [
                 'position_name.unique' => 'Nama jabatan sudah terdaftar.',
@@ -61,7 +60,6 @@ class PositionController extends Controller
             ]
         );
 
-        $position = Position::findOrFail($id);
         $position->update([
             'name' => $request->position_name,
             'position_code' => $request->position_code,
@@ -70,9 +68,8 @@ class PositionController extends Controller
         return redirect()->route('positions.index')->with('success', 'Jabatan berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Position $position)
     {
-        $position = Position::findOrFail($id);
         $position->delete();
 
         return redirect()->route('positions.index')->with('success', 'Jabatan berhasil dihapus.');

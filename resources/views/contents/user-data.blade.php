@@ -28,9 +28,9 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li class="breadcrumb-item"><i class="ti ti-user me-1 fs-15 d-inline-block"></i>Pengguna</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.index") }}"><i class="ti ti-users me-1 fs-15 d-inline-block"></i>Data Pengguna</a></li>
+                        <li class="breadcrumb-item">Management</li>
+                        <li class="breadcrumb-item">Pengguna</li>
+                        <li aria-current="page" class="breadcrumb-item active">Data Pengguna</li>
                     </ol>
                 </nav>
             </div>
@@ -133,24 +133,20 @@
         $(document).ready(function() {
             $('#responsiveDataTable').DataTable({
                 responsive: true,
-                // ⚙️ SESUAIKAN KODE initComplete INI
                 initComplete: function() {
                     this.api().columns().every(function() {
                         let column = this;
                         let title = $(column.header()).text();
 
-                        // Menargetkan sel di baris filter berdasarkan urutan kolom
                         let cell = $('#filters th').eq(column.index());
 
-                        // Lewati kolom "Aksi"
                         if (title === 'Aksi') {
                             cell.html('');
                             return;
                         }
 
-                        // Buat input field dan letakkan di sel header yang baru
                         let input = $('<input type="text" class="form-control form-control-sm" placeholder="Filter ' + title + '" />')
-                            .appendTo(cell) // Tidak perlu .empty() karena sel sudah kosong
+                            .appendTo(cell)
                             .on('keyup change clear', function() {
                                 if (column.search() !== this.value) {
                                     column.search(this.value).draw();
@@ -160,7 +156,6 @@
                 }
             });
 
-            // Kode SweetAlert Anda yang sudah ada sebelumnya
             $(document).on('click', '.delete-btn', function(e) {
                 e.preventDefault();
                 var userId = $(this).data('user-id');

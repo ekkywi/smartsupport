@@ -28,9 +28,9 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li class="breadcrumb-item"><i class="bx bxs-key me-1 fs-15 d-inline-block"></i>Token</li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="#"><i class="ti ti-key me-1 fs-15 d-inline-block"></i>Data Token</a></li>
+                        <li class="breadcrumb-item">Management</li>
+                        <li class="breadcrumb-item">Token</li>
+                        <li aria-current="page" class="breadcrumb-item active">Data Token</li>
                     </ol>
                 </nav>
             </div>

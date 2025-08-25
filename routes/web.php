@@ -73,9 +73,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/jabatan', [PositionController::class, 'index'])->name('positions.index');
     Route::get('/jabatan/tambah', [PositionController::class, 'create'])->name('positions.create');
     Route::post('/jabatan', [PositionController::class, 'store'])->name('positions.store');
-    Route::get('/jabatan/{id}/edit', [PositionController::class, 'edit'])->name('positions.edit');
-    Route::put('/jabatan/{id}', [PositionController::class, 'update'])->name('positions.update');
-    Route::delete('/jabatan/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
+    Route::get('/jabatan/{position}/edit', [PositionController::class, 'edit'])->name('positions.edit');
+    Route::put('/jabatan/{position}', [PositionController::class, 'update'])->name('positions.update');
+    Route::delete('/jabatan/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
 
     // Role
     Route::get('/peran', [RoleController::class, 'index'])->name('roles.index');

@@ -25,10 +25,10 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li class="breadcrumb-item"><i class="ti ti-user me-1 fs-15 d-inline-block"></i>Pengguna</li>
-                        <li class="breadcrumb-item"><a href="{{ route("users.index") }}"><i class="ti ti-users me-1 fs-15 d-inline-block"></i>Data Pengguna</a></li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("users.edit", $user->id) }}"><i class="ti ti-pencil me-1 fs-15 d-inline-block"></i>Edit Pengguna</a></li>
+                        <li class="breadcrumb-item">Management</li>
+                        <li class="breadcrumb-item">Pengguna</li>
+                        <li class="breadcrumb-item">Data Pengguna</li>
+                        <li aria-current="page" class="breadcrumb-item active">Edit Pengguna</li>
                     </ol>
                 </nav>
             </div>

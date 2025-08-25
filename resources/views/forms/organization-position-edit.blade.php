@@ -23,11 +23,11 @@
             <h1 class="page-title fw-semibold fs-18 mb-0">Edit Bagian</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
-                    <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li class="breadcrumb-item"><i class="bx bxs-business me-1 fs-15 d-inline-block"></i>Organisasi</li>
-                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("positions.index") }}"><i class="bx bx-briefcase me-1 fs-15 d-inline-block"></i>Data Jabatan</a></li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("positions.edit", $position->id) }}"><i class="ti ti-pencil me-1 fs-15 d-inline-block"></i>Edit Jabatan</a></li>
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"></i>Management</li>
+                        <li class="breadcrumb-item"></i>Organisasi</li>
+                        <li aria-current="page" class="breadcrumb-item"></i>Data Jabatan</li>
+                        <li aria-current="page" class="breadcrumb-item active"></i>Edit Jabatan</li>
                     </ol>
                 </nav>
             </div>
@@ -42,7 +42,7 @@
                                     Edit Data Bagian
                                 </div>
                             </div>
-                            <form action="{{ route("positions.update", $position->id) }}" class="row gy-4" method="POST">
+                            <form action="{{ route("positions.update", $position) }}" class="row gy-4" method="POST">
                                 @csrf
                                 @method("PUT")
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">

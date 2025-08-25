@@ -24,10 +24,10 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
-                        <li class="breadcrumb-item"><i class="ti ti-settings me-1 fs-15 d-inline-block"></i>Administrasi</li>
-                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("roles.index") }}"><i class="ti ti-briefcase me-1 fs-15 d-inline-block"></i>Data Peran</a></li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="#"><i class="ti ti-plus me-1 fs-15 d-inline-block"></i>Tambah Peran</a></li>
+                        <li class="breadcrumb-item">Management</li>
+                        <li class="breadcrumb-item">Administrasi</li>
+                        <li aria-current="page" class="breadcrumb-item">Data Peran</li>
+                        <li aria-current="page" class="breadcrumb-item active">Tambah Peran</li>
                     </ol>
                 </nav>
             </div>
