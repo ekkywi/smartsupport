@@ -70,11 +70,11 @@
                                         <td>{{ $section->section_code }}</td>
                                         <td>{{ $section->users_count }} </td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route("sections.edit", $section->id) }}"><i class="ti ti-pencil"></i> Edit</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route("sections.edit", $section) }}"><i class="ti ti-pencil"></i> Edit</a>
                                             <button class="btn btn-sm btn-danger delete-btn" data-section-id="{{ $section->id }}" type="button"><i class="ti ti-trash me-1"></i>
                                                 Hapus
                                             </button>
-                                            <form action="{{ route("sections.destroy", $section->id) }}" id="delete-form-{{ $section->id }}" method="POST" style="display: none;">
+                                            <form action="{{ route("sections.destroy", $section) }}" id="delete-form-{{ $section->id }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>

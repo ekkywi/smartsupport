@@ -20,9 +20,9 @@ class UserTokenController extends Controller
         return view('contents.user-token', compact('users'));
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::with(['tokens'])->findOrFail($id);
+        $user = User::with(['tokens'])->findOrFail($user->id);
         return view('contents.user-token-detail', compact('user'));
     }
 

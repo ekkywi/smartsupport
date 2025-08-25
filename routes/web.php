@@ -65,9 +65,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/bagian', [SectionController::class, 'index'])->name('sections.index');
     Route::get('/bagian/tambah', [SectionController::class, 'create'])->name('sections.create');
     Route::post('/bagian', [SectionController::class, 'store'])->name('sections.store');
-    Route::get('/bagian/{id}/edit', [SectionController::class, 'edit'])->name('sections.edit');
-    Route::put('/bagian/{id}', [SectionController::class, 'update'])->name('sections.update');
-    Route::delete('/bagian/{id}', [SectionController::class, 'destroy'])->name('sections.destroy');
+    Route::get('/bagian/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
+    Route::put('/bagian/{section}', [SectionController::class, 'update'])->name('sections.update');
+    Route::delete('/bagian/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
 
     // Position
     Route::get('/jabatan', [PositionController::class, 'index'])->name('positions.index');

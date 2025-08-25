@@ -42,18 +42,17 @@ class SectionController extends Controller
         return redirect()->route('sections.index')->with('success', 'Bagian berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(Section $section)
     {
-        $section = Section::findOrFail($id);
         return view('forms.organization-section-edit', compact('section'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Section $section)
     {
         $request->validate(
             [
-                'section_name' => 'required|string|max:255|unique:sections,name,' . $id,
-                'section_code' => 'required|string|max:255|unique:sections,section_code,' . $id,
+                'section_name' => 'required|string|max:255|unique:sections,name,' . $section->id,
+                'section_code' => 'required|string|max:255|unique:sections,section_code,' . $section->id,
             ],
             [
                 'section_name.required' => 'Nama bagian harus diisi.',
@@ -63,7 +62,6 @@ class SectionController extends Controller
             ]
         );
 
-        $section = Section::findOrFail($id);
         $section->update([
             'name' => $request->section_name,
             'section_code' => $request->section_code
@@ -72,9 +70,8 @@ class SectionController extends Controller
         return redirect()->route('sections.index')->with('success', 'Bagian berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Section $section)
     {
-        $section = Section::findOrFail($id);
         $section->delete();
 
         return redirect()->route('sections.index')->with('success', 'Bagian berhasil dihapus.');
