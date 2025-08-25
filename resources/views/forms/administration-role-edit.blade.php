@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Tambah Pengguna
+    SmartSupport &mdash; Edit Pengguna
 @endsection
 
 @section("styles")
@@ -26,8 +26,8 @@
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item"><i class="ti ti-home-2 me-1 fs-15 d-inline-block"></i>Management</li>
                         <li class="breadcrumb-item"><i class="ti ti-settings me-1 fs-15 d-inline-block"></i>Administrasi</li>
-                        <li aria-current="page" class="breadcrumb-item"><a href="{{ route("roles.index") }}"><i class="ti ti-briefcase me-1 fs-15 d-inline-block"></i>Data Peran</a></li>
-                        <li aria-current="page" class="breadcrumb-item active"><a href="{{ route("roles.edit", $role->id) }}"><i class="ti ti-pencil me-1 fs-15 d-inline-block"></i>Edit Peran</a></li>
+                        <li aria-current="page" class="breadcrumb-item"><i class="ti ti-briefcase me-1 fs-15 d-inline-block"></i>Data Peran</a></li>
+                        <li aria-current="page" class="breadcrumb-item active"><i class="ti ti-pencil me-1 fs-15 d-inline-block"></i>Edit Peran</a></li>
                     </ol>
                 </nav>
             </div>
@@ -39,19 +39,41 @@
                         <div class="row gy-4">
                             <div class="card-header justify-content-between">
                                 <div class="card-title">
-                                    Edit Data Bagian
+                                    Edit Data Peran
                                 </div>
                             </div>
-                            <form action="{{ route("roles.update", $role->id) }}" class="row gy-4" method="POST">
+                            <form action="{{ route("roles.update", $role) }}" class="row gy-4" method="POST">
                                 @csrf
                                 @method("PUT")
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="role_name">Nama Peran</label>
-                                    <input class="form-control" id="role_name" name="role_name" placeholder="Nama Peran Baru" type="text" value="{{ $role->name }}">
+                                    <label class="form-label text-default fw-semibold" for="name">Nama Peran</label>
+                                    <input class="form-control" id="name" name="name" placeholder="Nama Peran Baru" type="text" value="{{ $role->name }}">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label class="form-label text-default fw-semibold" for="role_code">Kode Peran</label>
                                     <input class="form-control" id="role_code" name="role_code" placeholder="Kode Peran Baru" type="text" value="{{ $role->role_code }}">
+                                </div>
+
+                                <div class="card-header justify-content-between">
+                                    <div class="card-title">
+                                        Hak Akses Peran
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    @forelse ($permissions as $permission)
+                                        <div class="col-md-4 mb-2">
+                                            <div class="form-check">
+                                                <input {{ $role->permissions->contains($permission) ? "checked" : "" }} class="form-check-input" id="perm-{{ $permission->id }}" name="permissions[]" type="checkbox" value="{{ $permission->id }}">
+                                                <label class="form-check-label" for="perm-{{ $permission->id }}">
+                                                    {{ $permission->description }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="col-12">
+                                            <p class="text-muted">Tidak ada jenis izin yang tersedia. Silakan tambahkan terlebih dahulu.</p>
+                                        </div>
+                                    @endforelse
                                 </div>
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
                                     <a class="btn btn-danger" href="{{ route("roles.index") }}"><i class="ti ti-x"></i> Batal</a>

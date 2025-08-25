@@ -15,6 +15,7 @@ use App\Http\Controllers\Token\TokenController;
 use App\Http\Controllers\Organization\SectionController;
 use App\Http\Controllers\Organization\PositionController;
 use App\Http\Controllers\Administration\RoleController;
+use App\Http\Controllers\Administration\PermissionController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -80,7 +81,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/peran', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/peran/tambah', [RoleController::class, 'create'])->name('roles.create');
     Route::post('/peran', [RoleController::class, 'store'])->name('roles.store');
-    Route::get('/peran/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-    Route::put('/peran/{id}', [RoleController::class, 'update'])->name('roles.update');
-    Route::delete('/peran/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::get('/peran/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/peran/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/peran/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+    // Permission
+    Route::get('/hak-akses', [PermissionController::class, 'index'])->name('permissions.index');
 });

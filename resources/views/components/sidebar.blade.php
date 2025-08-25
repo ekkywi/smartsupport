@@ -78,10 +78,10 @@
                     </ul>
                 </li>
 
-                <li class="slide has-sub {{ request()->routeIs("roles.index", "roles.create", "roles.edit") ? "open" : "" }}">
+                <li class="slide has-sub {{ request()->routeIs("roles.index", "roles.create", "roles.edit", "permissions.index", "permissions.create", "permissions.edit") ? "open" : "" }}">
                     <a class="side-menu__item" href="javascript:void(0);">
                         <i class="bx bx-cog side-menu__icon"></i>
-                        <span class="side-menu__label {{ request()->routeIs("roles.index", "roles.create", "roles.edit") ? "active" : "" }}">Administrasi</span>
+                        <span class="side-menu__label {{ request()->routeIs("roles.index", "roles.create", "roles.edit", "permissions.index", "permissions.create", "permissions.edit") ? "active" : "" }}">Administrasi</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1">
@@ -89,10 +89,7 @@
                             <a class="side-menu__item {{ request()->routeIs("roles.index", "roles.create", "roles.edit") ? "active" : "" }}" href="{{ route("roles.index") }}">Peran</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item" href="#">Izin Akses</a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" href="#">Jenis Askes</a>
+                            <a class="side-menu__item {{ request()->routeIs("permissions.index", "permissions.create", "permissions.edit") ? "active" : "" }}" href="{{ route("permissions.index") }}">Hak Akses</a>
                         </li>
                     </ul>
                 </li>

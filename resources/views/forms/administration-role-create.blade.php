@@ -45,8 +45,8 @@
                             <form action="{{ route("roles.store") }}" class="row gy-4" method="POST">
                                 @csrf
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="role_name">Nama Peran</label>
-                                    <input class="form-control" id="role_name" name="role_name" placeholder="Nama Peran Baru" type="text">
+                                    <label class="form-label text-default fw-semibold" for="name">Nama Peran</label>
+                                    <input class="form-control" id="name" name="name" placeholder="Nama Peran Baru" type="text">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label class="form-label text-default fw-semibold" for="role_code">Kode Peran</label>

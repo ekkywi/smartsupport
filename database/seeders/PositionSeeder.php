@@ -13,14 +13,14 @@ class PositionSeeder extends Seeder
      */
     public function run(): void
     {
-        $positionList = [
+        $positions = [
             ['position_code' => 'MNG', 'name' => 'Manager'],
             ['position_code' => 'KBG', 'name' => 'Kepala Bagian'],
             ['position_code' => 'SPV', 'name' => 'Supervisor'],
             ['position_code' => 'STF', 'name' => 'Staff']
         ];
 
-        foreach ($positionList as $position) {
+        foreach ($positions as $position) {
             Position::updateOrCreate(
                 ['position_code' => $position['position_code']],
                 ['name' => $position['name']]

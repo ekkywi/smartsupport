@@ -9,14 +9,9 @@ use App\Models\Section;
 
 class SectionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-
-    // Menjalankan seeder untuk tabel bagian
     public function run(): void
     {
-        $sectionList = [
+        $sections = [
             ['section_code' => 'MSL', 'name' => 'Sales'],
             ['section_code' => 'MMS', 'name' => 'Marketing Support'],
             ['section_code' => 'MBD', 'name' => 'Business Development'],
@@ -49,8 +44,7 @@ class SectionSeeder extends Seeder
             ['section_code' => 'QMS', 'name' => 'Quality Management System'],
         ];
 
-        // Menggunakan updateOrCreate untuk menghindari duplikasi data
-        foreach ($sectionList as $section) {
+        foreach ($sections as $section) {
             Section::updateOrCreate(
                 ['section_code' => $section['section_code']],
                 ['name' => $section['name']]

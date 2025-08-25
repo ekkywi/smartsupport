@@ -35,17 +35,17 @@
                 </nav>
             </div>
         </div>
+        <div class="mb-3">
+            <a class="btn btn-success" href="{{ route("users.create") }}">
+                <i class="ti ti-plus"></i> Tambah Pengguna
+            </a>
+        </div>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
                             Data Pengguna Aplikasi
-                        </div>
-                        <div class="mb-3">
-                            <a class="btn btn-success" href="{{ route("users.create") }}">
-                                <i class="ti ti-plus"></i> Tambah Pengguna
-                            </a>
                         </div>
                     </div>
                     <div class="card-body">
