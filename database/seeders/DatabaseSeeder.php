@@ -18,7 +18,10 @@ class DatabaseSeeder extends Seeder
             PositionSeeder::class,
             RoleSeeder::class,
             PermissionSeeder::class,
-            AdminSeeder::class
+            AdminSeeder::class,
+            AssetCategorySeeder::class,
+            AssetBrandSeeder::class,
+            AssetStatusSeeder::class
         ]);
     }
 }
