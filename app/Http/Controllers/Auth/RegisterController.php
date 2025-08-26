@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Position;
 use App\Models\Section;
 use App\Models\User;
+use App\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -36,12 +37,19 @@ class RegisterController extends Controller
             ]
         );
 
+        $defaultRole = Role::where('name', 'Pengguna')->first();
+
+        if (!$defaultRole) {
+            return back()->with('error', 'Gagal melakukan registerasi. Silahkan hubungi administrator.');
+        }
+
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'section_id' => $request->section_id,
             'position_id' => $request->position_id,
             'password' => $request->password,
+            'role_id' => $defaultRole->id,
         ]);
 
         return redirect()->route('login')->with('success', 'Registerasi berhasil, silahkan aktivasi akun anda.');

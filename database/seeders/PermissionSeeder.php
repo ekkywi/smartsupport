@@ -11,14 +11,35 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            ['name' => 'user_manage', 'description' => 'Mengelola data pengguna (CRUD)'],
-            ['name' => 'asset_manage', 'description' => 'Mengelola data aset (CRUD)'],
+            [
+                'name' => 'manage_users',
+                'code_name' => 'Manage Users',
+                'description' => 'Mengelola data pengguna (CRUD) - Dapat melakukan penambahan, pengeditan, penghapusan, dan aktivasi pengguna'
+            ],
+            [
+                'name' => 'manage_organizations',
+                'code_name' => 'Manage Organizations',
+                'description' => 'Mengelola data organisasi (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan bagian/jabatan'
+            ],
+            [
+                'name' => 'manage_tokens',
+                'code_name' => 'Manage Tokens',
+                'description' => 'Mengelola data token - Dapat melakukan generate token aktivasi dan token reset password'
+            ],
+            [
+                'name' => 'manage_administrations',
+                'code_name' => 'Manage Administrations',
+                'description' => 'Mengelola data administrasi - Dapat melakukan penambahan, pengeditan, dan penghapusan data peran. Dapat mengatur hak akses peran'
+            ]
         ];
 
         foreach ($permissions as $permission) {
             Permission::updateOrCreate(
                 ['name' => $permission['name']],
-                ['description' => $permission['description']]
+                [
+                    'code_name' => $permission['code_name'],
+                    'description' => $permission['description']
+                ]
             );
         }
     }

@@ -28,7 +28,7 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item">>Management</li>
+                        <li class="breadcrumb-item">Management</li>
                         <li class="breadcrumb-item">Administrasi</li>
                         <li aria-current="page" class="breadcrumb-item active">Hak Akses</li>
                     </ol>
@@ -57,8 +57,8 @@
                             <th></th>
                         </tr>
                         <tr>
-                            <th scope="col">Deskripsi Izin</th>
-                            <th scope="col">Nama Izin (untuk Kode)</th>
+                            <th scope="col">Nama Hak Akses (Kode)</th>
+                            <th scope="col">Deksripsi Hak Akses</th>
                             <th scope="col">Diberikan Kepada Peran</th>
                         </tr>
                     </thead>
@@ -66,10 +66,10 @@
                         @forelse ($permissions as $permission)
                             <tr>
                                 <td>
-                                    <strong>{{ $permission->description }}</strong>
+                                    <code class="fs-13">{{ $permission->code_name }}</code>
                                 </td>
                                 <td>
-                                    <code class="fs-13">{{ $permission->name }}</code>
+                                    <i>{{ $permission->description }}</i>
                                 </td>
                                 <td>
                                     @forelse ($permission->roles as $role)

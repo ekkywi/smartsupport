@@ -59,13 +59,20 @@
                                         Hak Akses Peran
                                     </div>
                                 </div>
+                                {{-- <div class="col-12 mb-2">
+                                    <p class="text-muted">Pilih hak akses yang sesuai untuk peran ini:</p>
+                                </div> --}}
+                                <div class="col-12 mb-2">
+                                    <h6 class="fw-bold mb-3">Hak Akses Manajemen</h6>
+                                </div>
                                 <div class="row">
                                     @forelse ($permissions as $permission)
                                         <div class="col-md-4 mb-2">
                                             <div class="form-check">
                                                 <input {{ $role->permissions->contains($permission) ? "checked" : "" }} class="form-check-input" id="perm-{{ $permission->id }}" name="permissions[]" type="checkbox" value="{{ $permission->id }}">
                                                 <label class="form-check-label" for="perm-{{ $permission->id }}">
-                                                    {{ $permission->description }}
+                                                    <span class="fw-semibold">{{ $permission->code_name }}</span> <br>
+                                                    <small class="text-muted">{{ $permission->description }}</small>
                                                 </label>
                                             </div>
                                         </div>

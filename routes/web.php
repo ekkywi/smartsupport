@@ -44,47 +44,60 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // User
-    Route::get('/pengguna', [UserController::class, 'index'])->name('users.index');
-    Route::get('/pengguna/tambah', [UserController::class, 'create'])->name('users.create');
-    Route::post('/pengguna', [UserController::class, 'store'])->name('users.store');
-    Route::get('/pengguna/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/pengguna/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/pengguna/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    // User Management
+    Route::middleware(['auth', 'can:manage_users'])->group(function () {
+        // User
+        Route::get('/pengguna', [UserController::class, 'index'])->name('users.index');
+        Route::get('/pengguna/tambah', [UserController::class, 'create'])->name('users.create');
+        Route::post('/pengguna', [UserController::class, 'store'])->name('users.store');
+        Route::get('/pengguna/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/pengguna/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/pengguna/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-    // Activation
-    Route::get('/aktivasi-pengguna', [UserActivationController::class, 'index'])->name('users.activation.index');
-    Route::patch('/aktivasi-pengguna/{user}', [UserActivationController::class, 'toggleActivation'])->name('users.activation.toggle');
+        // Activation
+        Route::get('/aktivasi-pengguna', [UserActivationController::class, 'index'])->name('users.activation.index');
+        Route::patch('/aktivasi-pengguna/{user}', [UserActivationController::class, 'toggleActivation'])->name('users.activation.toggle');
+    });
 
-    // User Token
-    Route::get('/token-pengguna', [TokenController::class, 'index'])->name('users.token.index');
-    Route::get('/token-pengguna/{user}/tokens', [TokenController::class, 'show'])->name('users.token.show');
-    Route::post('/token-pengguna/{user}/tokens/generate', [TokenController::class, 'generateToken'])->name('users.token.generate');
+    // Organization Management
+    Route::middleware(['auth', 'can:manage_organizations'])->group(function () {
+        // Section
+        Route::get('/bagian', [SectionController::class, 'index'])->name('sections.index');
+        Route::get('/bagian/tambah', [SectionController::class, 'create'])->name('sections.create');
+        Route::post('/bagian', [SectionController::class, 'store'])->name('sections.store');
+        Route::get('/bagian/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
+        Route::put('/bagian/{section}', [SectionController::class, 'update'])->name('sections.update');
+        Route::delete('/bagian/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
 
-    // Section
-    Route::get('/bagian', [SectionController::class, 'index'])->name('sections.index');
-    Route::get('/bagian/tambah', [SectionController::class, 'create'])->name('sections.create');
-    Route::post('/bagian', [SectionController::class, 'store'])->name('sections.store');
-    Route::get('/bagian/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
-    Route::put('/bagian/{section}', [SectionController::class, 'update'])->name('sections.update');
-    Route::delete('/bagian/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
+        // Position
+        Route::get('/jabatan', [PositionController::class, 'index'])->name('positions.index');
+        Route::get('/jabatan/tambah', [PositionController::class, 'create'])->name('positions.create');
+        Route::post('/jabatan', [PositionController::class, 'store'])->name('positions.store');
+        Route::get('/jabatan/{position}/edit', [PositionController::class, 'edit'])->name('positions.edit');
+        Route::put('/jabatan/{position}', [PositionController::class, 'update'])->name('positions.update');
+        Route::delete('/jabatan/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
+    });
 
-    // Position
-    Route::get('/jabatan', [PositionController::class, 'index'])->name('positions.index');
-    Route::get('/jabatan/tambah', [PositionController::class, 'create'])->name('positions.create');
-    Route::post('/jabatan', [PositionController::class, 'store'])->name('positions.store');
-    Route::get('/jabatan/{position}/edit', [PositionController::class, 'edit'])->name('positions.edit');
-    Route::put('/jabatan/{position}', [PositionController::class, 'update'])->name('positions.update');
-    Route::delete('/jabatan/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
 
-    // Role
-    Route::get('/peran', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('/peran/tambah', [RoleController::class, 'create'])->name('roles.create');
-    Route::post('/peran', [RoleController::class, 'store'])->name('roles.store');
-    Route::get('/peran/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-    Route::put('/peran/{role}', [RoleController::class, 'update'])->name('roles.update');
-    Route::delete('/peran/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    // Administration Management
+    Route::middleware(['auth', 'can:manage_administrations'])->group(function () {
+        // Role
+        Route::get('/peran', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('/peran/tambah', [RoleController::class, 'create'])->name('roles.create');
+        Route::post('/peran', [RoleController::class, 'store'])->name('roles.store');
+        Route::get('/peran/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+        Route::put('/peran/{role}', [RoleController::class, 'update'])->name('roles.update');
+        Route::delete('/peran/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
-    // Permission
-    Route::get('/hak-akses', [PermissionController::class, 'index'])->name('permissions.index');
+        // Permission
+        Route::get('/hak-akses', [PermissionController::class, 'index'])->name('permissions.index');
+    });
+
+    // User Token Management
+    Route::middleware(['auth', 'can:manage_tokens'])->group(function () {
+        // User Token
+        Route::get('/token-pengguna', [TokenController::class, 'index'])->name('users.token.index');
+        Route::get('/token-pengguna/{user}/tokens', [TokenController::class, 'show'])->name('users.token.show');
+        Route::post('/token-pengguna/{user}/tokens/generate', [TokenController::class, 'generateToken'])->name('users.token.generate');
+    });
 });
