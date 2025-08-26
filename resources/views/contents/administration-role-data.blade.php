@@ -55,11 +55,12 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                </tr>
+                                    <th></th>
                                 <tr>
                                     <th>Nama</th>
                                     <th>Kode Peran</th>
                                     <th>Jumlah Pengguna</th>
+                                    <th>Hak Akses</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -69,6 +70,16 @@
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->role_code }}</td>
                                         <td>{{ $role->users_count }} </td>
+                                        <td>
+                                            @if ($role->permissions && $role->permissions->count())
+                                                @foreach ($role->permissions as $permission)
+                                                    <span class="badge bg-info mb-1">{{ $permission->code_name }}</span>
+                                                @endforeach
+                                            @else
+                                                <span class="badge bg-danger mb-1">Belum memiliki hak akses</span>
+                                            @endif
+                                        </td>
+                                        </td>
                                         <td>
                                             <a class="btn btn-sm btn-primary" href="{{ route("roles.edit", $role->id) }}"><i class="ti ti-pencil"></i> Edit</a>
                                             <button class="btn btn-sm btn-danger delete-btn" data-role-id="{{ $role->id }}" type="button"><i class="ti ti-trash me-1"></i>
