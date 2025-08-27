@@ -17,6 +17,7 @@ use App\Http\Controllers\Organization\PositionController;
 use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
 use App\Http\Controllers\Asset\AssetCategoryController;
+use App\Http\Controllers\Asset\AssetBrandController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -53,6 +54,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/kategori-aset/{asset_category}', [AssetCategoryController::class, 'update'])->name('assets.category.update');
     Route::delete('/kategori-aset/{asset_category}', [AssetCategoryController::class, 'destroy'])->name('assets.category.destroy');
     // });
+
+    Route::get('/merk-aset', [AssetBrandController::class, 'index'])->name('assets.brand.index');
+    Route::post('/merk-aset', [AssetBrandController::class, 'store'])->name('assets.brand.store');
+    Route::get('/merk-aset/{asset_brand}/edit', [AssetBrandController::class, 'edit'])->name('assets.brand.edit');
+    Route::put('/merk-aset/{asset_brand}', [AssetBrandController::class, 'update'])->name('assets.brand.update');
+    Route::delete('/merk-aset/{asset_brand}', [AssetBrandController::class, 'destroy'])->name('assets.brand.destroy');
 
     // User Management
     Route::middleware(['auth', 'can:manage_users'])->group(function () {

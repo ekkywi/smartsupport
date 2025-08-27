@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Kategori Aset
+    SmartSupport &mdash; Merk Aset
 @endsection
 
 @section("styles")
@@ -30,14 +30,14 @@
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item">Management Aset</li>
                         <li class="breadcrumb-item">Master Data Aset</li>
-                        <li aria-current="page" class="breadcrumb-item active">Kategori Aset</li>
+                        <li aria-current="page" class="breadcrumb-item active">Merk Aset</li>
                     </ol>
                 </nav>
             </div>
         </div>
         <div class="mb-3">
             <button class="btn btn-success" id="addCategoryBtn">
-                <i class="ti ti-plus"></i> Tambah Kategori
+                <i class="ti ti-plus"></i> Tambah Merk
             </button>
         </div>
         <div class="row">
@@ -45,7 +45,7 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Data Kategori Aset
+                            Data Merk Aset
                         </div>
                     </div>
                     <div class="card-body">
@@ -56,20 +56,20 @@
                                     <th></th>
                                 </tr>
                                 <tr>
-                                    <th>Nama Kategori</th>
+                                    <th>Nama Merk</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($assetCategories as $category)
+                                @foreach ($assetBrands as $brand)
                                     <tr>
-                                        <td>{{ $category->name ?? "-" }}</td>
+                                        <td>{{ $brand->name ?? "-" }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary edit-btn" data-id="{{ $category->id }}" data-name="{{ $category->name }}">
+                                            <button class="btn btn-sm btn-primary edit-btn" data-id="{{ $brand->id }}" data-name="{{ $brand->name }}">
                                                 <i class="ti ti-pencil me-1"></i>Edit
                                             </button>
 
-                                            <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $category->id }}">
+                                            <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $brand->id }}">
                                                 <i class="ti ti-trash me-1"></i>Hapus
                                             </button>
                                         </td>
@@ -84,21 +84,20 @@
     </div>
 
     {{-- Modal Form --}}
-    <div aria-hidden="true" aria-labelledby="categoryModalLabel" class="modal fade" id="categoryModal" tabindex="-1">
+    <div aria-hidden="true" aria-labelledby="brandModalLabel" class="modal fade" id="brandModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="categoryModalLabel">Form Kategori</h5>
+                    <h5 class="modal-title" id="brandModalLabel">Form Merk</h5>
                     <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="categoryForm">
+                    <form id="brandForm">
                         @csrf
                         <input id="formMethod" name="_method" type="hidden">
-                        <input id="categoryId" name="id" type="hidden">
-
+                        <input id="brandId" name="id" type="hidden">
                         <div class="mb-3">
-                            <label class="form-label" for="name">Nama Kategori</label>
+                            <label class="form-label" for="name">Nama Merk</label>
                             <input class="form-control" id="name" name="name" required type="text">
                             <div class="invalid-feedback" id="name-error"></div>
                         </div>
@@ -202,17 +201,18 @@
 
             // Reset form saat modal dibuka
             function resetForm() {
-                $('#categoryForm')[0].reset();
+                $('#brandForm')[0].reset();
                 $('#formMethod').val('');
-                $('#categoryId').val('');
+                $('#brandId').val('');
                 $('#name-error').text('').hide();
+                $('#name').removeClass('is-invalid');
             }
 
             // Tampilkan Modal Tambah
             $('#addCategoryBtn').on('click', function() {
                 resetForm();
-                $('#categoryModalLabel').text('Tambah Kategori');
-                $('#categoryModal').modal('show');
+                $('#brandModalLabel').text('Tambah Merk');
+                $('#brandModal').modal('show');
             });
 
             // Tampilkan Modal Edit
@@ -220,11 +220,11 @@
                 resetForm();
                 const id = $(this).data('id');
                 const name = $(this).data('name');
-                $('#categoryId').val(id);
+                $('#brandId').val(id); // perbaiki id field
                 $('#name').val(name);
                 $('#formMethod').val('PUT');
-                $('#categoryModalLabel').text('Edit Kategori');
-                $('#categoryModal').modal('show');
+                $('#brandModalLabel').text('Edit Merk');
+                $('#brandModal').modal('show');
             });
 
             // Simpan Data (Tambah/Edit)
@@ -235,10 +235,10 @@
                 let formData = $('#brandForm').serialize();
 
                 if (id) {
-                    url = '/kategori-aset/' + id;
+                    url = '/merk-aset/' + id;
                     type = 'POST';
                 } else {
-                    url = '/kategori-aset';
+                    url = '/merk-aset';
                     type = 'POST';
                 }
 
@@ -250,7 +250,7 @@
                     data: formData,
                     success: function(res) {
                         $('#saveBtn').prop('disabled', false).text('Simpan');
-                        $('#categoryModal').modal('hide');
+                        $('#brandModal').modal('hide');
                         Swal.fire({
                             icon: 'success',
                             title: 'Berhasil!',
@@ -286,7 +286,7 @@
                 let id = $(this).data('id');
                 Swal.fire({
                     title: 'Hapus data?',
-                    text: "Data kategori akan dihapus permanen.",
+                    text: "Data merk akan dihapus permanen.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -296,7 +296,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/kategori-aset/' + id,
+                            url: '/merk-aset/' + id,
                             type: 'POST',
                             data: {
                                 '_token': '{{ csrf_token() }}',
@@ -326,7 +326,7 @@
             });
 
             // Reset validasi saat modal ditutup
-            $('#categoryModal').on('hidden.bs.modal', function() {
+            $('#brandModal').on('hidden.bs.modal', function() {
                 $('#name').removeClass('is-invalid');
                 $('#name-error').text('').hide();
             });

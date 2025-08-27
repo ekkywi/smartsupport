@@ -48,8 +48,8 @@
                         <span class="side-menu__label">Semua Aset</span>
                     </a>
                 </li>
-                <li class="slide has-sub {{ request()->routeIs("assets.category.*") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("assets.category.*") ? "active" : "" }}" href="javascript:void(0);">
+                <li class="slide has-sub {{ request()->routeIs("assets.category.*", "assets.brand.*") ? "open" : "" }}">
+                    <a class="side-menu__item {{ request()->routeIs("assets.category.*", "assets.brand.*") ? "active" : "" }}" href="javascript:void(0);">
                         <i class="bx bx-data side-menu__icon"></i>
                         <span class="side-menu__label">Master Data Aset</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -59,7 +59,7 @@
                             <a class="side-menu__item {{ request()->routeIs("assets.category.*") ? "active" : "" }}" href="{{ route("assets.category.index") }}">Kategori Aset</a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item">Merk Aset</a>
+                            <a class="side-menu__item {{ request()->routeIs("assets.brand.*") ? "active" : "" }}" href="{{ route("assets.brand.index") }}">Merk Aset</a>
                         </li>
                         <li class="slide">
                             <a class="side-menu__item">Model Aset</a>

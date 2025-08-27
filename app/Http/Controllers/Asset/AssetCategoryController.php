@@ -17,12 +17,15 @@ class AssetCategoryController extends Controller
 
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => 'required|unique:asset_categories,name',
-        ], [
-            'name.unique' => 'Kategori aset sudah ada.',
-            'name.required' => 'Nama kategori harus diisi.'
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|unique:asset_categories,name',
+            ],
+            [
+                'name.unique' => 'Kategori aset sudah ada.',
+                'name.required' => 'Nama kategori harus diisi.'
+            ]
+        );
 
         AssetCategory::create([
             'name' => $request->name,
@@ -40,12 +43,15 @@ class AssetCategoryController extends Controller
 
     public function update(Request $request, AssetCategory $assetCategory)
     {
-        request()->validate([
-            'name' => 'required|unique:asset_categories,name,' . $assetCategory->id,
-        ], [
-            'name.unique' => 'Kategori aset sudah ada.',
-            'name.required' => 'Nama kategori harus diisi.',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|unique:asset_categories,name,' . $assetCategory->id,
+            ],
+            [
+                'name.unique' => 'Kategori aset sudah ada.',
+                'name.required' => 'Nama kategori harus diisi.',
+            ]
+        );
 
         $assetCategory->update([
             'name' => $request->name,
