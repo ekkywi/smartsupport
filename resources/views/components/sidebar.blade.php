@@ -32,8 +32,51 @@
                     </a>
                 </li>
 
+                <li class="slide__category">
+                    <span class="category-name">Manajemen Aset</span>
+                </li>
+
+                <li class="slide">
+                    <a class="side-menu__item" href="">
+                        <i class="bx bx-doughnut-chart side-menu__icon"></i>
+                        <span class="side-menu__label">Monitoring Aset</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item" href="">
+                        <i class="bx bx-devices side-menu__icon"></i>
+                        <span class="side-menu__label">Semua Aset</span>
+                    </a>
+                </li>
+                <li class="slide has-sub">
+                    <a class="side-menu__item" href="javascript:void(0);">
+                        <i class="bx bx-data side-menu__icon"></i>
+                        <span class="side-menu__label">Master Data Aset</span>
+                        <i class="fe fe-chevron-right side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu child1">
+                        <li class="slide">
+                            <a class="side-menu__item">Kategori Aset</a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item">Merk Aset</a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item">Model Aset</a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item">Status Aset</a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item">Lokasi Aset</a>
+                        </li>
+                    </ul>
+                </li>
+
                 @canany(["manage_users", "manage_organizations", "manage_tokens", "manage_administrations"])
-                    <li class="slide__category"><span class="category-name">Management</span></li>
+                    <li class="slide__category">
+                        <span class="category-name">Manajemen Aplikasi</span>
+                    </li>
 
                     @can("manage_users")
                         <li class="slide has-sub {{ request()->routeIs("users.index", "users.create", "users.edit", "users.activation", "users.activation.index") ? "open" : "" }}">
@@ -105,63 +148,6 @@
                     @endcan
                 @endcanany
 
-                <li class="slide has-sub">
-                    <a class="side-menu__item" href="javascript:void(0);">
-                        <i class="bx bx-data side-menu__icon"></i>
-                        <span class="side-menu__label">Master Data Aset</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Master Data</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a class="side-menu__item" href="javascript:void(0);">Hardware
-                                <i class="fe fe-chevron-right side-menu__angle"></i>
-                            </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">Perangkat Utama</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">Komponen Internal</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">Aksesori dan Perlengkapan</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">Perlengkapan Jaringan</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a class="side-menu__item" href="javascript:void(0);">Software
-                                <i class="fe fe-chevron-right side-menu__angle"></i>
-                            </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">Lisensi</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a class="side-menu__item" href="javascript:void(0);">Server
-                                <i class="fe fe-chevron-right side-menu__angle"></i>
-                            </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">Domain</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">SSL</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item" href="#">VPS</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <div class="slide-right" id="slide-right"><svg fill="#7b8191" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>

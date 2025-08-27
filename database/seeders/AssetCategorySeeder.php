@@ -16,6 +16,7 @@ class AssetCategorySeeder extends Seeder
             ['name' => 'Monitor'],
             ['name' => 'Printer'],
         ];
+
         foreach ($categories as $category) {
             AssetCategory::updateOrCreate(
                 [

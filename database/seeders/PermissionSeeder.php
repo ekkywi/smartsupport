@@ -29,7 +29,7 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'manage_administrations',
                 'code_name' => 'Manage Administrations',
-                'description' => 'Mengelola data administrasi - Dapat melakukan penambahan, pengeditan, dan penghapusan data peran. Dapat mengatur hak akses peran'
+                'description' => 'Mengelola data administrasi (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan data peran. Dapat mengatur hak akses peran'
             ]
         ];
 

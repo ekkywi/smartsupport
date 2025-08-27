@@ -59,11 +59,8 @@
                                         Hak Akses Peran
                                     </div>
                                 </div>
-                                {{-- <div class="col-12 mb-2">
-                                    <p class="text-muted">Pilih hak akses yang sesuai untuk peran ini:</p>
-                                </div> --}}
                                 <div class="col-12 mb-2">
-                                    <h6 class="fw-bold mb-3">Hak Akses Manajemen</h6>
+                                    <h6 class="fw-bold mb-3">Manajemen Aplikasi</h6>
                                 </div>
                                 <div class="row">
                                     @forelse ($permissions as $permission)

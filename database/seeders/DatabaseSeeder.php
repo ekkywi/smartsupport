@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             AssetCategorySeeder::class,
             AssetBrandSeeder::class,
-            AssetStatusSeeder::class
+            AssetStatusSeeder::class,
+            AssetLocationSeeder::class
         ]);
     }
 }
