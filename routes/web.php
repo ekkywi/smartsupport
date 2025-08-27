@@ -16,6 +16,7 @@ use App\Http\Controllers\Organization\SectionController;
 use App\Http\Controllers\Organization\PositionController;
 use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
+use App\Http\Controllers\Asset\AssetCategoryController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -43,6 +44,15 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Asset Management
+    // Route::middleware(['auth', 'can:manage_assets'])->group(function () {
+    Route::get('/kategori-aset', [AssetCategoryController::class, 'index'])->name('assets.category.index');
+    Route::post('/kategori-aset', [AssetCategoryController::class, 'store'])->name('assets.category.store');
+    Route::get('/kategori-aset/{asset_category}/edit', [AssetCategoryController::class, 'edit'])->name('assets.category.edit');
+    Route::put('/kategori-aset/{asset_category}', [AssetCategoryController::class, 'update'])->name('assets.category.update');
+    Route::delete('/kategori-aset/{asset_category}', [AssetCategoryController::class, 'destroy'])->name('assets.category.destroy');
+    // });
 
     // User Management
     Route::middleware(['auth', 'can:manage_users'])->group(function () {

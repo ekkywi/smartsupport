@@ -48,15 +48,15 @@
                         <span class="side-menu__label">Semua Aset</span>
                     </a>
                 </li>
-                <li class="slide has-sub">
-                    <a class="side-menu__item" href="javascript:void(0);">
+                <li class="slide has-sub {{ request()->routeIs("assets.category.*") ? "open" : "" }}">
+                    <a class="side-menu__item {{ request()->routeIs("assets.category.*") ? "active" : "" }}" href="javascript:void(0);">
                         <i class="bx bx-data side-menu__icon"></i>
                         <span class="side-menu__label">Master Data Aset</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1">
                         <li class="slide">
-                            <a class="side-menu__item">Kategori Aset</a>
+                            <a class="side-menu__item {{ request()->routeIs("assets.category.*") ? "active" : "" }}" href="{{ route("assets.category.index") }}">Kategori Aset</a>
                         </li>
                         <li class="slide">
                             <a class="side-menu__item">Merk Aset</a>
@@ -79,8 +79,8 @@
                     </li>
 
                     @can("manage_users")
-                        <li class="slide has-sub {{ request()->routeIs("users.index", "users.create", "users.edit", "users.activation", "users.activation.index") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit", "users.activation", "users.activation.index") ? "active" : "" }}" href="javascript:void(0);">
+                        <li class="slide has-sub {{ request()->routeIs("users.index", "users.create", "users.edit", "users.activation.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit", "users.activation.*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-user side-menu__icon"></i>
                                 <span class="side-menu__label">Pengguna</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -90,58 +90,58 @@
                                     <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit") ? "active" : "" }}" href="{{ route("users.index") }}">Data Pengguna</a>
                                 </li>
                                 <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("users.activation.index") ? "active" : "" }}" href="{{ route("users.activation.index") }}">Aktivasi Pengguna</a>
+                                    <a class="side-menu__item {{ request()->routeIs("users.activation.*") ? "active" : "" }}" href="{{ route("users.activation.index") }}">Aktivasi Pengguna</a>
                                 </li>
                             </ul>
                         </li>
                     @endcan
 
                     @can("manage_organizations")
-                        <li class="slide has-sub {{ request()->routeIs("sections.index", "positions.index", "sections.create", "sections.edit", "positions.create", "positions.edit") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("sections.index", "positions.index", "sections.create", "sections.edit", "positions.create", "positions.edit") ? "active" : "" }}" href="javascript:void(0);">
+                        <li class="slide has-sub {{ request()->routeIs("sections.*", "positions.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("sections.*", "positions.*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-building side-menu__icon"></i>
                                 <span class="side-menu__label">Organisasi</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
                             </a>
                             <ul class="slide-menu child1">
                                 <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("sections.index", "sections.create", "sections.edit") ? "active" : "" }}" href="{{ route("sections.index") }}">Bagian</a>
+                                    <a class="side-menu__item {{ request()->routeIs("sections.*") ? "active" : "" }}" href="{{ route("sections.index") }}">Bagian</a>
                                 </li>
                                 <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("positions.index", "positions.create", "positions.edit") ? "active" : "" }}" href="{{ route("positions.index") }}">Jabatan</a>
+                                    <a class="side-menu__item {{ request()->routeIs("positions.*") ? "active" : "" }}" href="{{ route("positions.index") }}">Jabatan</a>
                                 </li>
                             </ul>
                         </li>
                     @endcan
 
                     @can("manage_tokens")
-                        <li class="slide has-sub {{ request()->routeIs("users.token.index", "users.token.show") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("users.token.index", "users.token.show") ? "active" : "" }}" href="javascript:void(0);">
+                        <li class="slide has-sub {{ request()->routeIs("users.token.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("users.token.*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-key side-menu__icon"></i>
                                 <span class="side-menu__label">Token</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
                             </a>
                             <ul class="slide-menu child1">
                                 <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("users.token.index", "users.token.show") ? "active" : "" }}" href="{{ route("users.token.index") }}">Token Pengguna</a>
+                                    <a class="side-menu__item {{ request()->routeIs("users.token.*") ? "active" : "" }}" href="{{ route("users.token.index") }}">Token Pengguna</a>
                                 </li>
                             </ul>
                         </li>
                     @endcan
 
                     @can("manage_administrations")
-                        <li class="slide has-sub {{ request()->routeIs("roles.index", "roles.create", "roles.edit", "permissions.index", "permissions.create", "permissions.edit") ? "open" : "" }}">
+                        <li class="slide has-sub {{ request()->routeIs("roles.*", "permissions.*") ? "open" : "" }}">
                             <a class="side-menu__item" href="javascript:void(0);">
                                 <i class="bx bx-cog side-menu__icon"></i>
-                                <span class="side-menu__label {{ request()->routeIs("roles.index", "roles.create", "roles.edit", "permissions.index", "permissions.create", "permissions.edit") ? "active" : "" }}">Administrasi</span>
+                                <span class="side-menu__label {{ request()->routeIs("roles.*", "permissions.*") ? "active" : "" }}">Administrasi</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
                             </a>
                             <ul class="slide-menu child1">
                                 <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("roles.index", "roles.create", "roles.edit") ? "active" : "" }}" href="{{ route("roles.index") }}">Peran</a>
+                                    <a class="side-menu__item {{ request()->routeIs("roles.*") ? "active" : "" }}" href="{{ route("roles.index") }}">Peran</a>
                                 </li>
                                 <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("permissions.index", "permissions.create", "permissions.edit") ? "active" : "" }}" href="{{ route("permissions.index") }}">Hak Akses</a>
+                                    <a class="side-menu__item {{ request()->routeIs("permissions.*") ? "active" : "" }}" href="{{ route("permissions.index") }}">Hak Akses</a>
                                 </li>
                             </ul>
                         </li>
