@@ -11,6 +11,7 @@ class AssetLocation extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'name'
+        'name',
+        'description'
     ];
 }

@@ -32,46 +32,50 @@
                     </a>
                 </li>
 
-                <li class="slide__category">
-                    <span class="category-name">Manajemen Aset</span>
-                </li>
+                @canany(["manage_assets"])
+                    @can("manage_assets")
+                        <li class="slide__category">
+                            <span class="category-name">Manajemen Aset</span>
+                        </li>
 
-                <li class="slide">
-                    <a class="side-menu__item" href="">
-                        <i class="bx bx-doughnut-chart side-menu__icon"></i>
-                        <span class="side-menu__label">Monitoring Aset</span>
-                    </a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item" href="">
-                        <i class="bx bx-devices side-menu__icon"></i>
-                        <span class="side-menu__label">Semua Aset</span>
-                    </a>
-                </li>
-                <li class="slide has-sub {{ request()->routeIs("assets.category.*", "assets.brand.*") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("assets.category.*", "assets.brand.*") ? "active" : "" }}" href="javascript:void(0);">
-                        <i class="bx bx-data side-menu__icon"></i>
-                        <span class="side-menu__label">Master Data Aset</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("assets.category.*") ? "active" : "" }}" href="{{ route("assets.category.index") }}">Kategori Aset</a>
+                            <a class="side-menu__item" href="">
+                                <i class="bx bx-doughnut-chart side-menu__icon"></i>
+                                <span class="side-menu__label">Monitoring Aset</span>
+                            </a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("assets.brand.*") ? "active" : "" }}" href="{{ route("assets.brand.index") }}">Merk Aset</a>
+                            <a class="side-menu__item" href="">
+                                <i class="bx bx-devices side-menu__icon"></i>
+                                <span class="side-menu__label">Semua Aset</span>
+                            </a>
                         </li>
-                        <li class="slide">
-                            <a class="side-menu__item">Model Aset</a>
+                        <li class="slide has-sub {{ request()->routeIs("assets.category.*", "assets.brand.*", "assets.model.*", "assets.status.*", "assets.location.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("assets.category.*", "assets.brand.*", "assets.model.*", "assets.status.*", "assets.location.*") ? "active" : "" }}" href="javascript:void(0);">
+                                <i class="bx bx-data side-menu__icon"></i>
+                                <span class="side-menu__label">Master Data Aset</span>
+                                <i class="fe fe-chevron-right side-menu__angle"></i>
+                            </a>
+                            <ul class="slide-menu child1">
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("assets.category.*") ? "active" : "" }}" href="{{ route("assets.category.index") }}">Kategori Aset</a>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("assets.brand.*") ? "active" : "" }}" href="{{ route("assets.brand.index") }}">Merk Aset</a>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("assets.model.*") ? "active" : "" }}" href="{{ route("assets.model.index") }}">Model Aset</a>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("assets.status.*") ? "active" : "" }}" href="{{ route("assets.status.index") }}">Status Aset</a>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("assets.location.*") ? "active" : "" }}" href="{{ route("assets.location.index") }}">Lokasi Aset</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="slide">
-                            <a class="side-menu__item">Status Aset</a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item">Lokasi Aset</a>
-                        </li>
-                    </ul>
-                </li>
+                    @endcan
+                @endcanany
 
                 @canany(["manage_users", "manage_organizations", "manage_tokens", "manage_administrations"])
                     <li class="slide__category">

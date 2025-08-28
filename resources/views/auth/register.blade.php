@@ -65,6 +65,7 @@
                                         <input autocomplete="new-password" class="form-control form-control-lg" id="password" name="password" placeholder="Masukan password anda" required type="password">
                                         <button class="btn btn-light" id="button-addon-password" onclick="createpassword('password',this)" type="button"><i class="ri-eye-off-line align-middle"></i></button>
                                     </div>
+                                    <small class="text-muted">**Password minimal 8 karakter.</small>
                                 </div>
                                 <div class="col-xl-12 mb-2">
                                     <label class="form-label text-default fw-semibold" for="confirm-password">Konfirmasi Password</label>

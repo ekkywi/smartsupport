@@ -12,6 +12,11 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             [
+                'name' => 'manage_assets',
+                'code_name' => 'Manage Assets',
+                'description' => 'Mengelola data aset (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan kategori/merk aset'
+            ],
+            [
                 'name' => 'manage_users',
                 'code_name' => 'Manage Users',
                 'description' => 'Mengelola data pengguna (CRUD) - Dapat melakukan penambahan, pengeditan, penghapusan, dan aktivasi pengguna'
