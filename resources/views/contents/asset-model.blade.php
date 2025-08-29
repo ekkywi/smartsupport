@@ -148,7 +148,6 @@
             });
         </script>
     @endif
-
     <script>
         $(document).ready(function() {
 

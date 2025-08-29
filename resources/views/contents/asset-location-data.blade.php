@@ -68,7 +68,7 @@
                                         <td>{{ $location->name ?? "-" }}</td>
                                         <td>{{ $location->description ?? "-" }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary edit-btn" data-description="{{ $location->description }}" data-id="{{ $location->id }}" data-name="{{ $location->name }}">
+                                            <button class="btn btn-sm btn-primary edit-btn" data-id="{{ $location->id }}" data-name="{{ $location->name }}">
                                                 <i class="ti ti-pencil me-1"></i>Edit
                                             </button>
 
@@ -208,6 +208,7 @@
                 }
             });
 
+
             // Reset form saat modal dibuka
             function resetForm() {
                 $('#locationForm')[0].reset();
@@ -229,7 +230,7 @@
                 resetForm();
                 const id = $(this).data('id');
                 const name = $(this).data('name');
-                const description = $(this).data('description');
+                const description = $(this).closest('tr').find('td').eq(1).text();
                 $('#locationId').val(id);
                 $('#name').val(name);
                 $('#description').val(description);

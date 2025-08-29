@@ -11,6 +11,6 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::with('roles')->orderBy('description')->get();
-        return view('contents.administration-permission-data', compact('permissions'));
+        return view('contents.administration-permission', compact('permissions'));
     }
 }

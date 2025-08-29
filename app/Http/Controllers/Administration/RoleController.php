@@ -12,13 +12,13 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::withCount('users')->orderBy('name')->get();
-        return view('contents.administration-role-data', compact('roles'));
+        return view('contents.administration-role', compact('roles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
-        return view('forms.administration-role-create', compact('permissions'));
+        return view('forms.administration-role-form', compact('permissions'));
     }
 
     public function store(Request $request)
@@ -48,7 +48,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
-        return view('forms.administration-role-edit', compact('role', 'permissions'));
+        return view('forms.administration-role-form', compact('role', 'permissions'));
     }
 
     public function update(Request $request, Role $role)
