@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Tambah Jabatan
+    SmartSupport &mdash; {{ isset($position) ? "Edit" : "Tambah" }} Jabatan
 @endsection
 
 @section("styles")
@@ -39,23 +39,36 @@
                         <div class="row gy-4">
                             <div class="card-header justify-content-between">
                                 <div class="card-title">
-                                    Tambah Data Jabatan
+                                    {{ isset($position) ? "Edit" : "Tambah" }} Jabatan
                                 </div>
                             </div>
-                            <form action="{{ route("positions.store") }}" class="row gy-4" method="POST">
+                            <form action="{{ isset($position) ? route("positions.update", $position->id) : route("positions.store") }}" method="POST">
                                 @csrf
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="position_name">Nama Jabatan</label>
-                                    <input class="form-control" id="position_name" name="position_name" placeholder="Nama Jabatan Baru" type="text">
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="position_code">Kode Jabatan</label>
-                                    <input class="form-control" id="position_code" name="position_code" placeholder="Kode Jabatan Baru" type="text">
-                                </div>
-                                <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                                    <button class="btn btn-danger" onclick="goToIndex()" type="button"><i class="ti ti-x"></i> Batal</button>
-                                    <button class="btn btn-secondary" onclick="clearFormInputs()" type="button"><i class="ti ti-trash"></i> Hapus</button>
-                                    <button class="btn btn-primary" type="submit"><i class="ti ti-check"></i> Simpan</button>
+                                @if (isset($position))
+                                    @method("PUT")
+                                @endif
+
+                                <div class="row gy-4">
+                                    <div class="col-xl-6">
+                                        <label class="form-label" for="name">Nama Jabatan</label>
+                                        <input class="form-control @error("name") is-invalid @enderror" id="name" name="name" required type="text" value="{{ old("name", $position->name ?? "") }}">
+                                        @error("name")
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-xl-6">
+                                        <label class="form-label" for="position_code">Kode Jabatan</label>
+                                        <input class="form-control @error("position_code") is-invalid @enderror" id="position_code" name="position_code" required type="text" value="{{ old("position_code", $position->position_code ?? "") }}">
+                                        @error("position_code")
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+                                        <a class="btn btn-danger" href="{{ route("positions.index") }}">Batal</a>
+                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

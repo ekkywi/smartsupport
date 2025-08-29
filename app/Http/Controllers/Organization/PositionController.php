@@ -11,31 +11,31 @@ class PositionController extends Controller
     public function index()
     {
         $positions = Position::withCount('users')->get();
-        return view('contents.organization-position-data', compact('positions'));
+        return view('contents.organization-position', compact('positions'));
     }
 
     public function create()
     {
-        return view('forms.organization-position-create');
+        return view('forms.organization-position-form');
     }
 
     public function store(Request $request)
     {
         $request->validate(
             [
-                'position_name' => 'required|string|max:255|unique:positions,name',
+                'name' => 'required|string|max:255|unique:positions,name',
                 'position_code' => 'required|string|max:255|unique:positions,position_code',
             ],
             [
-                'position_name.required' => 'Nama jabatan harus diisi.',
-                'position_name.unique' => 'Nama jabatan sudah terdaftar.',
+                'name.required' => 'Nama jabatan harus diisi.',
+                'name.unique' => 'Nama jabatan sudah terdaftar.',
                 'position_code.required' => 'Kode jabatan harus diisi.',
                 'position_code.unique' => 'Kode jabatan sudah terdaftar.',
             ]
         );
 
         $positions = Position::create([
-            'name' => $request->input('position_name'),
+            'name' => $request->input('name'),
             'position_code' => $request->input('position_code'),
         ]);
 
@@ -44,24 +44,24 @@ class PositionController extends Controller
 
     public function edit(Position $position)
     {
-        return view('forms.organization-position-edit', compact('position'));
+        return view('forms.organization-position-form', compact('position'));
     }
 
     public function update(Request $request, Position $position)
     {
         $request->validate(
             [
-                'position_name' => 'required|string|max:255|unique:positions,name,' . $position->id,
+                'name' => 'required|string|max:255|unique:positions,name,' . $position->id,
                 'position_code' => 'required|string|max:255|unique:positions,position_code,' . $position->id,
             ],
             [
-                'position_name.unique' => 'Nama jabatan sudah terdaftar.',
+                'name.unique' => 'Nama jabatan sudah terdaftar.',
                 'position_code.unique' => 'Kode jabatan sudah terdaftar.',
             ]
         );
 
         $position->update([
-            'name' => $request->position_name,
+            'name' => $request->name,
             'position_code' => $request->position_code,
         ]);
 
