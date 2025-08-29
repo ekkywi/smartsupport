@@ -45,9 +45,9 @@
                             </a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item" href="">
+                            <a class="side-menu__item {{ request()->routeIs("assets.index") ? "active" : "" }}" href="{{ route("assets.index") }}">
                                 <i class="bx bx-devices side-menu__icon"></i>
-                                <span class="side-menu__label">Semua Aset</span>
+                                <span class="side-menu__label">Data Aset</span>
                             </a>
                         </li>
                         <li class="slide has-sub {{ request()->routeIs("assets.category.*", "assets.brand.*", "assets.model.*", "assets.status.*", "assets.location.*") ? "open" : "" }}">

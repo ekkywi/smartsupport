@@ -16,6 +16,7 @@ use App\Http\Controllers\Organization\SectionController;
 use App\Http\Controllers\Organization\PositionController;
 use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
+use App\Http\Controllers\Asset\AssetController;
 use App\Http\Controllers\Asset\AssetCategoryController;
 use App\Http\Controllers\Asset\AssetBrandController;
 use App\Http\Controllers\Asset\AssetStatusController;
@@ -51,6 +52,13 @@ Route::middleware('auth')->group(function () {
 
     // Asset Management
     Route::middleware(['auth', 'can:manage_assets'])->group(function () {
+        // Asset
+        Route::get('/aset', [AssetController::class, 'index'])->name('assets.index');
+        Route::post('/aset', [AssetController::class, 'store'])->name('assets.store');
+        Route::get('/aset/{asset}/edit', [AssetController::class, 'edit'])->name('assets.edit');
+        Route::put('/aset/{asset}', [AssetController::class, 'update'])->name('assets.update');
+        Route::delete('/aset/{asset}', [AssetController::class, 'destroy'])->name('assets.destroy');
+
         // Asset Categories
         Route::get('/kategori-aset', [AssetCategoryController::class, 'index'])->name('assets.category.index');
         Route::post('/kategori-aset', [AssetCategoryController::class, 'store'])->name('assets.category.store');
