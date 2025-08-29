@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Tambah Bagian
+    SmartSupport &mdash; {{ isset($section) ? "Edit" : "Tambah" }} Bagian
 @endsection
 
 @section("styles")
@@ -27,7 +27,7 @@
                         <li class="breadcrumb-item">Management</li>
                         <li class="breadcrumb-item">Organisasi</li>
                         <li aria-current="page" class="breadcrumb-item">Data Bagian</li>
-                        <li aria-current="page" class="breadcrumb-item active">Tambah Bagian</li>
+                        <li aria-current="page" class="breadcrumb-item active">{{ isset($section) ? "Edit" : "Tambah" }} Bagian</li>
                     </ol>
                 </nav>
             </div>
@@ -42,20 +42,32 @@
                                     Tambah Data Bagian
                                 </div>
                             </div>
-                            <form action="{{ route("sections.store") }}" class="row gy-4" method="POST">
+                            <form action="{{ isset($section) ? route("sections.update", $section->id) : route("sections.store") }}" method="POST">
                                 @csrf
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="section_name">Nama Bagian</label>
-                                    <input class="form-control" id="section_name" name="section_name" placeholder="Nama Bagian Baru" type="text">
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="section_code">Kode Bagian</label>
-                                    <input class="form-control" id="section_code" name="section_code" placeholder="Kode Bagian Baru" type="text">
-                                </div>
-                                <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                                    <button class="btn btn-danger" onclick="goToIndex()" type="button"><i class="ti ti-x"></i> Batal</button>
-                                    <button class="btn btn-secondary" onclick="clearFormInputs()" type="button"><i class="ti ti-trash"></i> Hapus</button>
-                                    <button class="btn btn-primary" type="submit"><i class="ti ti-check"></i> Simpan</button>
+                                @if (isset($section))
+                                    @method("PUT")
+                                @endif
+                                <div class="row gy-4">
+                                    <div class="col-xl-6">
+                                        <label class="form-label" for="name">Nama Bagian</label>
+                                        <input class="form-control @error("name") is-invalid @enderror" id="name" name="name" required type="text" value="{{ old("name", $section->name ?? "") }}">
+                                        @error("name")
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-xl-6">
+                                        <label class="form-label" for="section_code">Kode Bagian</label>
+                                        <input class="form-control @error("section_code") is-invalid @enderror" id="section_code" name="section_code" required type="text" value="{{ old("section_code", $section->section_code ?? "") }}">
+                                        @error("section_code")
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+                                        <a class="btn btn-danger" href="{{ route("sections.index") }}">Batal</a>
+                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

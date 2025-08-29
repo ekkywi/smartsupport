@@ -11,31 +11,31 @@ class SectionController extends Controller
     public function index()
     {
         $sections = Section::withCount('users')->get();
-        return view('contents.organization-section-data', compact('sections'));
+        return view('contents.organization-section', compact('sections'));
     }
 
     public function create()
     {
-        return view('forms.organization-section-create');
+        return view('forms.organization-section-form');
     }
 
     public function store(Request $request)
     {
         $request->validate(
             [
-                'section_name' => 'required|string|max:255|unique:sections,name',
+                'name' => 'required|string|max:255|unique:sections,name',
                 'section_code' => 'required|string|max:255|unique:sections,section_code',
             ],
             [
-                'section_name.required' => 'Nama bagian harus diisi.',
-                'section_name.unique' => 'Nama bagian sudah terdaftar.',
+                'name.required' => 'Nama bagian harus diisi.',
+                'name.unique' => 'Nama bagian sudah terdaftar.',
                 'section_code.required' => 'Kode bagian harus diisi.',
                 'section_code.unique' => 'Kode bagian sudah terdaftar.',
             ]
         );
 
         $section = Section::create([
-            'name' => $request->section_name,
+            'name' => $request->name,
             'section_code' => $request->section_code
         ]);
 
@@ -44,26 +44,26 @@ class SectionController extends Controller
 
     public function edit(Section $section)
     {
-        return view('forms.organization-section-edit', compact('section'));
+        return view('forms.organization-section-form', compact('section'));
     }
 
     public function update(Request $request, Section $section)
     {
         $request->validate(
             [
-                'section_name' => 'required|string|max:255|unique:sections,name,' . $section->id,
+                'name' => 'required|string|max:255|unique:sections,name,' . $section->id,
                 'section_code' => 'required|string|max:255|unique:sections,section_code,' . $section->id,
             ],
             [
-                'section_name.required' => 'Nama bagian harus diisi.',
+                'name.required' => 'Nama bagian harus diisi.',
                 'section_code.required' => 'Kode bagian harus diisi.',
-                'section_name.unique' => 'Nama bagian sudah terdaftar.',
+                'name.unique' => 'Nama bagian sudah terdaftar.',
                 'section_code.unique' => 'Kode bagian sudah terdaftar.',
             ]
         );
 
         $section->update([
-            'name' => $request->section_name,
+            'name' => $request->name,
             'section_code' => $request->section_code
         ]);
 
