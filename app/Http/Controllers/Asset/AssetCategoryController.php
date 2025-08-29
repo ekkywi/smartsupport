@@ -64,6 +64,12 @@ class AssetCategoryController extends Controller
 
     public function destroy(AssetCategory $assetCategory)
     {
+        if ($assetCategory->assetModels()->count() > 0) {
+            return response()->json([
+                'error' => 'Gagal menghapus! Kategori ini masih digunakan oleh ' . $assetCategory->assetModels()->count() . ' model aset.'
+            ], 422);
+        }
+
         $assetCategory->delete();
 
         return response()->json([

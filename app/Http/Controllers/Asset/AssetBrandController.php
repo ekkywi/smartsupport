@@ -63,6 +63,12 @@ class AssetBrandController extends Controller
 
     public function destroy(AssetBrand $assetBrand)
     {
+        if ($assetBrand->assetModels()->count() > 0) {
+            return response()->json([
+                'error' => 'Gagal menghapus! Merk ini masih digunakan oleh ' . $assetBrand->assetModels()->count() . ' model aset.'
+            ], 422);
+        }
+
         $assetBrand->delete();
 
         return response()->json([

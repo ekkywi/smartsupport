@@ -171,7 +171,7 @@
         </script>
     @endif
 
-    <script>
+    {{-- <script>
         $(function() {
 
             // Setup CSRF token untuk semua ajax
@@ -301,10 +301,12 @@
                                     .then(() => location.reload());
                             })
                             .fail(function(xhr) {
+                                let errorMessage = xhr.responseJSON ? xhr.responseJSON.error : 'Terjadi kesalahan.';
+
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal!',
-                                    text: xhr.responseJSON?.message || 'Terjadi kesalahan.'
+                                    text: errorMessage
                                 });
                             });
                     }
@@ -313,6 +315,171 @@
 
             // Reset validasi saat modal ditutup
             $('#categoryModal').on('hidden.bs.modal', resetForm);
+        });
+    </script> --}}
+
+    <script>
+        $(document).ready(function() {
+
+            // Initialize DataTable
+            $('#responsiveDataTable').DataTable({
+                responsive: true,
+                initComplete: function() {
+                    this.api().columns().every(function() {
+                        let column = this;
+                        let title = $(column.header()).text();
+
+                        let cell = $('#filters th').eq(column.index());
+
+                        if (title === 'Aksi') {
+                            cell.html('');
+                            return;
+                        }
+
+                        let input = $('<input type="text" class="form-control form-control-sm" placeholder="Filter ' + title + '" />')
+                            .appendTo(cell)
+                            .on('keyup change clear', function() {
+                                if (column.search() !== this.value) {
+                                    column.search(this.value).draw();
+                                }
+                            });
+                    });
+                }
+            });
+
+            // Reset form saat modal dibuka
+            function resetForm() {
+                $('#categoryForm')[0].reset();
+                $('#formMethod').val('');
+                $('#categoryId').val('');
+                $('#name-error').text('').hide();
+                $('#name').removeClass('is-invalid');
+            }
+
+            // Tampilkan Modal Tambah
+            $('#addCategoryBtn').on('click', function() {
+                resetForm();
+                $('#categoryModalLabel').text('Tambah Kategori');
+                $('#categoryModal').modal('show');
+            });
+
+            // Tampilkan Modal Edit
+            $(document).on('click', '.edit-btn', function() {
+                resetForm();
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+                $('#categoryId').val(id); // perbaiki id field
+                $('#name').val(name);
+                $('#formMethod').val('PUT');
+                $('#categoryModalLabel').text('Edit Kategori');
+                $('#categoryModal').modal('show');
+            });
+
+            // Simpan Data (Tambah/Edit)
+            $('#saveBtn').on('click', function() {
+                let id = $('#categoryId').val();
+                let url = '';
+                let type = '';
+                let formData = $('#categoryForm').serialize();
+
+                if (id) {
+                    url = '/kategori-aset/' + id;
+                    type = 'POST';
+                } else {
+                    url = '/kategori-aset';
+                    type = 'POST';
+                }
+
+                $('#saveBtn').prop('disabled', true).text('Menyimpan...');
+
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: formData,
+                    success: function(res) {
+                        $('#saveBtn').prop('disabled', false).text('Simpan');
+                        $('#categoryModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: res.message || 'Data berhasil disimpan!',
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        $('#saveBtn').prop('disabled', false).text('Simpan');
+                        if (xhr.status === 422) {
+                            // Validasi
+                            let err = xhr.responseJSON.errors;
+                            if (err && err.name) {
+                                $('#name-error').text(err.name[0]).show();
+                                $('#name').addClass('is-invalid');
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: xhr.responseJSON?.message || 'Terjadi kesalahan.',
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Hapus Data
+            $(document).on('click', '.delete-btn', function() {
+                let id = $(this).data('id');
+                Swal.fire({
+                    title: 'Hapus data?',
+                    text: "Data kategori akan dihapus permanen.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/kategori-aset/' + id,
+                            type: 'POST',
+                            data: {
+                                '_token': '{{ csrf_token() }}',
+                                '_method': 'DELETE'
+                            },
+                            success: function(res) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: res.message || 'Data berhasil dihapus!',
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function(xhr) {
+                                let errorMessage = xhr.responseJSON ? xhr.responseJSON.error : 'Terjadi kesalahan.';
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: errorMessage,
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Reset validasi saat modal ditutup
+            $('#categoryModal').on('hidden.bs.modal', function() {
+                $('#name').removeClass('is-invalid');
+                $('#name-error').text('').hide();
+            });
         });
     </script>
 @endsection

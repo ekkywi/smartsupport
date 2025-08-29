@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <button class="btn btn-success" id="addCategoryBtn">
+            <button class="btn btn-success" id="addBrandBtn">
                 <i class="ti ti-plus"></i> Tambah Merk
             </button>
         </div>
@@ -209,7 +209,7 @@
             }
 
             // Tampilkan Modal Tambah
-            $('#addCategoryBtn').on('click', function() {
+            $('#addBrandBtn').on('click', function() {
                 resetForm();
                 $('#brandModalLabel').text('Tambah Merk');
                 $('#brandModal').modal('show');
@@ -314,10 +314,12 @@
                                 });
                             },
                             error: function(xhr) {
+                                let errorMessage = xhr.responseJSON ? xhr.responseJSON.error : 'Terjadi kesalahan.';
+
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal!',
-                                    text: xhr.responseJSON?.message || 'Terjadi kesalahan.',
+                                    text: errorMessage,
                                 });
                             }
                         });
