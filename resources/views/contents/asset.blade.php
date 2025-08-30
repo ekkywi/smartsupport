@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <a class="btn btn-success" href="#">
+            <a class="btn btn-success" href="{{ route("assets.create") }}">
                 <i class="ti ti-plus"></i> Tambah Aset
             </a>
         </div>
@@ -65,6 +65,7 @@
                                     <th>Status</th>
                                     <th>Lokasi</th>
                                     <th>Pengguna</th>
+                                    <th>Catatan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -73,7 +74,6 @@
                                     <tr>
                                         <td>{{ $asset->name }}</td>
                                         <td>
-                                            {{-- Menampilkan jenis aset --}}
                                             @if ($asset->assetable_type == "App\Models\HardwareDetail")
                                                 <span class="badge bg-info">Hardware</span>
                                             @elseif($asset->assetable_type == "App\Models\SoftwareLicense")
@@ -85,6 +85,7 @@
                                         <td>{{ $asset->status->name ?? "-" }}</td>
                                         <td>{{ $asset->location->name ?? "-" }}</td>
                                         <td>{{ $asset->user->name ?? "-" }}</td>
+                                        <td>{{ $asset->notes ?? "-" }}</td>
                                         <td>
                                             {{-- Tombol aksi --}}
                                         </td>

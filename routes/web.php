@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth', 'can:manage_assets'])->group(function () {
         // Asset
         Route::get('/aset', [AssetController::class, 'index'])->name('assets.index');
+        Route::get('/aset/tambah', [AssetController::class, 'create'])->name('assets.create');
         Route::post('/aset', [AssetController::class, 'store'])->name('assets.store');
         Route::get('/aset/{asset}/edit', [AssetController::class, 'edit'])->name('assets.edit');
         Route::put('/aset/{asset}', [AssetController::class, 'update'])->name('assets.update');

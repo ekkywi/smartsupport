@@ -45,7 +45,7 @@
                             </a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("assets.index") ? "active" : "" }}" href="{{ route("assets.index") }}">
+                            <a class="side-menu__item {{ request()->routeIs("assets.index", "assets.create") ? "active" : "" }}" href="{{ route("assets.index") }}">
                                 <i class="bx bx-devices side-menu__icon"></i>
                                 <span class="side-menu__label">Data Aset</span>
                             </a>
