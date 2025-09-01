@@ -74,20 +74,28 @@
                                     <tr>
                                         <td>{{ $asset->name }}</td>
                                         <td>
-                                            @if ($asset->assetable_type == "App\Models\HardwareDetail")
-                                                <span class="badge bg-info">Hardware</span>
-                                            @elseif($asset->assetable_type == "App\Models\SoftwareLicense")
-                                                <span class="badge bg-success">Software</span>
-                                            @else
-                                                <span class="badge bg-warning">Layanan Digital</span>
-                                            @endif
+                                            <span class="badge bg-{{ $asset->getAssetable() === "Hardware" ? "info" : ($asset->getAssetable() === "Software" ? "success" : "warning") }}">
+                                                {{ $asset->getAssetable() }}
+                                            </span>
                                         </td>
                                         <td>{{ $asset->status->name ?? "-" }}</td>
                                         <td>{{ $asset->location->name ?? "-" }}</td>
                                         <td>{{ $asset->user->name ?? "-" }}</td>
                                         <td>{{ $asset->notes ?? "-" }}</td>
-                                        <td>
-                                            {{-- Tombol aksi --}}
+                                        <td class="text-nowrap">
+                                            <a class="btn btn-sm btn-info" href="#">
+                                                <i class="ti ti-eye"></i> Detail
+                                            </a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route("assets.edit", $asset->id) }}">
+                                                <i class="ti ti-pencil"></i> Edit
+                                            </a>
+                                            <form action="#" class="d-inline-block" method="POST">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button class="btn btn-sm btn-danger" title="Hapus" type="submit">
+                                                    <i class="ti ti-trash"></i> Hapus
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -152,4 +160,32 @@
             });
         });
     </script>
+    @if (session("success"))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session("success") }}',
+            });
+        </script>
+    @endif
+    @if (session("error"))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session("error") }}',
+            });
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                html: `{!! implode("<br>", $errors->all()) !!}`,
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 @endsection

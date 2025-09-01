@@ -45,9 +45,10 @@
                             {{-- ===================== --}}
                             {{-- BAGIAN INFORMASI UMUM --}}
                             {{-- ===================== --}}
-                            <div class="col-12">
-                                <h5 class="fw-semibold mb-0">Informasi Umum</h5>
-                                <hr class="mt-2">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Informasi Umum Aset
+                                </div>
                             </div>
 
                             <div class="col-md-12">
@@ -89,11 +90,11 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label" for="user_id">Pengguna</label>
-                                <select class="form-select @error("user_id") is-invalid @enderror" name="user_id">
+                                <label class="form-label" for="assigned_to_user_id">Pengguna</label>
+                                <select class="form-select @error("assigned_to_user_id") is-invalid @enderror" name="assigned_to_user_id">
                                     <option disabled value="">Pilih Pengguna...</option>
                                     @foreach ($users as $user)
-                                        <option {{ old("user_id", $asset->user_id ?? "") == $user->id ? "selected" : "" }} value="{{ $user->id }}">
+                                        <option {{ old("assigned_to_user_id", $asset->assigned_to_user_id ?? "") == $user->id ? "selected" : "" }} value="{{ $user->id }}">
                                             {{ $user->name }}
                                         </option>
                                     @endforeach
@@ -114,9 +115,10 @@
                             {{-- ===================== --}}
                             {{-- BAGIAN DETAIL ASET (DINAMIS) --}}
                             {{-- ===================== --}}
-                            <div class="col-12 mt-4">
-                                <h5 class="fw-semibold mb-0">Detail Spesifik Aset</h5>
-                                <hr class="mt-2">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Detail Spesifik Aset
+                                </div>
                             </div>
 
                             <div class="col-md-12">
@@ -142,7 +144,7 @@
                                     <label class="form-label" for="serial_number">Nomor Seri</label>
                                     <input class="form-control" name="serial_number" type="text" value="{{ old("serial_number", $asset->serial_number ?? "") }}">
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="model_id">Model</label>
                                     <select class="form-select" name="model_id">
                                         <option disabled value="">Pilih Model...</option>
@@ -152,6 +154,13 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="purchase_date">Tanggal Pembelian</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                        <input class="form-control" id="date" name="purchase_date" placeholder="Pilih tanggal" type="date" value="{{ old("purchase_date", isset($asset->purchase_date) ? $asset->purchase_date->format("Y-m-d") : "") }}">
+                                    </div>
                                 </div>
                                 {{-- ... input hardware lainnya --}}
                             </div>
@@ -209,6 +218,8 @@
     <script src="{{ asset("libs/sweetalert2/sweetalert2.all.min.js") }}"></script>
     <script src="{{ asset("js/show-password.js") }}"></script>
     <script src="{{ asset("libs/jquery/jquery-3.6.1.min.js") }}"></script>
+    <script src="{{ asset("libs/flatpickr/flatpickr.min.js") }}"></script>
+    <script src="{{ asset("js/date&time_pickers.js") }}"></script>
 
     @if (session("success"))
         <script>
@@ -238,31 +249,30 @@
             });
         </script>
     @endif
-    {{-- Script
-        <script>
-            $(document).ready(function() {
-                function toggleAssetFields() {
-                    var assetType = $('#asset_type').val();
-                    // Sembunyikan semua field detail terlebih dahulu
-                    $('#hardware-fields').hide();
-                    $('#software-fields').hide();
-                    $('#digital-service-fields').hide();
+    <script>
+        $(document).ready(function() {
+            function toggleAssetFields() {
+                var assetType = $('#asset_type').val();
+                // Sembunyikan semua field detail terlebih dahulu
+                $('#hardware-fields').hide();
+                $('#software-fields').hide();
+                $('#digital-service-fields').hide();
 
-                    // Tampilkan field yang sesuai
-                    if (assetType === 'hardware') {
-                        $('#hardware-fields').show();
-                    } else if (assetType === 'software') {
-                        $('#software-fields').show();
-                    } else if (assetType === 'digital_service') {
-                        $('#digital-service-fields').show();
-                    }
+                // Tampilkan field yang sesuai
+                if (assetType === 'hardware') {
+                    $('#hardware-fields').show();
+                } else if (assetType === 'software') {
+                    $('#software-fields').show();
+                } else if (assetType === 'digital_service') {
+                    $('#digital-service-fields').show();
                 }
+            }
 
-                // Jalankan fungsi saat halaman pertama kali dimuat (untuk menangani old input dan edit)
-                toggleAssetFields();
+            // Jalankan fungsi saat halaman pertama kali dimuat (untuk menangani old input dan edit)
+            toggleAssetFields();
 
-                // Jalankan fungsi setiap kali dropdown "Jenis Aset" berubah
-                $('#asset_type').on('change', toggleAssetFields);
-            });
-        </script>
-    @endsection
+            // Jalankan fungsi setiap kali dropdown "Jenis Aset" berubah
+            $('#asset_type').on('change', toggleAssetFields);
+        });
+    </script>
+@endsection

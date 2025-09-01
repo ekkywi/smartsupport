@@ -21,11 +21,25 @@ class Asset extends Model
         'assetable_type'
     ];
 
-    protected function cast(): array
+    protected function casts(): array
     {
         return [
             'purchase_date' => 'date',
         ];
+    }
+
+    public function getAssetable()
+    {
+        switch ($this->assetable_type) {
+            case \App\Models\HardwareDetail::class:
+                return 'Hardware';
+            case \App\Models\SoftwareDetail::class:
+                return 'Software';
+            case \App\Models\DigitalService::class:
+                return 'Digital Service';
+            default:
+                return 'Unknown';
+        }
     }
 
     public function assetable()

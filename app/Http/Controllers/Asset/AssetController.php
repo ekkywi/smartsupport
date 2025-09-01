@@ -40,14 +40,24 @@ class AssetController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'asset_type' => 'required|in:hardware,software,digital_service',
-            'status_id' => 'nullable|uuid|exists:asset_statuses,id',
-            'location_id' => 'nullable|uuid|exists:asset_locations,id',
-            'user_id' => 'nullable|uuid|exists:users,id',
-            'notes' => 'nullable|string'
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'asset_type' => 'required|in:hardware,software,digital_service',
+                'status_id' => 'nullable|uuid|exists:asset_statuses,id',
+                'location_id' => 'nullable|uuid|exists:asset_locations,id',
+                'assigned_to_user_id' => 'nullable|uuid|exists:users,id',
+                'notes' => 'nullable|string'
+            ],
+            [
+                'name' => 'required|string|max:255',
+                'asset_type' => 'required|in:hardware,software,digital_service',
+                'status_id' => 'nullable|uuid|exists:asset_statuses,id',
+                'location_id' => 'nullable|uuid|exists:asset_locations,id',
+                'user_id' => 'nullable|uuid|exists:users,id',
+                'notes' => 'nullable|string'
+            ]
+        );
 
         if ($request->asset_type === 'hardware') {
             $hardwareDetail = HardwareDetail::create([
@@ -82,10 +92,22 @@ class AssetController extends Controller
             'assetable_id' => $assetableId,
             'status_id' => $request->status_id,
             'location_id' => $request->location_id,
-            'user_id' => $request->user_id,
+            'purchase_date' => $request->purchase_date,
+            'assigned_to_user_id' => $request->assigned_to_user_id,
             'notes' => $request->notes,
         ]);
 
         return redirect()->route('assets.index')->with('success', 'Aset berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $asset = Asset::with('assetable')->findOrFail($id);
+        $statuses = AssetStatus::orderBy('name')->get();
+        $locations = AssetLocation::orderBy('name')->get();
+        $users = User::orderBy('name')->get();
+        $models = AssetModel::orderBy('name')->get();
+
+        return view('forms.asset-form', compact('asset', 'statuses', 'locations', 'users', 'models'));
     }
 }
