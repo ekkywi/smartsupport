@@ -89,10 +89,10 @@
                                             <a class="btn btn-sm btn-primary" href="{{ route("assets.edit", $asset->id) }}">
                                                 <i class="ti ti-pencil"></i> Edit
                                             </a>
-                                            <form action="#" class="d-inline-block" method="POST">
+                                            <form action="{{ route("assets.destroy", $asset->id) }}" class="d-inline-block form-delete" method="POST">
                                                 @csrf
                                                 @method("DELETE")
-                                                <button class="btn btn-sm btn-danger" title="Hapus" type="submit">
+                                                <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $asset->id }}" title="Hapus" type="button">
                                                     <i class="ti ti-trash"></i> Hapus
                                                 </button>
                                             </form>
@@ -158,6 +158,25 @@
                     });
                 }
             });
+
+            $('.form-delete .btn-delete').click(function(e) {
+                e.preventDefault();
+                let form = $(this).closest('form');
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Data aset akan dihapus permanen!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
         });
     </script>
     @if (session("success"))
@@ -166,6 +185,8 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session("success") }}',
+                timer: 2000,
+                showConfirmButton: false,
             });
         </script>
     @endif

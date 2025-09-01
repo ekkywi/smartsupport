@@ -125,9 +125,9 @@
                                 <label class="form-label" for="asset_type">Jenis Aset</label>
                                 <select class="form-select @error("asset_type") is-invalid @enderror" id="asset_type" name="asset_type" required>
                                     <option disabled value="">Pilih Jenis Aset...</option>
-                                    <option {{ old("asset_type", $asset->asset_type ?? "") == "hardware" ? "selected" : "" }} value="hardware">Hardware</option>
-                                    <option {{ old("asset_type", $asset->asset_type ?? "") == "software" ? "selected" : "" }} value="software">Software</option>
-                                    <option {{ old("asset_type", $asset->asset_type ?? "") == "digital_service" ? "selected" : "" }} value="digital_service">Layanan Digital</option>
+                                    <option {{ old("asset_type", $asset->asset_type ?? (isset($asset) ? class_basename($asset->assetable_type) : "")) == "hardware" ? "selected" : "" }} value="hardware">Hardware</option>
+                                    <option {{ old("asset_type", $asset->asset_type ?? (isset($asset) ? class_basename($asset->assetable_type) : "")) == "software" ? "selected" : "" }} value="software">Software</option>
+                                    <option {{ old("asset_type", $asset->asset_type ?? (isset($asset) ? class_basename($asset->assetable_type) : "")) == "digital_service" ? "selected" : "" }} value="digital_service">Layanan Digital</option>
                                 </select>
                                 @error("asset_type")
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -138,18 +138,18 @@
                             <div class="row gy-4 ms-1" id="hardware-fields" style="display:none;">
                                 <div class="col-md-6">
                                     <label class="form-label" for="asset_tag">Nomor Aset (QR Code)</label>
-                                    <input class="form-control" name="asset_tag" type="text" value="{{ old("asset_tag", $asset->asset_tag ?? "") }}">
+                                    <input class="form-control" name="asset_tag" type="text" value="{{ old("asset_tag", isset($asset) && isset($asset->assetable->asset_tag) ? $asset->assetable->asset_tag : "") }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="serial_number">Nomor Seri</label>
-                                    <input class="form-control" name="serial_number" type="text" value="{{ old("serial_number", $asset->serial_number ?? "") }}">
+                                    <input class="form-control" name="serial_number" type="text" value="{{ old("serial_number", isset($asset) && isset($asset->assetable->serial_number) ? $asset->assetable->serial_number : "") }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="model_id">Model</label>
                                     <select class="form-select" name="model_id">
                                         <option disabled value="">Pilih Model...</option>
                                         @foreach ($models as $model)
-                                            <option {{ old("model_id", $asset->model_id ?? "") == $model->id ? "selected" : "" }} value="{{ $model->id }}">
+                                            <option {{ old("model_id", isset($asset) && isset($asset->assetable->model_id) ? $asset->assetable->model_id : "") == $model->id ? "selected" : "" }} value="{{ $model->id }}">
                                                 {{ $model->name }} ({{ $model->brand->name }} - {{ $model->category->name }})
                                             </option>
                                         @endforeach
@@ -159,7 +159,14 @@
                                     <label class="form-label" for="purchase_date">Tanggal Pembelian</label>
                                     <div class="input-group">
                                         <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
-                                        <input class="form-control" id="date" name="purchase_date" placeholder="Pilih tanggal" type="date" value="{{ old("purchase_date", isset($asset->purchase_date) ? $asset->purchase_date->format("Y-m-d") : "") }}">
+                                        <input class="form-control" id="purchase_date" name="purchase_date" placeholder="Pilih tanggal" type="text" value="{{ old("purchase_date", isset($asset->purchase_date) ? $asset->purchase_date->format("Y-m-d") : "") }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="warranty_expires_at">Tanggal Kadaluarsa Garansi</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                        <input class="form-control" id="warranty_expires_at" name="warranty_expires_at" placeholder="Pilih tanggal" type="text" value="{{ old("warranty_expires_at", isset($asset) && isset($asset->assetable->warranty_expires_at) && $asset->assetable->warranty_expires_at ? \Carbon\Carbon::parse($asset->assetable->warranty_expires_at)->format("Y-m-d") : "") }}">
                                     </div>
                                 </div>
                                 {{-- ... input hardware lainnya --}}
@@ -169,11 +176,11 @@
                             <div class="row gy-4 ms-1" id="software-fields" style="display:none;">
                                 <div class="col-md-6">
                                     <label class="form-label" for="license_key">Kunci Lisensi</label>
-                                    <input class="form-control" name="license_key" type="text" value="{{ old("license_key", $asset->license_key ?? "") }}">
+                                    <input class="form-control" name="license_key" type="text" value="{{ old("license_key", isset($asset) && isset($asset->assetable->license_key) ? $asset->assetable->license_key : "") }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="total_seats">Jumlah Lisensi (Seats)</label>
-                                    <input class="form-control" name="total_seats" type="number" value="{{ old("total_seats", $asset->total_seats ?? 1) }}">
+                                    <input class="form-control" name="total_seats" type="number" value="{{ old("total_seats", isset($asset) && isset($asset->assetable->total_seats) ? $asset->assetable->total_seats : 1) }}">
                                 </div>
                             </div>
 
@@ -181,17 +188,17 @@
                             <div class="row gy-4 ms-1" id="digital-service-fields" style="display:none;">
                                 <div class="col-md-6">
                                     <label class="form-label" for="provider">Provider</label>
-                                    <input class="form-control" name="provider" placeholder="e.g., Niagahoster" type="text" value="{{ old("provider", $asset->provider ?? "") }}">
+                                    <input class="form-control" name="provider" placeholder="e.g., Niagahoster" type="text" value="{{ old("provider", isset($asset) && isset($asset->assetable->provider) ? $asset->assetable->provider : "") }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="service_name">Nama Layanan</label>
-                                    <input class="form-control" name="service_name" placeholder="e.g., perusahaan.com" type="text" value="{{ old("service_name", $asset->service_name ?? "") }}">
+                                    <input class="form-control" name="service_name" placeholder="e.g., perusahaan.com" type="text" value="{{ old("service_name", isset($asset) && isset($asset->assetable->service_name) ? $asset->assetable->service_name : "") }}">
                                 </div>
                             </div>
 
                             <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                                <a class="btn btn-danger" href="{{ route("assets.index") }}">Batal</a>
-                                <button class="btn btn-primary" type="submit">Simpan Aset</button>
+                                <a class="btn btn-danger" href="{{ route("assets.index") }}"><i class="ti ti-x"></i> Batal</a>
+                                <button class="btn btn-primary" type="submit"><i class="ti ti-check"></i> Simpan</button>
                             </div>
                         </form>
                     </div>
@@ -227,6 +234,8 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session("success") }}',
+                timer: 2000,
+                showConfirmButton: false,
             });
         </script>
     @endif
@@ -268,11 +277,20 @@
                 }
             }
 
-            // Jalankan fungsi saat halaman pertama kali dimuat (untuk menangani old input dan edit)
             toggleAssetFields();
-
-            // Jalankan fungsi setiap kali dropdown "Jenis Aset" berubah
             $('#asset_type').on('change', toggleAssetFields);
+        });
+    </script>
+    <script>
+        $(function() {
+            flatpickr("#purchase_date", {
+                dateFormat: "Y-m-d",
+                allowInput: true,
+            });
+            flatpickr("#warranty_expires_at", {
+                dateFormat: "Y-m-d",
+                allowInput: true,
+            });
         });
     </script>
 @endsection

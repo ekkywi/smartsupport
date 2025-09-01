@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Asset;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Asset;
 use App\Models\AssetStatus;
 use App\Models\AssetLocation;
@@ -60,11 +61,26 @@ class AssetController extends Controller
         );
 
         if ($request->asset_type === 'hardware') {
+            $request->validate(
+                [
+                    'asset_tag' => 'required|string|max:255|unique:hardware_details,asset_tag',
+                    'serial_number' => 'nullable|string|max:255',
+                    'model_id' => 'nullable|uuid|exists:asset_models,id',
+                    'warranty_expires_at' => 'nullable|date'
+                ],
+                [
+                    'asset_tag.required' => 'Tag aset harus diisi.',
+                    'asset_tag.unique' => 'Tag aset sudah terdaftar.',
+                    'model_id.exists' => 'Model yang dipilih tidak valid.',
+                    'warranty_expires_at.date' => 'Tanggal kadaluarsa garansi tidak valid.',
+                ]
+            );
+
             $hardwareDetail = HardwareDetail::create([
                 'asset_tag' => $request->asset_tag,
                 'serial_number' => $request->serial_number,
                 'model_id' => $request->model_id,
-                // ... field hardware lain sesuai kebutuhan
+                'warranty_expires_at' => $request->warranty_expires_at,
             ]);
             $assetableType = HardwareDetail::class;
             $assetableId = $hardwareDetail->id;
@@ -72,7 +88,6 @@ class AssetController extends Controller
             $softwareLicense = SoftwareDetail::create([
                 'license_key' => $request->license_key,
                 'total_seats' => $request->total_seats,
-                // ... field software lain sesuai kebutuhan
             ]);
             $assetableType = SoftwareDetail::class;
             $assetableId = $softwareLicense->id;
@@ -80,7 +95,6 @@ class AssetController extends Controller
             $digitalService = DigitalService::create([
                 'provider' => $request->provider,
                 'service_name' => $request->service_name,
-                // ... field digital service lain sesuai kebutuhan
             ]);
             $assetableType = DigitalService::class;
             $assetableId = $digitalService->id;
@@ -109,5 +123,84 @@ class AssetController extends Controller
         $models = AssetModel::orderBy('name')->get();
 
         return view('forms.asset-form', compact('asset', 'statuses', 'locations', 'users', 'models'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $asset = Asset::with('assetable')->findOrFail($id);
+        $assetType = $request->asset_type;
+
+        // Validasi umum
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'asset_type' => 'required|in:hardware,software,digital_service',
+            'status_id' => 'nullable|uuid|exists:asset_statuses,id',
+            'location_id' => 'nullable|uuid|exists:asset_locations,id',
+            'assigned_to_user_id' => 'nullable|uuid|exists:users,id',
+            'notes' => 'nullable|string',
+        ]);
+
+        // Validasi & update detail aset
+        if ($assetType === 'hardware') {
+            $request->validate([
+                'asset_tag' => 'required|unique:hardware_details,asset_tag,' . $asset->assetable->id,
+                'serial_number' => 'required',
+                'model_id' => 'required|uuid|exists:asset_models,id',
+                // tambahkan validasi lain jika ada
+            ]);
+            $asset->assetable->update([
+                'asset_tag' => $request->asset_tag,
+                'serial_number' => $request->serial_number,
+                'model_id' => $request->model_id,
+                'warranty_expires_at' => $request->warranty_expires_at,
+            ]);
+        } elseif ($assetType === 'software') {
+            $request->validate([
+                'license_key' => 'required',
+                'total_seats' => 'required|integer|min:1',
+            ]);
+            $asset->assetable->update([
+                'license_key' => $request->license_key,
+                'total_seats' => $request->total_seats,
+            ]);
+        } else { // digital_service
+            $request->validate([
+                'provider' => 'required|string|max:255',
+                'service_name' => 'required|string|max:255',
+            ]);
+            $asset->assetable->update([
+                'provider' => $request->provider,
+                'service_name' => $request->service_name,
+            ]);
+        }
+
+        // Update aset utama
+        $asset->update([
+            'name' => $request->name,
+            'status_id' => $request->status_id,
+            'location_id' => $request->location_id,
+            'purchase_date' => $request->purchase_date,
+            'assigned_to_user_id' => $request->assigned_to_user_id,
+            'notes' => $request->notes,
+        ]);
+
+        return redirect()->route('assets.index')->with('success', 'Aset berhasil diupdate.');
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $asset = Asset::with('assetable')->findOrFail($id);
+            // Hapus detail polymorphic terlebih dahulu
+            $asset->assetable->delete();
+            // Hapus aset utama
+            $asset->delete();
+            DB::commit();
+            return redirect()->route('assets.index')->with('success', 'Aset berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('assets.index')->with('error', 'Gagal menghapus aset: ' . $e->getMessage());
+        }
     }
 }

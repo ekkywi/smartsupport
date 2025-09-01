@@ -31,11 +31,11 @@ class Asset extends Model
     public function getAssetable()
     {
         switch ($this->assetable_type) {
-            case \App\Models\HardwareDetail::class:
+            case HardwareDetail::class:
                 return 'Hardware';
-            case \App\Models\SoftwareDetail::class:
+            case SoftwareDetail::class:
                 return 'Software';
-            case \App\Models\DigitalService::class:
+            case DigitalService::class:
                 return 'Digital Service';
             default:
                 return 'Unknown';

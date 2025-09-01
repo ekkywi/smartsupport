@@ -11,7 +11,8 @@ class AssetCategory extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'name'
+        'name',
+        'category_tag'
     ];
 
     public function assetModels()

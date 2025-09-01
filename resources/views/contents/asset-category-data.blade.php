@@ -54,9 +54,11 @@
                                 <tr id="filters">
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th>Nama Kategori</th>
+                                    <th>Tag Kategori</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -65,10 +67,12 @@
                                     <tr>
                                         <td>{{ $category->name ?? "-" }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary edit-btn" data-id="{{ $category->id }}" data-name="{{ $category->name }}">
+                                            <span class="badge bg-primary">{{ $category->category_tag ?? "-" }}</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary edit-btn" data-category_tag="{{ $category->category_tag }}" data-id="{{ $category->id }}" data-name="{{ $category->name }}">
                                                 <i class="ti ti-pencil me-1"></i>Edit
                                             </button>
-
                                             <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $category->id }}">
                                                 <i class="ti ti-trash me-1"></i>Hapus
                                             </button>
@@ -101,6 +105,11 @@
                             <label class="form-label" for="name">Nama Kategori</label>
                             <input class="form-control" id="name" name="name" required type="text">
                             <div class="invalid-feedback" id="name-error"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="category_tag">Tag Kategori</label>
+                            <input class="form-control" id="category_tag" name="category_tag" required type="text">
+                            <div class="invalid-feedback" id="category_tag-error"></div>
                         </div>
                     </form>
                 </div>
@@ -368,8 +377,10 @@
                 resetForm();
                 const id = $(this).data('id');
                 const name = $(this).data('name');
-                $('#categoryId').val(id); // perbaiki id field
+                const category_tag = $(this).data('category_tag');
+                $('#categoryId').val(id);
                 $('#name').val(name);
+                $('#category_tag').val(category_tag);
                 $('#formMethod').val('PUT');
                 $('#categoryModalLabel').text('Edit Kategori');
                 $('#categoryModal').modal('show');
@@ -479,6 +490,8 @@
             $('#categoryModal').on('hidden.bs.modal', function() {
                 $('#name').removeClass('is-invalid');
                 $('#name-error').text('').hide();
+                $('#category_tag').removeClass('is-invalid');
+                $('#category_tag-error').text('').hide();
             });
         });
     </script>

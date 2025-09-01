@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('asset_tag')->unique();
             $table->string('serial_number')->unique()->nullable();
             $table->foreignUuid('model_id')->constrained('asset_models');
-            $table->timestamp('warranty_expires_at')->nullable();
+            $table->date('warranty_expires_at')->nullable();
             $table->timestamps();
         });
     }

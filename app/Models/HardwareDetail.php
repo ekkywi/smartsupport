@@ -20,7 +20,7 @@ class HardwareDetail extends Model
     protected function cast(): array
     {
         return [
-            'warranty_expires_at' => 'datetime',
+            'warranty_expires_at' => 'date',
         ];
     }
 

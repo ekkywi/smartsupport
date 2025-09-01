@@ -20,15 +20,19 @@ class AssetCategoryController extends Controller
         $request->validate(
             [
                 'name' => 'required|unique:asset_categories,name',
+                'category_tag' => 'required|unique:asset_categories,category_tag'
             ],
             [
                 'name.unique' => 'Kategori aset sudah ada.',
-                'name.required' => 'Nama kategori harus diisi.'
+                'name.required' => 'Nama kategori harus diisi.',
+                'category_tag.unique' => 'Tag kategori sudah ada.',
+                'category_tag.required' => 'Tag kategori harus diisi.'
             ]
         );
 
         AssetCategory::create([
             'name' => $request->name,
+            'category_tag' => $request->category_tag
         ]);
 
         return response()->json([
@@ -46,15 +50,19 @@ class AssetCategoryController extends Controller
         $request->validate(
             [
                 'name' => 'required|unique:asset_categories,name,' . $assetCategory->id,
+                'category_tag' => 'required|unique:asset_categories,category_tag,' . $assetCategory->id
             ],
             [
                 'name.unique' => 'Kategori aset sudah ada.',
                 'name.required' => 'Nama kategori harus diisi.',
+                'category_tag.unique' => 'Tag kategori sudah ada.',
+                'category_tag.required' => 'Tag kategori harus diisi.'
             ]
         );
 
         $assetCategory->update([
             'name' => $request->name,
+            'category_tag' => $request->category_tag
         ]);
 
         return response()->json([
