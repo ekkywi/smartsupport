@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/aset/{asset}/edit', [AssetController::class, 'edit'])->name('assets.edit');
         Route::put('/aset/{asset}', [AssetController::class, 'update'])->name('assets.update');
         Route::delete('/aset/{asset}', [AssetController::class, 'destroy'])->name('assets.destroy');
+        Route::get('/aset/{asset}', [AssetController::class, 'show'])->name('assets.show');
 
         // Asset Categories
         Route::get('/kategori-aset', [AssetCategoryController::class, 'index'])->name('assets.category.index');

@@ -137,10 +137,6 @@
                             {{-- Bagian Form untuk Hardware --}}
                             <div class="row gy-4 ms-1" id="hardware-fields" style="display:none;">
                                 <div class="col-md-6">
-                                    <label class="form-label" for="asset_tag">Nomor Aset (QR Code)</label>
-                                    <input class="form-control" name="asset_tag" type="text" value="{{ old("asset_tag", isset($asset) && isset($asset->assetable->asset_tag) ? $asset->assetable->asset_tag : "") }}">
-                                </div>
-                                <div class="col-md-6">
                                     <label class="form-label" for="serial_number">Nomor Seri</label>
                                     <input class="form-control" name="serial_number" type="text" value="{{ old("serial_number", isset($asset) && isset($asset->assetable->serial_number) ? $asset->assetable->serial_number : "") }}">
                                 </div>

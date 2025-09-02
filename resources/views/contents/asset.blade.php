@@ -58,9 +58,11 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th>Nama Aset</th>
+                                    <th>Nomor Aset</th>
                                     <th>Jenis</th>
                                     <th>Status</th>
                                     <th>Lokasi</th>
@@ -73,9 +75,11 @@
                                 @foreach ($assets as $asset)
                                     <tr>
                                         <td>{{ $asset->name }}</td>
+                                        <td>{{ $asset->assetable->asset_tag ?? "-" }}</td>
+
                                         <td>
-                                            <span class="badge bg-{{ $asset->getAssetable() === "Hardware" ? "info" : ($asset->getAssetable() === "Software" ? "success" : "warning") }}">
-                                                {{ $asset->getAssetable() }}
+                                            <span class="badge bg-{{ $asset->asset_type_color }}">
+                                                {{ $asset->asset_type }}
                                             </span>
                                         </td>
                                         <td>{{ $asset->status->name ?? "-" }}</td>
@@ -83,7 +87,7 @@
                                         <td>{{ $asset->user->name ?? "-" }}</td>
                                         <td>{{ $asset->notes ?? "-" }}</td>
                                         <td class="text-nowrap">
-                                            <a class="btn btn-sm btn-info" href="#">
+                                            <a class="btn btn-sm btn-info" href="{{ route("assets.show", $asset->id) }}">
                                                 <i class="ti ti-eye"></i> Detail
                                             </a>
                                             <a class="btn btn-sm btn-primary" href="{{ route("assets.edit", $asset->id) }}">

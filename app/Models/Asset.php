@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\HardwareDetail;
+use App\Models\SoftwareDetail;
+use App\Models\DigitalService;
+use Dom\Attr;
 
 class Asset extends Model
 {
@@ -28,18 +33,40 @@ class Asset extends Model
         ];
     }
 
-    public function getAssetable()
+    protected function assetType(): Attribute
     {
-        switch ($this->assetable_type) {
-            case HardwareDetail::class:
-                return 'Hardware';
-            case SoftwareDetail::class:
-                return 'Software';
-            case DigitalService::class:
-                return 'Digital Service';
-            default:
-                return 'Unknown';
-        }
+        return Attribute::make(
+            get: function () {
+                switch ($this->assetable_type) {
+                    case HardwareDetail::class:
+                        return 'Hardware';
+                    case SoftwareDetail::class:
+                        return 'Software';
+                    case DigitalService::class:
+                        return 'Layanan Digital';
+                    default:
+                        return 'Tidak Diketahui';
+                }
+            },
+        );
+    }
+
+    protected function assetTypeColor(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                switch ($this->assetable_type) {
+                    case HardwareDetail::class:
+                        return 'success';
+                    case SoftwareDetail::class:
+                        return 'info';
+                    case DigitalService::class:
+                        return 'warning';
+                    default:
+                        return 'secondary';
+                }
+            },
+        );
     }
 
     public function assetable()
