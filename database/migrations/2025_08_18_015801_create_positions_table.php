@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('position_code')->unique();
             $table->string('name')->unique();
+            $table->string('position_code')->unique();
             $table->timestamps();
         });
     }

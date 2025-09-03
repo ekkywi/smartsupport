@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('section_code')->unique();
             $table->string('name')->unique();
+            $table->string('section_code')->unique();
             $table->timestamps();
         });
     }
