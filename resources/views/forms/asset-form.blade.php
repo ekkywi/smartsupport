@@ -59,20 +59,23 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label" for="status_id">Status</label>
-                                <select class="form-select @error("status_id") is-invalid @enderror" name="status_id" required>
-                                    <option disabled value="">Pilih Status...</option>
-                                    @foreach ($statuses as $status)
-                                        <option {{ old("status_id", $asset->status_id ?? "") == $status->id ? "selected" : "" }} value="{{ $status->id }}">
-                                            {{ $status->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error("status_id")
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- STATUS hanya ditampilkan saat EDIT --}}
+                            @if (isset($asset))
+                                <div class="col-md-6">
+                                    <label class="form-label" for="status_id">Status</label>
+                                    <select class="form-select @error("status_id") is-invalid @enderror" name="status_id" required>
+                                        <option disabled value="">Pilih Status...</option>
+                                        @foreach ($statuses as $status)
+                                            <option {{ old("status_id", $asset->status_id ?? "") == $status->id ? "selected" : "" }} value="{{ $status->id }}">
+                                                {{ $status->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error("status_id")
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            @endif
 
                             <div class="col-md-6">
                                 <label class="form-label" for="location_id">Lokasi</label>
@@ -99,9 +102,17 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error("user_id")
+                                @error("assigned_to_user_id")
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="purchase_date">Tanggal Pembelian</label>
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                    <input class="form-control" id="purchase_date" name="purchase_date" placeholder="Pilih tanggal" type="text" value="{{ old("purchase_date", isset($asset->purchase_date) ? $asset->purchase_date->format("Y-m-d") : "") }}">
+                                </div>
                             </div>
 
                             <div class="col-md-12">
@@ -121,13 +132,18 @@
                                 </div>
                             </div>
 
+                            @php
+                                // Mapping asset_type untuk keperluan dropdown dan toggle
+                                $type = old("asset_type", isset($asset) ? (class_basename($asset->assetable_type) === "HardwareDetail" ? "hardware" : (class_basename($asset->assetable_type) === "SoftwareDetail" ? "software" : (class_basename($asset->assetable_type) === "DigitalService" ? "digital_service" : ""))) : "");
+                            @endphp
+
                             <div class="col-md-12">
                                 <label class="form-label" for="asset_type">Jenis Aset</label>
                                 <select class="form-select @error("asset_type") is-invalid @enderror" id="asset_type" name="asset_type" required>
                                     <option disabled value="">Pilih Jenis Aset...</option>
-                                    <option {{ old("asset_type", $asset->asset_type ?? (isset($asset) ? class_basename($asset->assetable_type) : "")) == "hardware" ? "selected" : "" }} value="hardware">Hardware</option>
-                                    <option {{ old("asset_type", $asset->asset_type ?? (isset($asset) ? class_basename($asset->assetable_type) : "")) == "software" ? "selected" : "" }} value="software">Software</option>
-                                    <option {{ old("asset_type", $asset->asset_type ?? (isset($asset) ? class_basename($asset->assetable_type) : "")) == "digital_service" ? "selected" : "" }} value="digital_service">Layanan Digital</option>
+                                    <option {{ $type == "hardware" ? "selected" : "" }} value="hardware">Hardware</option>
+                                    <option {{ $type == "software" ? "selected" : "" }} value="software">Software</option>
+                                    <option {{ $type == "digital_service" ? "selected" : "" }} value="digital_service">Layanan Digital</option>
                                 </select>
                                 @error("asset_type")
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -152,13 +168,6 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label" for="purchase_date">Tanggal Pembelian</label>
-                                    <div class="input-group">
-                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
-                                        <input class="form-control" id="purchase_date" name="purchase_date" placeholder="Pilih tanggal" type="text" value="{{ old("purchase_date", isset($asset->purchase_date) ? $asset->purchase_date->format("Y-m-d") : "") }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
                                     <label class="form-label" for="warranty_expires_at">Tanggal Kadaluarsa Garansi</label>
                                     <div class="input-group">
                                         <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
@@ -177,6 +186,13 @@
                                 <div class="col-md-6">
                                     <label class="form-label" for="total_seats">Jumlah Lisensi (Seats)</label>
                                     <input class="form-control" name="total_seats" type="number" value="{{ old("total_seats", isset($asset) && isset($asset->assetable->total_seats) ? $asset->assetable->total_seats : 1) }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="expiry_date">Tanggal Kadaluarsa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                        <input class="form-control" id="expiry_date" name="expiry_date" placeholder="Pilih tanggal" type="text" value="{{ old("expiry_date", isset($asset->expiry_date) ? $asset->expiry_date->format("Y-m-d") : "") }}">
+                                    </div>
                                 </div>
                             </div>
 
@@ -284,6 +300,10 @@
                 allowInput: true,
             });
             flatpickr("#warranty_expires_at", {
+                dateFormat: "Y-m-d",
+                allowInput: true,
+            });
+            flatpickr("#expiry_date", {
                 dateFormat: "Y-m-d",
                 allowInput: true,
             });

@@ -71,7 +71,7 @@
                                     <div class="col-12">
                                         @if ($asset->assetable instanceof \App\Models\HardwareDetail)
                                             @include("components.hardware", ["details" => $asset->assetable])
-                                        @elseif ($asset->assetable instanceof \App\Models\SoftwareLicense)
+                                        @elseif ($asset->assetable instanceof \App\Models\SoftwareDetail)
                                             @include("components.software", ["details" => $asset->assetable])
                                         @elseif ($asset->assetable instanceof \App\Models\DigitalService)
                                             @include("components.digital-service", ["details" => $asset->assetable])
@@ -90,5 +90,15 @@
 @endsection
 
 @section("scripts")
+    <script src="{{ asset("libs/@popperjs/core/umd/popper.min.js") }}"></script>
     <script src="{{ asset("libs/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
+    <script src="{{ asset("js/defaultmenu.min.js") }}"></script>
+    <script src="{{ asset("libs/node-waves/waves.min.js") }}"></script>
+    <script src="{{ asset("js/sticky.js") }}"></script>
+    <script src="{{ asset("libs/simplebar/simplebar.min.js") }}"></script>
+    <script src="{{ asset("js/simplebar.js") }}"></script>
+    <script src="{{ asset("libs/@simonwep/pickr/pickr.es5.min.js") }}"></script>
+    <script src="{{ asset("js/custom-switcher.min.js") }}"></script>
+    <script src="{{ asset("libs/choices.js/public/assets/scripts/choices.min.js") }}"></script>
+    <script src="{{ asset("js/main.js") }}"></script>
 @endsection

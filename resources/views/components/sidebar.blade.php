@@ -44,11 +44,17 @@
                                 <span class="side-menu__label">Monitoring Aset</span>
                             </a>
                         </li>
-                        <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("assets.index", "assets.create") ? "active" : "" }}" href="{{ route("assets.index") }}">
+                        <li class="slide has-sub {{ request()->routeIs("assets.index", "assets.create", "assets.edit", "assets.show") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("assets.index", "assets.create", "assets.edit", "assets.show") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-devices side-menu__icon"></i>
                                 <span class="side-menu__label">Data Aset</span>
+                                <i class="fe fe-chevron-right side-menu__angle"></i>
                             </a>
+                            <ul class="slide-menu child1">
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("assets.index", "assets.create", "assets.edit", "assets.show") ? "active" : "" }}" href="{{ route("assets.index") }}">Semua Aset</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="slide has-sub {{ request()->routeIs("assets.category.*", "assets.brand.*", "assets.model.*", "assets.status.*", "assets.location.*") ? "open" : "" }}">
                             <a class="side-menu__item {{ request()->routeIs("assets.category.*", "assets.brand.*", "assets.model.*", "assets.status.*", "assets.location.*") ? "active" : "" }}" href="javascript:void(0);">

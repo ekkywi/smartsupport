@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\HardwareDetail;
 use App\Models\SoftwareDetail;
 use App\Models\DigitalService;
-use Dom\Attr;
 
 class Asset extends Model
 {
@@ -62,6 +61,26 @@ class Asset extends Model
                         return 'info';
                     case DigitalService::class:
                         return 'warning';
+                    default:
+                        return 'secondary';
+                }
+            },
+        );
+    }
+
+    protected function assetStatusColor(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                switch ($this->status->name) {
+                    case 'Tersedia':
+                        return 'success';
+                    case 'Dipinjam':
+                        return 'primary';
+                    case 'Dalam Perbaikan':
+                        return 'warning';
+                    case 'Dihapus':
+                        return 'danger';
                     default:
                         return 'secondary';
                 }
