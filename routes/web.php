@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Auth\Events\Login;
-use PHPUnit\Framework\Attributes\Group;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -16,12 +14,6 @@ use App\Http\Controllers\Organization\SectionController;
 use App\Http\Controllers\Organization\PositionController;
 use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
-use App\Http\Controllers\Asset\AssetController;
-use App\Http\Controllers\Asset\AssetCategoryController;
-use App\Http\Controllers\Asset\AssetBrandController;
-use App\Http\Controllers\Asset\AssetStatusController;
-use App\Http\Controllers\Asset\AssetLocationController;
-use App\Http\Controllers\Asset\AssetModelController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -49,54 +41,6 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Asset Management
-    Route::middleware(['auth', 'can:manage_assets'])->group(function () {
-        // Asset
-        Route::get('/aset', [AssetController::class, 'index'])->name('assets.index');
-        Route::get('/aset/tambah', [AssetController::class, 'create'])->name('assets.create');
-        Route::post('/aset', [AssetController::class, 'store'])->name('assets.store');
-        Route::get('/aset/{asset}/edit', [AssetController::class, 'edit'])->name('assets.edit');
-        Route::put('/aset/{asset}', [AssetController::class, 'update'])->name('assets.update');
-        Route::delete('/aset/{asset}', [AssetController::class, 'destroy'])->name('assets.destroy');
-        Route::get('/aset/{asset}', [AssetController::class, 'show'])->name('assets.show');
-
-        // Asset Categories
-        Route::get('/kategori-aset', [AssetCategoryController::class, 'index'])->name('assets.category.index');
-        Route::post('/kategori-aset', [AssetCategoryController::class, 'store'])->name('assets.category.store');
-        Route::get('/kategori-aset/{asset_category}/edit', [AssetCategoryController::class, 'edit'])->name('assets.category.edit');
-        Route::put('/kategori-aset/{asset_category}', [AssetCategoryController::class, 'update'])->name('assets.category.update');
-        Route::delete('/kategori-aset/{asset_category}', [AssetCategoryController::class, 'destroy'])->name('assets.category.destroy');
-
-        // Asset Brands
-        Route::get('/merk-aset', [AssetBrandController::class, 'index'])->name('assets.brand.index');
-        Route::post('/merk-aset', [AssetBrandController::class, 'store'])->name('assets.brand.store');
-        Route::get('/merk-aset/{asset_brand}/edit', [AssetBrandController::class, 'edit'])->name('assets.brand.edit');
-        Route::put('/merk-aset/{asset_brand}', [AssetBrandController::class, 'update'])->name('assets.brand.update');
-        Route::delete('/merk-aset/{asset_brand}', [AssetBrandController::class, 'destroy'])->name('assets.brand.destroy');
-
-        // Asset Models
-        Route::get('/model-aset', [AssetModelController::class, 'index'])->name('assets.model.index');
-        Route::get('/model-aset/tambah', [AssetModelController::class, 'create'])->name('assets.model.create');
-        Route::post('/model-aset', [AssetModelController::class, 'store'])->name('assets.model.store');
-        Route::get('/model-aset/{asset_model}/edit', [AssetModelController::class, 'edit'])->name('assets.model.edit');
-        Route::put('/model-aset/{asset_model}', [AssetModelController::class, 'update'])->name('assets.model.update');
-        Route::delete('/model-aset/{asset_model}', [AssetModelController::class, 'destroy'])->name('assets.model.destroy');
-
-        // Asset Statuses
-        Route::get('/status-aset', [AssetStatusController::class, 'index'])->name('assets.status.index');
-        Route::post('/status-aset', [AssetStatusController::class, 'store'])->name('assets.status.store');
-        Route::get('/status-aset/{asset_status}/edit', [AssetStatusController::class, 'edit'])->name('assets.status.edit');
-        Route::put('/status-aset/{asset_status}', [AssetStatusController::class, 'update'])->name('assets.status.update');
-        Route::delete('/status-aset/{asset_status}', [AssetStatusController::class, 'destroy'])->name('assets.status.destroy');
-
-        // Asset Locations
-        Route::get('/lokasi-aset', [AssetLocationController::class, 'index'])->name('assets.location.index');
-        Route::post('/lokasi-aset', [AssetLocationController::class, 'store'])->name('assets.location.store');
-        Route::get('/lokasi-aset/{asset_location}/edit', [AssetLocationController::class, 'edit'])->name('assets.location.edit');
-        Route::put('/lokasi-aset/{asset_location}', [AssetLocationController::class, 'update'])->name('assets.location.update');
-        Route::delete('/lokasi-aset/{asset_location}', [AssetLocationController::class, 'destroy'])->name('assets.location.destroy');
-    });
 
     // User Management
     Route::middleware(['auth', 'can:manage_users'])->group(function () {
