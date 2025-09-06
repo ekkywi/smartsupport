@@ -14,6 +14,7 @@ use App\Http\Controllers\Organization\SectionController;
 use App\Http\Controllers\Organization\PositionController;
 use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
+use App\Http\Controllers\AssetStatus\AssetStatusController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -41,6 +42,15 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/aset-status', [AssetStatusController::class, 'index'])->name('asset-status.index');
+        Route::get('/aset-status/tambah', [AssetStatusController::class, 'create'])->name('asset-status.create');
+        Route::post('/aset-status', [AssetStatusController::class, 'store'])->name('asset-status.store');
+        Route::get('/aset-status/{assetStatus}/edit', [AssetStatusController::class, 'edit'])->name('asset-status.edit');
+        Route::put('/aset-status/{assetStatus}', [AssetStatusController::class, 'update'])->name('asset-status.update');
+        Route::delete('/aset-status/{assetStatus}', [AssetStatusController::class, 'destroy'])->name('asset-status.destroy');
+    });
 
     // User Management
     Route::middleware(['auth', 'can:manage_users'])->group(function () {

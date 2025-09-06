@@ -32,6 +32,49 @@
                     </a>
                 </li>
 
+                <li class="slide__category">
+                    <span class="category-name">Master Data Aset</span>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs("asset-status*") ? "active" : "" }}" href="{{ route("asset-status.index") }}">
+                        <i class="bx bx-info-circle side-menu__icon"></i>
+                        <span class="side-menu__label">Status Aset</span>
+                    </a>
+                </li>
+                <li class="slide has-sub">
+                    <a class="side-menu__item" href="javascript:void(0);">
+                        <i class="bx bxs-component side-menu__icon"></i>
+                        <span class="side-menu__label">Komponen</span>
+                        <i class="fe fe-chevron-right side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu child1">
+                        <li class="slide">
+                            <a class="side-menu__item" href="#">Data Komponen</a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item" href="#">Jenis Komponen</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="slide has-sub">
+                    <a class="side-menu__item" href="javascript:void(0);">
+                        <i class="bx bx-devices side-menu__icon"></i>
+                        <span class="side-menu__label">Hardware</span>
+                        <i class="fe fe-chevron-right side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu child1">
+                        <li class="slide">
+                            <a class="side-menu__item" href="#">Data Hardware</a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item" href="#">Jenis Hardware</a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item" href="#">Model Hardware</a>
+                        </li>
+                    </ul>
+                </li>
+
                 @canany(["manage_users", "manage_organizations", "manage_tokens", "manage_administrations"])
                     <li class="slide__category">
                         <span class="category-name">Manajemen Aplikasi</span>
