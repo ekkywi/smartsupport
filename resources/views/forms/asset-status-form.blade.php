@@ -121,7 +121,7 @@
     <script>
         function clearFormInputs() {
             document.getElementById('name').value = '';
-            document.getElementById('asset_status_code').value = '';
+            document.getElementById('asset_status_tag').value = '';
             document.getElementById('description').value = '';
         }
 

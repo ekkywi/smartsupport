@@ -29,9 +29,9 @@ class AssetStatusController extends Controller
             ],
             [
                 'name.required' => 'Nama status aset wajib diisi.',
-                'name.unique' => 'Nama status aset sudah ada.',
+                'name.unique' => 'Nama status aset sudah ada, atau pulihkan status aset yang terhapus.',
                 'asset_status_tag.required' => 'Tag status aset wajib diisi.',
-                'asset_status_tag.unique' => 'Tag status aset sudah ada.',
+                'asset_status_tag.unique' => 'Tag status aset sudah ada, atau pulihkan status aset yang terhapus.',
             ]
         );
 
@@ -59,9 +59,9 @@ class AssetStatusController extends Controller
             ],
             [
                 'name.required' => 'Nama status aset wajib diisi.',
-                'name.unique' => 'Nama status aset sudah ada.',
+                'name.unique' => 'Nama status aset sudah ada, atau pulihkan status aset yang terhapus.',
                 'asset_status_tag.required' => 'Tag status aset wajib diisi.',
-                'asset_status_tag.unique' => 'Tag status aset sudah ada.',
+                'asset_status_tag.unique' => 'Tag status aset sudah ada, atau pulihkan status aset yang terhapus.',
             ]
         );
 
@@ -78,5 +78,25 @@ class AssetStatusController extends Controller
     {
         $assetStatus->delete();
         return redirect()->route('asset-status.index')->with('success', 'Status aset berhasil dihapus.');
+    }
+
+    public function trashed()
+    {
+        $trashedAssetStatuses = AssetStatus::onlyTrashed()->get();
+        return view('contents.asset-status-trashed', compact('trashedAssetStatuses'));
+    }
+
+    public function restore($id)
+    {
+        $assetStatus = AssetStatus::onlyTrashed()->findOrFail($id);
+        $assetStatus->restore();
+        return redirect()->route('asset-status.trashed')->with('success', 'Status aset berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id)
+    {
+        $assetStatus = AssetStatus::onlyTrashed()->findOrFail($id);
+        $assetStatus->forceDelete();
+        return redirect()->route('asset-status.trashed')->with('success', 'Status aset berhasil dihapus secara permanen.');
     }
 }

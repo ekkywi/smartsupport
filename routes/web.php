@@ -50,6 +50,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/aset-status/{assetStatus}/edit', [AssetStatusController::class, 'edit'])->name('asset-status.edit');
         Route::put('/aset-status/{assetStatus}', [AssetStatusController::class, 'update'])->name('asset-status.update');
         Route::delete('/aset-status/{assetStatus}', [AssetStatusController::class, 'destroy'])->name('asset-status.destroy');
+        Route::get('/aset-status/trash', [AssetStatusController::class, 'trashed'])->name('asset-status.trashed');
+        Route::post('/aset-status/{id}/restore', [AssetStatusController::class, 'restore'])->name('asset-status.restore');
+        Route::delete('/aset-status/{id}/force-delete', [AssetStatusController::class, 'forceDelete'])->name('asset-status.force-delete');
     });
 
     // User Management
