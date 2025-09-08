@@ -2,15 +2,13 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use App\Models\AssetStatus;
+use App\Models\AssetStatusLog;
 
 class AssetStatusSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $assetStatuses = [
@@ -46,14 +44,23 @@ class AssetStatusSeeder extends Seeder
             ],
         ];
 
-        foreach ($assetStatuses as $status) {
-            AssetStatus::updateOrCreate(
-                ['name' => $status['name']],
-                [
-                    'asset_status_tag' => $status['asset_status_tag'],
-                    'description' => $status['description']
-                ]
-            );
+        $user = User::first();
+
+        foreach ($assetStatuses as $statusData) {
+
+            $status = AssetStatus::create($statusData);
+
+            AssetStatusLog::create([
+                'user_id' => $user ? $user->id : null,
+                'asset_status_id' => $status->id,
+                'action' => 'created',
+                'data' => json_encode([
+                    'message' => 'Inisialisasi data status aset: ' . $status->name,
+                    'name' => $status->name,
+                    'asset_status_tag' => $status->asset_status_tag,
+                    'description' => $status->description,
+                ]),
+            ]);
         }
     }
 }

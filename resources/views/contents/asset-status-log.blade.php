@@ -78,7 +78,7 @@
                                             Tidak diketahui
                                         @endif
                                     </td>
-                                    <td>{{ $log->assetStatus->name }}</td>
+                                    <td>{{ $log->assetStatus->name ?? "Tidak diketahui" }}</td>
                                     </tr>
                                 @endforeach
 

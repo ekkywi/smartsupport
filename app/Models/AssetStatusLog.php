@@ -18,7 +18,7 @@ class AssetStatusLog extends Model
 
     public function assetStatus()
     {
-        return $this->belongsTo(AssetStatus::class);
+        return $this->belongsTo(AssetStatus::class)->withTrashed();
     }
 
     public function user()
