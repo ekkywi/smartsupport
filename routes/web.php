@@ -15,6 +15,7 @@ use App\Http\Controllers\Organization\PositionController;
 use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
 use App\Http\Controllers\AssetStatus\AssetStatusController;
+use App\Http\Controllers\SystemLog\AssetStatusLogController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -44,15 +45,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware(['auth'])->group(function () {
-        Route::get('/aset-status', [AssetStatusController::class, 'index'])->name('asset-status.index');
-        Route::get('/aset-status/tambah', [AssetStatusController::class, 'create'])->name('asset-status.create');
-        Route::post('/aset-status', [AssetStatusController::class, 'store'])->name('asset-status.store');
-        Route::get('/aset-status/{assetStatus}/edit', [AssetStatusController::class, 'edit'])->name('asset-status.edit');
-        Route::put('/aset-status/{assetStatus}', [AssetStatusController::class, 'update'])->name('asset-status.update');
-        Route::delete('/aset-status/{assetStatus}', [AssetStatusController::class, 'destroy'])->name('asset-status.destroy');
-        Route::get('/aset-status/trash', [AssetStatusController::class, 'trashed'])->name('asset-status.trashed');
-        Route::post('/aset-status/{id}/restore', [AssetStatusController::class, 'restore'])->name('asset-status.restore');
-        Route::delete('/aset-status/{id}/force-delete', [AssetStatusController::class, 'forceDelete'])->name('asset-status.force-delete');
+        Route::get('/aset-status', [AssetStatusController::class, 'index'])->name('asset.status.index');
+        Route::get('/aset-status/tambah', [AssetStatusController::class, 'create'])->name('asset.status.create');
+        Route::post('/aset-status', [AssetStatusController::class, 'store'])->name('asset.status.store');
+        Route::get('/aset-status/{assetStatus}/edit', [AssetStatusController::class, 'edit'])->name('asset.status.edit');
+        Route::put('/aset-status/{assetStatus}', [AssetStatusController::class, 'update'])->name('asset.status.update');
+        Route::delete('/aset-status/{assetStatus}', [AssetStatusController::class, 'destroy'])->name('asset.status.destroy');
+        Route::get('/aset-status/trash', [AssetStatusController::class, 'trashed'])->name('asset.status.trashed');
+        Route::post('/aset-status/{id}/restore', [AssetStatusController::class, 'restore'])->name('asset.status.restore');
+        Route::delete('/aset-status/{id}/force-delete', [AssetStatusController::class, 'forceDelete'])->name('asset.status.force.delete');
     });
 
     // User Management
@@ -110,5 +111,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/token-pengguna', [TokenController::class, 'index'])->name('users.token.index');
         Route::get('/token-pengguna/{user}/tokens', [TokenController::class, 'show'])->name('users.token.show');
         Route::post('/token-pengguna/{user}/tokens/generate', [TokenController::class, 'generateToken'])->name('users.token.generate');
+    });
+
+    // System Log
+    Route::middleware(['auth'])->group(function () {
+        // Asset Status Log
+        Route::get('/log-status-aset', [AssetStatusLogController::class, 'index'])->name('asset.status.log.index');
     });
 });

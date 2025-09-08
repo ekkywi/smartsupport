@@ -29,7 +29,7 @@
         </div>
 
         <div class="mb-3 d-flex flex-wrap gap-2">
-            <a class="btn btn-secondary mt-3" href="{{ route("asset-status.index") }}">
+            <a class="btn btn-secondary mt-3" href="{{ route("asset.status.index") }}">
                 <i class="ti ti-arrow-left"></i> Kembali ke Data Status Asset
             </a>
         </div>
@@ -71,13 +71,13 @@
                                         <td>{{ $status->description }}</td>
                                         <td>{{ $status->deleted_at ? $status->deleted_at->format("d-m-Y H:i") : "-" }}</td>
                                         <td>
-                                            <form action="{{ route("asset-status.restore", $status->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route("asset.status.restore", $status->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 <button class="btn btn-success btn-sm" type="submit">
                                                     <i class="ti ti-history"></i> Restore
                                                 </button>
                                             </form>
-                                            <form action="{{ route("asset-status.force-delete", $status->id) }}" id="delete-form-{{ $status->id }}" method="POST" style="display: none;">
+                                            <form action="{{ route("asset.status.force.delete", $status->id) }}" id="delete-form-{{ $status->id }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>

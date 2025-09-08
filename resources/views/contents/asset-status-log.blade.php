@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Data Jabatan
+    SmartSupport &mdash; Log Status Aset
 @endsection
 
 @section("styles")
@@ -24,35 +24,23 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Status Aset</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Log Status Aset</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item">Master Data Aset</li>
-                        <li aria-current="page" class="breadcrumb-item active">Status Aset</li>
+                        <li class="breadcrumb-item">Laporan</li>
+                        <li class="breadcrumb-item">Log Sistem</li>
+                        <li aria-current="page" class="breadcrumb-item active">Log Status Aset</li>
                     </ol>
                 </nav>
             </div>
         </div>
-
-        <div class="mb-3 d-flex flex-wrap gap-2">
-            <a class="btn btn-success" href="{{ route("asset.status.create") }}">
-                <i class="ti ti-plus"></i> Tambah Status Aset
-            </a>
-            <a class="btn btn-primary" href="{{ route("asset.status.trashed") }}">
-                <i class="ti ti-refresh"></i> Pulihkan Data
-            </a>
-            <a class="btn btn-info" href="#">
-                <i class="ti ti-file-export"></i> Ekspor Data
-            </a>
-        </div>
-
         <div class="row">
             <div class="col-xl-12">
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Daftar Status Aset
+                            Data Log Status Aset
                         </div>
                     </div>
                     <div class="card-body">
@@ -62,36 +50,38 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Tag Status Aset</th>
-                                    <th>Deskripsi</th>
-                                    <th>Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>Jam</th>
+                                    <th>Nama Pengguna</th>
+                                    <th>Aksi Pengguna</th>
+                                    <th>Nama Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($assetStatuses as $assetStatus)
-                                    <tr>
-                                        <td>{{ $assetStatus->name }}</td>
-                                        <td>{{ $assetStatus->asset_status_tag }}</td>
-                                        <td>{{ $assetStatus->description }}</td>
-                                        <td>
-                                            <a class="btn btn-sm btn-primary" href="{{ route("asset.status.edit", $assetStatus) }}"><i class="ti ti-pencil"></i> Edit</a>
-                                            <button class="btn btn-sm btn-danger delete-btn" data-asset-status-id="{{ $assetStatus->id }}" type="button"><i class="ti ti-trash me-1"></i>
-                                                Hapus
-                                            </button>
-                                            <form action="{{ route("asset.status.destroy", $assetStatus) }}" id="delete-form-{{ $assetStatus->id }}" method="POST" style="display: none;">
-                                                @csrf
-                                                @method("DELETE")
-                                            </form>
-                                        </td>
+                                @foreach ($assetStatusLogs as $log)
+                                    <td>{{ $log->created_at->format("d M Y") }}</td>
+                                    <td>{{ $log->created_at->format("H:i:s") }}</td>
+                                    <td>{{ $log->user->name }}</td>
+                                    <td>
+                                        @if ($log->action == "created")
+                                            Membuat
+                                        @elseif ($log->action == "updated")
+                                            Memperbarui
+                                        @elseif ($log->action == "deleted")
+                                            Menghapus
+                                        @elseif ($log->action == "restored")
+                                            Mengembalikan
+                                        @else
+                                            Tidak diketahui
+                                        @endif
+                                    </td>
+                                    <td>{{ $log->assetStatus->name }}</td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td class="text-center" colspan="6">Tidak ada data status aset.</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -137,11 +127,6 @@
                         let title = $(column.header()).text();
                         let cell = $('#filters th').eq(column.index());
 
-                        if (title === 'Aksi') {
-                            cell.html('');
-                            return;
-                        }
-
                         let input = $('<input type="text" class="form-control form-control-sm" placeholder="Filter ' + title + '" />')
                             .appendTo(cell)
                             .on('keyup change clear', function() {
@@ -154,54 +139,4 @@
             });
         });
     </script>
-    <script>
-        $(document).on('click', '.delete-btn', function(e) {
-            e.preventDefault();
-            var assetStatusId = $(this).data('assetStatus-id');
-            Swal.fire({
-                title: "Apakah Anda yakin?",
-                text: "Data ini akan dihapus!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Hapus",
-                cancelButtonText: "Batal",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById("delete-form-" + assetStatusId).submit();
-                }
-            });
-        });
-    </script>
-    @if (session("success"))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session("success") }}',
-                timer: 2500,
-                showConfirmButton: false
-            });
-        </script>
-    @endif
-    @if (session("error"))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal!',
-                text: '{{ session("error") }}',
-            });
-        </script>
-    @endif
-    @if ($errors->any())
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal!',
-                html: `{!! implode("<br>", $errors->all()) !!}`,
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
 @endsection

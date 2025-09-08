@@ -35,18 +35,15 @@
                 <li class="slide__category">
                     <span class="category-name">Master Data Aset</span>
                 </li>
-                <li class="slide has-sub {{ request()->routeIs("asset-status*") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("asset-status*") ? "active" : "" }}" href="javascript:void(0);">
+                <li class="slide has-sub {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "open" : "" }}">
+                    <a class="side-menu__item {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "active" : "" }}" href="javascript:void(0);">
                         <i class="bx bx-info-circle side-menu__icon"></i>
                         <span class="side-menu__label">Status Aset</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1">
                         <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("asset-status*") ? "active" : "" }}" href="{{ route("asset-status.index") }}">Data Status Aset</a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item" href="#">Log Status Aset</a>
+                            <a class="side-menu__item {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "active" : "" }}" href="{{ route("asset.status.index") }}">Data Status Aset</a>
                         </li>
                     </ul>
                 </li>
@@ -159,6 +156,22 @@
                         </li>
                     @endcan
                 @endcanany
+
+                <li class="slide__category">
+                    <span class="category-name">Laporan</span>
+                </li>
+                <li class="slide has-sub {{ request()->routeIs("asset.status.log.*") ? "open" : "" }}">
+                    <a class="side-menu__item {{ request()->routeIs("asset.status.log.*") ? "active" : "" }}" href="javascript:void(0);">
+                        <i class="bx bx-book-content side-menu__icon"></i>
+                        <span class="side-menu__label">Log Sistem</span>
+                        <i class="fe fe-chevron-right side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu child1">
+                        <li class="slide">
+                            <a class="side-menu__item {{ request()->routeIs("asset.status.log.index") ? "active" : "" }}" href="{{ route("asset.status.log.index") }}">Status Aset</a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
             <div class="slide-right" id="slide-right"><svg fill="#7b8191" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">

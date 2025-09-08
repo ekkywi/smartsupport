@@ -49,7 +49,7 @@ class AssetStatusController extends Controller
             'data' => json_encode($assetStatus->toArray()),
         ]);
 
-        return redirect()->route('asset-status.index')->with('success', 'Status aset berhasil ditambahkan.');
+        return redirect()->route('asset.status.index')->with('success', 'Status aset berhasil ditambahkan.');
     }
 
     public function edit(AssetStatus $assetStatus)
@@ -86,7 +86,7 @@ class AssetStatusController extends Controller
             'data' => json_encode($assetStatus->toArray()),
         ]);
 
-        return redirect()->route('asset-status.index')->with('success', 'Status aset berhasil diperbarui.');
+        return redirect()->route('asset.status.index')->with('success', 'Status aset berhasil diperbarui.');
     }
 
     public function destroy(AssetStatus $assetStatus)
@@ -100,7 +100,7 @@ class AssetStatusController extends Controller
             'data' => json_encode($assetStatus->toArray()),
         ]);
 
-        return redirect()->route('asset-status.index')->with('success', 'Status aset berhasil dihapus.');
+        return redirect()->route('asset.status.index')->with('success', 'Status aset berhasil dihapus.');
     }
 
     public function trashed()
@@ -121,13 +121,13 @@ class AssetStatusController extends Controller
             'data' => json_encode($assetStatus->toArray()),
         ]);
 
-        return redirect()->route('asset-status.trashed')->with('success', 'Status aset berhasil dipulihkan.');
+        return redirect()->route('asset.status.trashed')->with('success', 'Status aset berhasil dipulihkan.');
     }
 
     public function forceDelete($id)
     {
         $assetStatus = AssetStatus::onlyTrashed()->findOrFail($id);
         $assetStatus->forceDelete();
-        return redirect()->route('asset-status.trashed')->with('success', 'Status aset berhasil dihapus secara permanen.');
+        return redirect()->route('asset.status.trashed')->with('success', 'Status aset berhasil dihapus secara permanen.');
     }
 }

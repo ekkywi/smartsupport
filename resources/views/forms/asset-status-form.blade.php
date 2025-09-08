@@ -43,7 +43,7 @@
                                     Form {{ isset($assetStatus) ? "Edit" : "Tambah" }} Status Asset
                                 </div>
                             </div>
-                            <form action="{{ isset($assetStatus) ? route("asset-status.update", $assetStatus->id) : route("asset-status.store") }}" autocomplete="off" class="row gy-4" method="POST">
+                            <form action="{{ isset($assetStatus) ? route("asset.status.update", $assetStatus->id) : route("asset.status.store") }}" autocomplete="off" class="row gy-4" method="POST">
                                 @csrf
                                 @if (isset($assetStatus))
                                     @method("PUT")
@@ -126,7 +126,7 @@
         }
 
         function goToIndex() {
-            window.location.href = "{{ route("asset-status.index") }}";
+            window.location.href = "{{ route("asset.status.index") }}";
         }
     </script>
 @endsection
