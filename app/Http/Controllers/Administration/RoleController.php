@@ -17,8 +17,8 @@ class RoleController extends Controller
 
     public function create()
     {
-        $permissions = Permission::all();
-        return view('forms.administration-role-form', compact('permissions'));
+        $permissionGroups = Permission::all()->groupBy('group');
+        return view('forms.administration-role-form', compact('permissionGroups'));
     }
 
     public function store(Request $request)
@@ -47,8 +47,8 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        $permissions = Permission::all();
-        return view('forms.administration-role-form', compact('role', 'permissions'));
+        $permissionGroups = Permission::all()->groupBy('group');
+        return view('forms.administration-role-form', compact('role', 'permissionGroups'));
     }
 
     public function update(Request $request, Role $role)

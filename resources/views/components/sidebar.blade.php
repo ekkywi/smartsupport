@@ -32,21 +32,26 @@
                     </a>
                 </li>
 
-                <li class="slide__category">
-                    <span class="category-name">Master Data Aset</span>
-                </li>
-                <li class="slide has-sub {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "active" : "" }}" href="javascript:void(0);">
-                        <i class="bx bx-info-circle side-menu__icon"></i>
-                        <span class="side-menu__label">Status Aset</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide">
-                            <a class="side-menu__item {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "active" : "" }}" href="{{ route("asset.status.index") }}">Data Status Aset</a>
+                @canany(["manage_asset_statuses"])
+                    <li class="slide__category">
+                        <span class="category-name">Master Data Aset</span>
+                    </li>
+
+                    @can(["manage_asset_statuses"])
+                        <li class="slide has-sub {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "active" : "" }}" href="javascript:void(0);">
+                                <i class="bx bx-info-circle side-menu__icon"></i>
+                                <span class="side-menu__label">Status Aset</span>
+                                <i class="fe fe-chevron-right side-menu__angle"></i>
+                            </a>
+                            <ul class="slide-menu child1">
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("asset.status.index", "asset.status.create", "asset.status.edit", "asset.status.trashed") ? "active" : "" }}" href="{{ route("asset.status.index") }}">Data Status Aset</a>
+                                </li>
+                            </ul>
                         </li>
-                    </ul>
-                </li>
+                    @endcan()
+                @endcanany
 
                 <li class="slide has-sub">
                     <a class="side-menu__item" href="javascript:void(0);">

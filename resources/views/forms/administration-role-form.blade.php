@@ -40,7 +40,7 @@
                         <div class="row gy-4">
                             <div class="card-header justify-content-between">
                                 <div class="card-title">
-                                    {{ isset($role) ? "Edit" : "Tambah" }} Peran
+                                    Form {{ isset($role) ? "Edit" : "Tambah" }} Peran
                                 </div>
                             </div>
                             <form action="{{ isset($role) ? route("roles.update", $role->id) : route("roles.store") }}" method="POST">
@@ -65,25 +65,33 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    <div class="col-12 mt-4 pt-3 border-top">
-                                        <h5 class="fw-semibold mb-3">Hak Akses (Permissions)</h5>
-                                        <div class="row">
-                                            @forelse ($permissions as $permission)
-                                                <div class="col-md-4 mb-2">
-                                                    <div class="form-check">
-                                                        <input @if (isset($role) && $role->permissions->contains($permission)) checked @endif class="form-check-input" id="perm-{{ $permission->id }}" name="permissions[]" type="checkbox" value="{{ $permission->id }}">
-                                                        <label class="form-check-label" for="perm-{{ $permission->id }}">
-                                                            <span class="fw-semibold">{{ $permission->code_name }}</span> <br>
-                                                            <small class="text-muted">{{ $permission->description }}</small>
-                                                        </label>
+                                    <div class="card-header justify-content-between mt-4">
+                                        <div class="card-title">
+                                            Form Hak Akses
+                                        </div>
+                                        <div class="col-12 mt-4 pt-3 border-top">
+                                            @foreach ($permissionGroups as $groupName => $permissions)
+                                                <div class="mb-4">
+                                                    <h6 class="fw-bold mb-3 text-primary">
+                                                        <i class="bi bi-shield-lock me-2"></i>{{ $groupName }}
+                                                    </h6>
+                                                    <div class="row g-3">
+                                                        @foreach ($permissions as $permission)
+                                                            <div class="col-md-4 col-sm-6">
+                                                                <div class="form-check form-switch py-2">
+                                                                    <input {{ (isset($role) && $role->permissions->contains($permission->id)) || (is_array(old("permissions")) && in_array($permission->id, old("permissions"))) ? "checked" : "" }} class="form-check-input" id="permission_{{ $permission->id }}" name="permissions[]" type="checkbox" value="{{ $permission->id }}">
+                                                                    <label class="form-check-label fw-semibold ms-2" for="permission_{{ $permission->id }}">
+                                                                        {{ $permission->code_name }}
+                                                                    </label>
+                                                                    <div class="text-muted small ms-2">
+                                                                        {{ $permission->description }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
                                                 </div>
-                                            @empty
-                                                <div class="col-12">
-                                                    <p class="text-muted">Tidak ada jenis izin yang tersedia.</p>
-                                                </div>
-                                            @endforelse
+                                            @endforeach
                                         </div>
                                     </div>
 

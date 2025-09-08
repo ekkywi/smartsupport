@@ -12,6 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->unique();
             $table->string('code_name')->unique();
+            $table->string('group')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
         });

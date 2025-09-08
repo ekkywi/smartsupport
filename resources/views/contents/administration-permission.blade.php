@@ -55,10 +55,12 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                         <tr>
                             <th scope="col">Nama Hak Akses (Kode)</th>
                             <th scope="col">Deksripsi Hak Akses</th>
+                            <th scope="col">Grup</th>
                             <th scope="col">Diberikan Kepada Peran</th>
                         </tr>
                     </thead>
@@ -70,6 +72,9 @@
                                 </td>
                                 <td>
                                     <i>{{ $permission->description }}</i>
+                                </td>
+                                <td>
+                                    {{ $permission->group ?? "Tidak Diketahui" }}
                                 </td>
                                 <td>
                                     @forelse ($permission->roles as $role)
