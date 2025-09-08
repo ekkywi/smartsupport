@@ -16,4 +16,9 @@ class AssetStatus extends Model
         'asset_status_tag',
         'description',
     ];
+
+    public function logs()
+    {
+        return $this->hasMany(AssetStatusLog::class);
+    }
 }

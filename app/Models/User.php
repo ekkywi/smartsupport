@@ -80,6 +80,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function assetStatusLogs()
+    {
+        return $this->hasMany(AssetStatusLog::class);
+    }
+
     protected function latestToken(): Attribute
     {
         return Attribute::make(

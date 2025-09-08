@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetStatus;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssetStatus;
+use App\Models\AssetStatusLog;
 use Illuminate\Http\Request;
 
 class AssetStatusController extends Controller
@@ -35,10 +36,17 @@ class AssetStatusController extends Controller
             ]
         );
 
-        AssetStatus::create([
+        $assetStatus = AssetStatus::create([
             'name' => $request->name,
             'asset_status_tag' => $request->asset_status_tag,
             'description' => $request->description,
+        ]);
+
+        AssetStatusLog::create([
+            'asset_status_id' => $assetStatus->id,
+            'user_id' => auth()->id(),
+            'action' => 'created',
+            'data' => json_encode($assetStatus->toArray()),
         ]);
 
         return redirect()->route('asset-status.index')->with('success', 'Status aset berhasil ditambahkan.');
@@ -71,12 +79,27 @@ class AssetStatusController extends Controller
             'description' => $request->description,
         ]);
 
+        AssetStatusLog::create([
+            'asset_status_id' => $assetStatus->id,
+            'user_id' => auth()->id(),
+            'action' => 'updated',
+            'data' => json_encode($assetStatus->toArray()),
+        ]);
+
         return redirect()->route('asset-status.index')->with('success', 'Status aset berhasil diperbarui.');
     }
 
     public function destroy(AssetStatus $assetStatus)
     {
         $assetStatus->delete();
+
+        AssetStatusLog::create([
+            'asset_status_id' => $assetStatus->id,
+            'user_id' => auth()->id(),
+            'action' => 'deleted',
+            'data' => json_encode($assetStatus->toArray()),
+        ]);
+
         return redirect()->route('asset-status.index')->with('success', 'Status aset berhasil dihapus.');
     }
 
@@ -90,6 +113,14 @@ class AssetStatusController extends Controller
     {
         $assetStatus = AssetStatus::onlyTrashed()->findOrFail($id);
         $assetStatus->restore();
+
+        AssetStatusLog::create([
+            'asset_status_id' => $assetStatus->id,
+            'user_id' => auth()->id(),
+            'action' => 'restored',
+            'data' => json_encode($assetStatus->toArray()),
+        ]);
+
         return redirect()->route('asset-status.trashed')->with('success', 'Status aset berhasil dipulihkan.');
     }
 
