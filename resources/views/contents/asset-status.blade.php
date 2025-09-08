@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Data Jabatan
+    SmartSupport &mdash; Data Status Aset
 @endsection
 
 @section("styles")
@@ -29,7 +29,8 @@
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item">Master Data Aset</li>
-                        <li aria-current="page" class="breadcrumb-item active">Status Aset</li>
+                        <li class="breadcrumb-item">Status Aset</li>
+                        <li aria-current="page" class="breadcrumb-item active">Data Status Aset</li>
                     </ol>
                 </nav>
             </div>

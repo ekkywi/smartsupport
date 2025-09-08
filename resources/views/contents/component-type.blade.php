@@ -1,37 +1,46 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Data Status Asset Terhapus
+    SmartSupport &mdash; Data Jenis Komponen
 @endsection
 
 @section("styles")
+    {{-- main styles --}}
     <link href="{{ asset("images/brand-logos/favicon.ico") }}" rel="icon" type="image/x-icon">
     <link href="{{ asset("libs/bootstrap/css/bootstrap.min.css") }}" id="style" rel="stylesheet">
     <link href="{{ asset("css/styles.min.css") }}" rel="stylesheet">
     <link href="{{ asset("css/icons.css") }}" rel="stylesheet">
     <link href="{{ asset("libs/node-waves/waves.min.css") }}" rel="stylesheet">
     <link href="{{ asset("libs/simplebar/simplebar.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("libs/flatpickr/flatpickr.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("libs/@simonwep/pickr/themes/nano.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("libs/choices.js/public/assets/styles/choices.min.css") }}" rel="stylesheet">
+    {{-- content styles --}}
+    <link href="{{ asset("libs/datatables/css/dataTables.bootstrap5.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("libs/datatables/css/responsive.bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("libs/datatables/css/buttons.bootstrap5.min.css") }}" rel="stylesheet">
 @endsection
 
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Status Asset Terhapus (Trash)</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Status Aset</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item">Master Data Aset</li>
-                        <li class="breadcrumb-item">Status Asset</li>
-                        <li class="breadcrumb-item">Data Status Asset</li>
-                        <li class="breadcrumb-item active">Data Aset Terhapus</li>
+                        <li aria-current="page" class="breadcrumb-item active">Status Aset</li>
                     </ol>
                 </nav>
             </div>
         </div>
 
         <div class="mb-3 d-flex flex-wrap gap-2">
-            <a class="btn btn-secondary mt-3" href="{{ route("asset.status.index") }}">
-                <i class="ti ti-arrow-left"></i> Kembali ke Data Status Asset
+            <a class="btn btn-success" href="#">
+                <i class="ti ti-plus"></i> Tambah Jenis Komponen
+            </a>
+            <a class="btn btn-primary" href="#">
+                <i class="ti ti-refresh"></i> Pulihkan Data
             </a>
         </div>
 
@@ -40,7 +49,7 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Daftar Status Aset Terhapus
+                            Daftar Jenis Komponen
                         </div>
                     </div>
                     <div class="card-body">
@@ -50,48 +59,16 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
                                 </tr>
                                 <tr>
-                                    <th>No</th>
                                     <th>Nama</th>
-                                    <th>Tag Status Aset</th>
+                                    <th>Tag Jenis Komponen</th>
                                     <th>Deskripsi</th>
-                                    <th>Dihapus Pada</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($trashedAssetStatuses as $status)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $status->name }}</td>
-                                        <td>{{ $status->asset_status_tag }}</td>
-                                        <td>{{ $status->description }}</td>
-                                        <td>{{ $status->deleted_at ? $status->deleted_at->format("d-m-Y H:i") : "-" }}</td>
-                                        <td>
-                                            <form action="{{ route("asset.status.restore", $status->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                <button class="btn btn-success btn-sm" type="submit">
-                                                    <i class="ti ti-history"></i> Restore
-                                                </button>
-                                            </form>
-                                            <form action="{{ route("asset.status.force.delete", $status->id) }}" id="delete-form-{{ $status->id }}" method="POST" style="display: none;">
-                                                @csrf
-                                                @method("DELETE")
-                                            </form>
-                                            <button class="btn btn-danger btn-sm delete-btn" data-assetstatus-id="{{ $status->id }}">
-                                                <i class="ti ti-trash"></i> Hapus Permanen
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td class="text-center" colspan="6">Tidak ada data status asset yang terhapus.</td>
-                                    </tr>
-                                @endforelse
+
                             </tbody>
                         </table>
                     </div>
@@ -152,23 +129,25 @@
                     });
                 }
             });
-            $(document).on('click', '.delete-btn', function(e) {
-                e.preventDefault();
-                var assetStatusId = $(this).data('assetstatus-id');
-                Swal.fire({
-                    title: "Apakah Anda yakin?",
-                    text: "Data yang dihapus tidak dapat dipulihkan!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#d33",
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Hapus",
-                    cancelButtonText: "Batal",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById("delete-form-" + assetStatusId).submit();
-                    }
-                });
+        });
+    </script>
+    <script>
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var componentTypeId = $(this).data('componentType-id');
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data ini akan dihapus!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Hapus",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("delete-form-" + componentTypeId).submit();
+                }
             });
         });
     </script>

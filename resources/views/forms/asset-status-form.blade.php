@@ -25,8 +25,9 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item">Management</li>
-                        <li class="breadcrumb-item">Data Status Asset</li>
+                        <li class="breadcrumb-item">Master Data Aset</li>
+                        <li class="breadcrumb-item">Status Aset</li>
+                        <li class="breadcrumb-item">Data Status Aset</li>
                         <li aria-current="page" class="breadcrumb-item active">{{ isset($assetStatus) ? "Edit" : "Tambah" }} Status Asset</li>
                     </ol>
                 </nav>

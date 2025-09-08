@@ -16,6 +16,7 @@ use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
 use App\Http\Controllers\AssetStatus\AssetStatusController;
 use App\Http\Controllers\SystemLog\AssetStatusLogController;
+use App\Http\Controllers\Component\ComponentTypeController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -44,7 +45,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'can:manage_asset_statuses'])->group(function () {
         Route::get('/aset-status', [AssetStatusController::class, 'index'])->name('asset.status.index');
         Route::get('/aset-status/tambah', [AssetStatusController::class, 'create'])->name('asset.status.create');
         Route::post('/aset-status', [AssetStatusController::class, 'store'])->name('asset.status.store');
@@ -54,6 +55,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/aset-status/trash', [AssetStatusController::class, 'trashed'])->name('asset.status.trashed');
         Route::post('/aset-status/{id}/restore', [AssetStatusController::class, 'restore'])->name('asset.status.restore');
         Route::delete('/aset-status/{id}/force-delete', [AssetStatusController::class, 'forceDelete'])->name('asset.status.force.delete');
+    });
+
+    Route::middleware(['auth', 'can:manage_component_types'])->group(function () {
+        Route::get('/tipe-komponen', [ComponentTypeController::class, 'index'])->name('component.types.index');
+        Route::get('/tipe-komponen/tambah', [ComponentTypeController::class, 'create'])->name('component.types.create');
+        Route::post('/tipe-komponen', [ComponentTypeController::class, 'store'])->name('component.types.store');
+        Route::get('/tipe-komponen/{componentType}/edit', [ComponentTypeController::class, 'edit'])->name('component.types.edit');
+        Route::put('/tipe-komponen/{componentType}', [ComponentTypeController::class, 'update'])->name('component.types.update');
+        Route::delete('/tipe-komponen/{componentType}', [ComponentTypeController::class, 'destroy'])->name('component.types.destroy');
+        Route::get('/tipe-komponen/trash', [ComponentTypeController::class, 'trashed'])->name('component.types.trashed');
+        Route::post('/tipe-komponen/{id}/restore', [ComponentTypeController::class, 'restore'])->name('component.types.restore');
+        Route::delete('/tipe-komponen/{id}/force-delete', [ComponentTypeController::class, 'forceDelete'])->name('component.types.force.delete');
     });
 
     // User Management
