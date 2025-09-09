@@ -18,10 +18,16 @@ class PermissionSeeder extends Seeder
                 'description' => 'Mengelola data status aset (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan status aset'
             ],
             [
-                'name' => 'manage_component_types',
-                'code_name' => 'Kelola Jenis Komponen',
-                'group' => 'Master Data Komponen',
-                'description' => 'Mengelola data jenis komponen (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan jenis komponen'
+                'name' => 'manage_component',
+                'code_name' => 'Kelola Komponen',
+                'group' => 'Master Data Aset',
+                'description' => 'Mengelola data komponen (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan komponen'
+            ],
+            [
+                'name' => 'manage_hardware',
+                'code_name' => 'Kelola Hardware',
+                'group' => 'Master Data Aset',
+                'description' => 'Mengelola data hardware (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan hardware'
             ],
             [
                 'name' => 'manage_users',

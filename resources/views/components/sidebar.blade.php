@@ -32,7 +32,7 @@
                     </a>
                 </li>
 
-                @canany(["manage_asset_statuses", "manage_component_types"])
+                @canany(["manage_asset_statuses", "manage_component"])
                     <li class="slide__category">
                         <span class="category-name">Master Data Aset</span>
                     </li>
@@ -52,7 +52,7 @@
                         </li>
                     @endcan()
 
-                    @can(["manage_component_types"])
+                    @can(["manage_component"])
                         <li class="slide has-sub {{ request()->routeIs("component.types*") ? "open" : "" }}">
                             <a class="side-menu__item {{ request()->routeIs("component.types*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bxs-component side-menu__icon"></i>
@@ -69,24 +69,27 @@
                             </ul>
                         </li>
                     @endcan
-                    <li class="slide has-sub">
-                        <a class="side-menu__item" href="javascript:void(0);">
-                            <i class="bx bx-devices side-menu__icon"></i>
-                            <span class="side-menu__label">Hardware</span>
-                            <i class="fe fe-chevron-right side-menu__angle"></i>
-                        </a>
-                        <ul class="slide-menu child1">
-                            <li class="slide">
-                                <a class="side-menu__item" href="#">Data Hardware</a>
-                            </li>
-                            <li class="slide">
-                                <a class="side-menu__item" href="#">Jenis Hardware</a>
-                            </li>
-                            <li class="slide">
-                                <a class="side-menu__item" href="#">Model Hardware</a>
-                            </li>
-                        </ul>
-                    </li>
+
+                    @can(["manage_hardware"])
+                        <li class="slide has-sub {{ request()->routeIs("hardware.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("hardware.*") ? "active" : "" }}" href="javascript:void(0);">
+                                <i class="bx bx-devices side-menu__icon"></i>
+                                <span class="side-menu__label">Hardware</span>
+                                <i class="fe fe-chevron-right side-menu__angle"></i>
+                            </a>
+                            <ul class="slide-menu child1">
+                                <li class="slide">
+                                    <a class="side-menu__item" href="#">Data Hardware</a>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item" href="#">Model Hardware</a>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item {{ request()->routeIs("hardware.types.index") ? "active" : "" }}" href="{{ route("hardware.types.index") }}">Jenis Hardware</a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endcan
                 @endcanany
 
                 @canany(["manage_users", "manage_organizations", "manage_tokens", "manage_administrations"])

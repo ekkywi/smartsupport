@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Data Jenis Komponen Terhapus (Trash)
+    SmartSupport &mdash; Data Jenis Hardware Terhapus (Trash)
 @endsection
 
 @section("styles")
@@ -21,17 +21,17 @@
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item">Master Data Aset</li>
-                        <li class="breadcrumb-item">Komponen</li>
-                        <li class="breadcrumb-item">Jenis Komponen</li>
-                        <li aria-current="page" class="breadcrumb-item active">Data Jenis Komponen Terhapus</li>
+                        <li class="breadcrumb-item">Hardware</li>
+                        <li class="breadcrumb-item">Jenis Hardware</li>
+                        <li aria-current="page" class="breadcrumb-item active">Data Jenis Hardware Terhapus</li>
                     </ol>
                 </nav>
             </div>
         </div>
 
         <div class="mb-3 d-flex flex-wrap gap-2">
-            <a class="btn btn-secondary mt-3" href="{{ route("component.types.index") }}">
-                <i class="ti ti-arrow-left"></i> Kembali ke Data Jenis Komponen
+            <a class="btn btn-secondary mt-3" href="{{ route("hardware.types.index") }}">
+                <i class="ti ti-arrow-left"></i> Kembali ke Data Jenis Hardware
             </a>
         </div>
 
@@ -40,7 +40,7 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Data Jenis Komponen Terhapus
+                            Daftar Jenis Hardware Terhapus
                         </div>
                     </div>
                     <div class="card-body">
@@ -54,29 +54,29 @@
                                 </tr>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Tag Jenis Komponen</th>
+                                    <th>Tag Jenis Hardware</th>
                                     <th>Dihapus Pada</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($trashedComponentTypes as $componentType)
+                                @forelse($trashedHardwareTypes as $hardwareType)
                                     <tr>
-                                        <td>{{ $componentType->name }}</td>
-                                        <td>{{ $componentType->component_type_tag }}</td>
-                                        <td>{{ $componentType->deleted_at ? $componentType->deleted_at->format("d-m-Y H:i") : "-" }}</td>
+                                        <td>{{ $hardwareType->name }}</td>
+                                        <td>{{ $hardwareType->hardware_type_tag }}</td>
+                                        <td>{{ $hardwareType->deleted_at ? $hardwareType->deleted_at->format("d-m-Y H:i") : "-" }}</td>
                                         <td>
-                                            <form action="{{ route("component.types.restore", $componentType->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route("hardware.types.restore", $hardwareType->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 <button class="btn btn-success btn-sm" type="submit">
                                                     <i class="ti ti-history"></i> Restore
                                                 </button>
                                             </form>
-                                            <form action="{{ route("component.types.force.delete", $componentType->id) }}" id="delete-form-{{ $componentType->id }}" method="POST" style="display: none;">
+                                            <form action="{{ route("hardware.types.force.delete", $hardwareType->id) }}" id="delete-form-{{ $hardwareType->id }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>
-                                            <button class="btn btn-danger btn-sm delete-btn" data-componenttype-id="{{ $componentType->id }}">
+                                            <button class="btn btn-danger btn-sm delete-btn" data-hardwaretype-id="{{ $hardwareType->id }}">
                                                 <i class="ti ti-trash"></i> Hapus Permanen
                                             </button>
                                         </td>
@@ -148,7 +148,7 @@
             });
             $(document).on('click', '.delete-btn', function(e) {
                 e.preventDefault();
-                var componentTypeId = $(this).data('componenttype-id');
+                var hardwareTypeId = $(this).data('hardwaretype-id');
                 Swal.fire({
                     title: "Apakah Anda yakin?",
                     text: "Data yang dihapus tidak dapat dipulihkan!",
@@ -160,7 +160,7 @@
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        document.getElementById("delete-form-" + componentTypeId).submit();
+                        document.getElementById("delete-form-" + hardwareTypeId).submit();
                     }
                 });
             });

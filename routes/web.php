@@ -17,6 +17,7 @@ use App\Http\Controllers\Administration\PermissionController;
 use App\Http\Controllers\AssetStatus\AssetStatusController;
 use App\Http\Controllers\SystemLog\AssetStatusLogController;
 use App\Http\Controllers\Component\ComponentTypeController;
+use App\Http\Controllers\Hardware\HardwareTypeController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Asset Status Master Data
     Route::middleware(['auth', 'can:manage_asset_statuses'])->group(function () {
         Route::get('/aset-status', [AssetStatusController::class, 'index'])->name('asset.status.index');
         Route::get('/aset-status/tambah', [AssetStatusController::class, 'create'])->name('asset.status.create');
@@ -57,7 +59,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/aset-status/{id}/force-delete', [AssetStatusController::class, 'forceDelete'])->name('asset.status.force.delete');
     });
 
-    Route::middleware(['auth', 'can:manage_component_types'])->group(function () {
+    // Compoponent Master Data
+    Route::middleware(['auth', 'can:manage_component'])->group(function () {
         Route::get('/tipe-komponen', [ComponentTypeController::class, 'index'])->name('component.types.index');
         Route::get('/tipe-komponen/tambah', [ComponentTypeController::class, 'create'])->name('component.types.create');
         Route::post('/tipe-komponen', [ComponentTypeController::class, 'store'])->name('component.types.store');
@@ -67,6 +70,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/tipe-komponen/trash', [ComponentTypeController::class, 'trashed'])->name('component.types.trashed');
         Route::post('/tipe-komponen/{id}/restore', [ComponentTypeController::class, 'restore'])->name('component.types.restore');
         Route::delete('/tipe-komponen/{id}/force-delete', [ComponentTypeController::class, 'forceDelete'])->name('component.types.force.delete');
+    });
+
+    // Hardware Master Data
+    Route::middleware(['auth', 'can:manage_hardware'])->group(function () {
+        Route::get('/tipe-hardware', [HardwareTypeController::class, 'index'])->name('hardware.types.index');
+        Route::get('/tipe-hardware/tambah', [HardwareTypeController::class, 'create'])->name('hardware.types.create');
+        Route::post('/tipe-hardware', [HardwareTypeController::class, 'store'])->name('hardware.types.store');
+        Route::get('/tipe-hardware/{hardwareType}/edit', [HardwareTypeController::class, 'edit'])->name('hardware.types.edit');
+        Route::put('/tipe-hardware/{hardwareType}', [HardwareTypeController::class, 'update'])->name('hardware.types.update');
+        Route::delete('/tipe-hardware/{hardwareType}', [HardwareTypeController::class, 'destroy'])->name('hardware.types.destroy');
+        Route::get('/tipe-hardware/trash', [HardwareTypeController::class, 'trashed'])->name('hardware.types.trashed');
+        Route::post('/tipe-hardware/{id}/restore', [HardwareTypeController::class, 'restore'])->name('hardware.types.restore');
+        Route::delete('/tipe-hardware/{id}/force-delete', [HardwareTypeController::class, 'forceDelete'])->name('hardware.types.force.delete');
     });
 
     // User Management
