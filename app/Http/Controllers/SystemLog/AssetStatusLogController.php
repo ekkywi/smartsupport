@@ -10,7 +10,9 @@ class AssetStatusLogController extends Controller
 {
     public function index()
     {
-        $assetStatusLogs = AssetStatusLog::with('user', 'assetStatus')->latest()->get();
+        $assetStatusLogs = AssetStatusLog::with(['user', 'assetStatus'])
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('contents.asset-status-log', compact('assetStatusLogs'));
     }
 }

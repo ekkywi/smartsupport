@@ -16,6 +16,11 @@ class AssetStatusLog extends Model
         'data',
     ];
 
+    public function formatedData()
+    {
+        return $this->created_at->locale('id')->isoFormat('dddd - D MMMM Y - HH:mm:ss');
+    }
+
     public function assetStatus()
     {
         return $this->belongsTo(AssetStatus::class)->withTrashed();

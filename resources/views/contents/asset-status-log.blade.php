@@ -50,11 +50,9 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
                                 </tr>
                                 <tr>
-                                    <th>Tanggal</th>
-                                    <th>Jam</th>
+                                    <th>Waktu</th>
                                     <th>Nama Pengguna</th>
                                     <th>Aksi Pengguna</th>
                                     <th>Nama Status</th>
@@ -62,8 +60,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($assetStatusLogs as $log)
-                                    <td>{{ $log->created_at->format("d M Y") }}</td>
-                                    <td>{{ $log->created_at->format("H:i:s") }}</td>
+                                    <td>{{ $log->formatedData() }}</td>
                                     <td>{{ $log->user->name }}</td>
                                     <td>
                                         @if ($log->action == "created")
@@ -121,6 +118,9 @@
         $(document).ready(function() {
             $('#responsiveDataTable').DataTable({
                 responsive: true,
+                order: [
+                    [0, 'desc']
+                ],
                 initComplete: function() {
                     this.api().columns().every(function() {
                         let column = this;
