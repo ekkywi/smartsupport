@@ -28,9 +28,9 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item">Management</li>
-                        <li class="breadcrumb-item">Token</li>
-                        <li class="breadcrumb-item">Data Token</li>
+                        <li class="breadcrumb-item">Manajemen Aplikasi</li>
+                        <li class="breadcrumb-item">Pengguna</li>
+                        <li class="breadcrumb-item">Token Pengguna</li>
                         <li class="breadcrumb-item active">Detail Token</li>
                     </ol>
                 </nav>

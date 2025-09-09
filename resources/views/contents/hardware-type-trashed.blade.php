@@ -23,7 +23,7 @@
                         <li class="breadcrumb-item">Master Data Aset</li>
                         <li class="breadcrumb-item">Hardware</li>
                         <li class="breadcrumb-item">Jenis Hardware</li>
-                        <li aria-current="page" class="breadcrumb-item active">Data Jenis Hardware Terhapus</li>
+                        <li aria-current="page" class="breadcrumb-item active">Jenis Hardware Terhapus</li>
                     </ol>
                 </nav>
             </div>

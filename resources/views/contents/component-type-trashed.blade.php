@@ -23,7 +23,7 @@
                         <li class="breadcrumb-item">Master Data Aset</li>
                         <li class="breadcrumb-item">Komponen</li>
                         <li class="breadcrumb-item">Jenis Komponen</li>
-                        <li aria-current="page" class="breadcrumb-item active">Data Jenis Komponen Terhapus</li>
+                        <li aria-current="page" class="breadcrumb-item active">Jenis Komponen Terhapus</li>
                     </ol>
                 </nav>
             </div>

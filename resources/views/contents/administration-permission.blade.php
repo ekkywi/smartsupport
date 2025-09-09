@@ -28,9 +28,9 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item">Management</li>
-                        <li class="breadcrumb-item">Administrasi</li>
-                        <li aria-current="page" class="breadcrumb-item active">Hak Akses</li>
+                        <li class="breadcrumb-item">Manajemen Aplikasi</li>
+                        <li class="breadcrumb-item">Administrasi dan Akses</li>
+                        <li aria-current="page" class="breadcrumb-item active">Hak Akses Tersedia</li>
                     </ol>
                 </nav>
             </div>

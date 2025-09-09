@@ -24,7 +24,7 @@
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
-                        <li class="breadcrumb-item">Management</li>
+                        <li class="breadcrumb-item">Manajemen Aplikasi</li>
                         <li class="breadcrumb-item">Organisasi</li>
                         <li aria-current="page" class="breadcrumb-item">Data Jabatan</li>
                         <li aria-current="page" class="breadcrumb-item active">Tambah Jabatan</li>

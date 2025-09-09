@@ -23,7 +23,7 @@
                         <li class="breadcrumb-item">Master Data Aset</li>
                         <li class="breadcrumb-item">Status Asset</li>
                         <li class="breadcrumb-item">Data Status Asset</li>
-                        <li class="breadcrumb-item active">Data Aset Terhapus</li>
+                        <li class="breadcrumb-item active">Status Aset Terhapus</li>
                     </ol>
                 </nav>
             </div>
