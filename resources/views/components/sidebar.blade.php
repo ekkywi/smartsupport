@@ -32,123 +32,141 @@
                     </a>
                 </li>
 
-                <li class="slide__category">
-                    <span class="category-name">Pengaturan Aplikasi</span>
-                </li>
+                @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_users", "manage_organizations", "manage_administrations_and_accesses"])
+                    <li class="slide__category">
+                        <span class="category-name">Pengaturan Aplikasi</span>
+                    </li>
 
-                <li class="slide has-sub {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*") ? "active" : "" }}" href="javascript:void(0);">
-                        <i class="bx bx-data side-menu__icon"></i>
-                        <span class="side-menu__label">Master Data Aset</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Master Data Aset</a>
-                        </li>
-                        <li class="slide has-sub {{ request()->routeIs("asset.status.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="javascript:void(0);">
-                                Status Aset
+                    @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares"])
+                        <li class="slide has-sub {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*") ? "active" : "" }}" href="javascript:void(0);">
+                                <i class="bx bx-data side-menu__icon"></i>
+                                <span class="side-menu__label">Master Data Aset</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
                             </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="{{ route("asset.status.index") }}">Data Status Aset</a>
+                            <ul class="slide-menu child1">
+                                <li class="slide side-menu__label1">
+                                    <a href="javascript:void(0)">Master Data Aset</a>
                                 </li>
+                                @can("manage_asset_statuses")
+                                    <li class="slide has-sub {{ request()->routeIs("asset.status.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="javascript:void(0);">
+                                            Status Aset
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="{{ route("asset.status.index") }}">Data Status Aset</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can("manage_asset_components")
+                                    <li class="slide has-sub {{ request()->routeIs("component.types.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="javascript:void(0);">
+                                            Komponen
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Data Komponen</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Model Komponen</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="{{ route("component.types.index") }}">Jenis Komponen</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can("manage_asset_hardwares")
+                                    <li class="slide has-sub {{ request()->routeIs("hardware.types.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("hardware.types.*") ? "active" : "" }}" href="javascript:void(0);">Hardware
+                                            <i class="fe fe-chevron-right side-menu__angle"></i></a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Data Hardware</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Model Hardware</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("hardware.types.*") ? "active" : "" }}" href="{{ route("hardware.types.index") }}">Jenis Hardware</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
                             </ul>
                         </li>
-                        <li class="slide has-sub {{ request()->routeIs("component.types.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="javascript:void(0);">
-                                Komponen
-                                <i class="fe fe-chevron-right side-menu__angle"></i>
-                            </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item" href="javascript:void(0);">Data Komponen</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item" href="javascript:void(0);">Model Komponen</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="{{ route("component.types.index") }}">Jenis Komponen</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub {{ request()->routeIs("hardware.types.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("hardware.types.*") ? "active" : "" }}" href="javascript:void(0);">Hardware
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item" href="javascript:void(0);">Data Hardware</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item" href="javascript:void(0);">Model Hardware</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("hardware.types.*") ? "active" : "" }}" href="{{ route("hardware.types.index") }}">Jenis Hardware</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
+                    @endcanany
 
-                <li class="slide has-sub {{ request()->routeIs("users.*", "sections.*", "positions.*", "roles.*", "permissions.*") ? "open" : "" }}">
-                    <a class="side-menu__item {{ request()->routeIs("users.*", "sections.*", "positions.*", "roles.*", "permissions.*") ? "active" : "" }}" href="javascript:void(0);">
-                        <i class="bx bx-cog side-menu__icon"></i>
-                        <span class="side-menu__label">Manajemen Aplikasi</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Manajemen Aplikasi</a>
-                        </li>
-                        <li class="slide has-sub {{ request()->routeIs("users.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("users.*") ? "active" : "" }}" href="javascript:void(0);">
-                                Pengguna
+                    @canany(["manage_users", "manage_organizations", "manage_administrations_and_accesses"])
+                        <li class="slide has-sub {{ request()->routeIs("users.*", "sections.*", "positions.*", "roles.*", "permissions.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("users.*", "sections.*", "positions.*", "roles.*", "permissions.*") ? "active" : "" }}" href="javascript:void(0);">
+                                <i class="bx bx-cog side-menu__icon"></i>
+                                <span class="side-menu__label">Manajemen Aplikasi</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
                             </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit") ? "active" : "" }}" href="{{ route("users.index") }}">Data Pengguna</a>
+                            <ul class="slide-menu child1">
+                                <li class="slide side-menu__label1">
+                                    <a href="javascript:void(0)">Manajemen Aplikasi</a>
                                 </li>
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("users.activation.*") ? "active" : "" }}" href="{{ route("users.activation.index") }}">Aktivasi Pengguna</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("users.token.*") ? "active" : "" }}" href="{{ route("users.token.index") }}">Token Pengguna</a>
-                                </li>
+                                @can("manage_users")
+                                    <li class="slide has-sub {{ request()->routeIs("users.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("users.*") ? "active" : "" }}" href="javascript:void(0);">
+                                            Pengguna
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("users.index", "users.create", "users.edit") ? "active" : "" }}" href="{{ route("users.index") }}">Data Pengguna</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("users.activation.*") ? "active" : "" }}" href="{{ route("users.activation.index") }}">Aktivasi Pengguna</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("users.token.*") ? "active" : "" }}" href="{{ route("users.token.index") }}">Token Pengguna</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can("manage_organizations")
+                                    <li class="slide has-sub {{ request()->routeIs("sections.*", "positions.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("sections.*", "positions.*") ? "active" : "" }}" href="javascript:void(0);">
+                                            Organisasi
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("sections.*") ? "active" : "" }}" href="{{ route("sections.index") }}">Data Bagian</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("positions.*") ? "active" : "" }}" href="{{ route("positions.index") }}">Data Jabatan</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can("manage_administrations_and_accesses")
+                                    <li class="slide has-sub {{ request()->routeIs("roles.*", "permissions.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("roles.*", "permissions.*") ? "active" : "" }}" href="javascript:void(0);">
+                                            Administrasi dan Akses
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("roles.*") ? "active" : "" }}" href="{{ route("roles.index") }}">Peran Pengguna</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("permissions.*") ? "active" : "" }}" href="{{ route("permissions.index") }}">Hak Akses Tersedia</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
                             </ul>
                         </li>
-                        <li class="slide has-sub {{ request()->routeIs("sections.*", "positions.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("sections.*", "positions.*") ? "active" : "" }}" href="javascript:void(0);">
-                                Organisasi
-                                <i class="fe fe-chevron-right side-menu__angle"></i>
-                            </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("sections.*") ? "active" : "" }}" href="{{ route("sections.index") }}">Data Bagian</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("positions.*") ? "active" : "" }}" href="{{ route("positions.index") }}">Data Jabatan</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub {{ request()->routeIs("roles.*", "permissions.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("roles.*", "permissions.*") ? "active" : "" }}" href="javascript:void(0);">
-                                Administrasi dan Akses
-                                <i class="fe fe-chevron-right side-menu__angle"></i>
-                            </a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("roles.*") ? "active" : "" }}" href="{{ route("roles.index") }}">Peran Pengguna</a>
-                                </li>
-                                <li class="slide">
-                                    <a class="side-menu__item {{ request()->routeIs("permissions.*") ? "active" : "" }}" href="{{ route("permissions.index") }}">Hak Akses Tersedia</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
+                    @endcanany
+                @endcanany
 
                 <li class="slide__category">
                     <span class="category-name">Laporan</span>

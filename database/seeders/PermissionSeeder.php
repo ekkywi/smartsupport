@@ -18,13 +18,13 @@ class PermissionSeeder extends Seeder
                 'description' => 'Mengelola data status aset (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan status aset'
             ],
             [
-                'name' => 'manage_component',
+                'name' => 'manage_asset_components',
                 'code_name' => 'Kelola Komponen',
                 'group' => 'Master Data Aset',
                 'description' => 'Mengelola data komponen (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan komponen'
             ],
             [
-                'name' => 'manage_hardware',
+                'name' => 'manage_asset_hardwares',
                 'code_name' => 'Kelola Hardware',
                 'group' => 'Master Data Aset',
                 'description' => 'Mengelola data hardware (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan hardware'
@@ -42,14 +42,8 @@ class PermissionSeeder extends Seeder
                 'description' => 'Mengelola data organisasi (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan bagian/jabatan'
             ],
             [
-                'name' => 'manage_tokens',
-                'code_name' => 'Kelola Token',
-                'group' => 'Manajemen Aplikasi',
-                'description' => 'Mengelola data token - Dapat melakukan generate token aktivasi dan token reset password'
-            ],
-            [
-                'name' => 'manage_administrations',
-                'code_name' => 'Kelola Administrasi',
+                'name' => 'manage_administrations_and_accesses',
+                'code_name' => 'Kelola Administrasi dan Akses',
                 'group' => 'Manajemen Aplikasi',
                 'description' => 'Mengelola data administrasi (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan data peran. Dapat mengatur hak akses peran'
             ]

@@ -59,8 +59,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/aset-status/{id}/force-delete', [AssetStatusController::class, 'forceDelete'])->name('asset.status.force.delete');
     });
 
-    // Compoponent Master Data
-    Route::middleware(['auth', 'can:manage_component'])->group(function () {
+    // Component Master Data
+    Route::middleware(['auth', 'can:manage_asset_components'])->group(function () {
         Route::get('/tipe-komponen', [ComponentTypeController::class, 'index'])->name('component.types.index');
         Route::get('/tipe-komponen/tambah', [ComponentTypeController::class, 'create'])->name('component.types.create');
         Route::post('/tipe-komponen', [ComponentTypeController::class, 'store'])->name('component.types.store');
@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Hardware Master Data
-    Route::middleware(['auth', 'can:manage_hardware'])->group(function () {
+    Route::middleware(['auth', 'can:manage_asset_hardwares'])->group(function () {
         Route::get('/tipe-hardware', [HardwareTypeController::class, 'index'])->name('hardware.types.index');
         Route::get('/tipe-hardware/tambah', [HardwareTypeController::class, 'create'])->name('hardware.types.create');
         Route::post('/tipe-hardware', [HardwareTypeController::class, 'store'])->name('hardware.types.store');
@@ -98,6 +98,11 @@ Route::middleware('auth')->group(function () {
         // Activation
         Route::get('/aktivasi-pengguna', [UserActivationController::class, 'index'])->name('users.activation.index');
         Route::patch('/aktivasi-pengguna/{user}', [UserActivationController::class, 'toggleActivation'])->name('users.activation.toggle');
+
+        // User Token
+        Route::get('/token-pengguna', [TokenController::class, 'index'])->name('users.token.index');
+        Route::get('/token-pengguna/{user}/tokens', [TokenController::class, 'show'])->name('users.token.show');
+        Route::post('/token-pengguna/{user}/tokens/generate', [TokenController::class, 'generateToken'])->name('users.token.generate');
     });
 
     // Organization Management
@@ -121,7 +126,7 @@ Route::middleware('auth')->group(function () {
 
 
     // Administration Management
-    Route::middleware(['auth', 'can:manage_administrations'])->group(function () {
+    Route::middleware(['auth', 'can:manage_administrations_and_accesses'])->group(function () {
         // Role
         Route::get('/peran', [RoleController::class, 'index'])->name('roles.index');
         Route::get('/peran/tambah', [RoleController::class, 'create'])->name('roles.create');
@@ -132,14 +137,6 @@ Route::middleware('auth')->group(function () {
 
         // Permission
         Route::get('/hak-akses', [PermissionController::class, 'index'])->name('permissions.index');
-    });
-
-    // User Token Management
-    Route::middleware(['auth', 'can:manage_tokens'])->group(function () {
-        // User Token
-        Route::get('/token-pengguna', [TokenController::class, 'index'])->name('users.token.index');
-        Route::get('/token-pengguna/{user}/tokens', [TokenController::class, 'show'])->name('users.token.show');
-        Route::post('/token-pengguna/{user}/tokens/generate', [TokenController::class, 'generateToken'])->name('users.token.generate');
     });
 
     // System Log
