@@ -32,12 +32,12 @@
                     </a>
                 </li>
 
-                @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_users", "manage_organizations", "manage_administrations_and_accesses", "manage_suppliers_and_vendors"])
+                @canany(["manage_asset_numberings", "manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_users", "manage_organizations", "manage_administrations_and_accesses", "manage_suppliers_and_vendors"])
                     <li class="slide__category">
                         <span class="category-name">Pengaturan Aplikasi</span>
                     </li>
 
-                    @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_suppliers_and_vendors"])
+                    @canany(["manage_asset_numberings", "manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_suppliers_and_vendors"])
                         <li class="slide has-sub {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*", "brands.*") ? "open" : "" }}">
                             <a class="side-menu__item {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*", "brands.*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-data side-menu__icon"></i>
@@ -48,7 +48,19 @@
                                 <li class="slide side-menu__label1">
                                     <a href="javascript:void(0)">Master Data Aset</a>
                                 </li>
-
+                                @can("manage_asset_numberings")
+                                    <li class="slide has-sub">
+                                        <a class="side-menu__item" href="javascript:void(0);">
+                                            Penomoran Aset
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Tag Aset</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
                                 @can("manage_asset_components")
                                     <li class="slide has-sub {{ request()->routeIs("component.types.*") ? "open" : "" }}">
                                         <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="javascript:void(0);">

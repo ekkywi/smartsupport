@@ -12,6 +12,12 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             [
+                'name' => 'manage_asset_numberings',
+                'code_name' => 'Kelola Penomoran Aset',
+                'group' => 'Master Data Aset',
+                'description' => 'Mengelola data penomoran aset (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan penomoran aset'
+            ],
+            [
                 'name' => 'manage_asset_statuses',
                 'code_name' => 'Kelola Status Aset',
                 'group' => 'Master Data Aset',
