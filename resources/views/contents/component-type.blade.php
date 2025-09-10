@@ -60,8 +60,10 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>Tag Jenis Komponen</th>
                                     <th>Aksi</th>
@@ -70,6 +72,7 @@
                             <tbody>
                                 @forelse ($componentTypes as $componentType)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $componentType->name }}</td>
                                         <td>{{ $componentType->component_type_tag }}</td>
                                         <td>

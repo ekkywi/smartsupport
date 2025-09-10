@@ -24,6 +24,12 @@ class PermissionSeeder extends Seeder
                 'description' => 'Mengelola data komponen (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan komponen'
             ],
             [
+                'name' => 'manage_suppliers_and_vendors',
+                'code_name' => 'Kelola Supplier dan Vendor',
+                'group' => 'Master Data Aset',
+                'description' => 'Mengelola data supplier dan vendor (CRUD) - Dapat melakukan penambahan, pengeditan, dan penghapusan supplier dan vendor'
+            ],
+            [
                 'name' => 'manage_asset_hardwares',
                 'code_name' => 'Kelola Hardware',
                 'group' => 'Master Data Aset',

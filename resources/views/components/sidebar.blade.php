@@ -32,14 +32,14 @@
                     </a>
                 </li>
 
-                @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_users", "manage_organizations", "manage_administrations_and_accesses"])
+                @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_users", "manage_organizations", "manage_administrations_and_accesses", "manage_suppliers_and_vendors"])
                     <li class="slide__category">
                         <span class="category-name">Pengaturan Aplikasi</span>
                     </li>
 
-                    @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares"])
-                        <li class="slide has-sub {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*") ? "active" : "" }}" href="javascript:void(0);">
+                    @canany(["manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_suppliers_and_vendors"])
+                        <li class="slide has-sub {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*", "brands.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("asset.status.*", "component.types.*", "hardware.types.*", "brands.*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-data side-menu__icon"></i>
                                 <span class="side-menu__label">Master Data Aset</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -48,19 +48,7 @@
                                 <li class="slide side-menu__label1">
                                     <a href="javascript:void(0)">Master Data Aset</a>
                                 </li>
-                                @can("manage_asset_statuses")
-                                    <li class="slide has-sub {{ request()->routeIs("asset.status.*") ? "open" : "" }}">
-                                        <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="javascript:void(0);">
-                                            Status Aset
-                                            <i class="fe fe-chevron-right side-menu__angle"></i>
-                                        </a>
-                                        <ul class="slide-menu child2">
-                                            <li class="slide">
-                                                <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="{{ route("asset.status.index") }}">Data Status Aset</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                @endcan
+
                                 @can("manage_asset_components")
                                     <li class="slide has-sub {{ request()->routeIs("component.types.*") ? "open" : "" }}">
                                         <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="javascript:void(0);">
@@ -93,6 +81,41 @@
                                             </li>
                                             <li class="slide">
                                                 <a class="side-menu__item {{ request()->routeIs("hardware.types.*") ? "active" : "" }}" href="{{ route("hardware.types.index") }}">Jenis Hardware</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can("manage_asset_statuses")
+                                    <li class="slide has-sub {{ request()->routeIs("asset.status.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="javascript:void(0);">
+                                            Status Aset
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("asset.status.*") ? "active" : "" }}" href="{{ route("asset.status.index") }}">Data Status Aset</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can("manage_suppliers_and_vendors")
+                                    <li class="slide has-sub {{ request()->routeIs("brands.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("brands.*") ? "active" : "" }}" href="javascript:void(0);">
+                                            Supplier dan Vendor
+                                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide">
+                                                <a class="side-menu__item {{ request()->routeIs("brands.*") ? "active" : "" }}" href="{{ route("brands.index") }}">Merek</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Supplier</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Vendor</a>
+                                            </li>
+                                            <li class="slide">
+                                                <a class="side-menu__item" href="javascript:void(0);">Penyedia Jasa</a>
                                             </li>
                                         </ul>
                                     </li>

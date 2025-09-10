@@ -18,6 +18,7 @@ use App\Http\Controllers\AssetStatus\AssetStatusController;
 use App\Http\Controllers\SystemLog\AssetStatusLogController;
 use App\Http\Controllers\Component\ComponentTypeController;
 use App\Http\Controllers\Hardware\HardwareTypeController;
+use App\Http\Controllers\SupplierVendor\BrandController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -84,6 +85,21 @@ Route::middleware('auth')->group(function () {
         Route::post('/tipe-hardware/{id}/restore', [HardwareTypeController::class, 'restore'])->name('hardware.types.restore');
         Route::delete('/tipe-hardware/{id}/force-delete', [HardwareTypeController::class, 'forceDelete'])->name('hardware.types.force.delete');
     });
+
+    // Brand and Supplier Master Data
+    Route::middleware(['auth', 'can:manage_suppliers_and_vendors'])->group(function () {
+        // Brand
+        Route::get('/merek', [BrandController::class, 'index'])->name('brands.index');
+        Route::get('/merek/tambah', [BrandController::class, 'create'])->name('brands.create');
+        Route::post('/merek', [BrandController::class, 'store'])->name('brands.store');
+        Route::get('/merek/{brand}/edit', [BrandController::class, 'edit'])->name('brands.edit');
+        Route::put('/merek/{brand}', [BrandController::class, 'update'])->name('brands.update');
+        Route::delete('/merek/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
+        Route::get('/merek/trash', [BrandController::class, 'trashed'])->name('brands.trashed');
+        Route::post('/merek/{id}/restore', [BrandController::class, 'restore'])->name('brands.restore');
+        Route::delete('/merek/{id}/force-delete', [BrandController::class, 'forceDelete'])->name('brands.force.delete');
+    });
+
 
     // User Management
     Route::middleware(['auth', 'can:manage_users'])->group(function () {
