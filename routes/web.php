@@ -19,6 +19,7 @@ use App\Http\Controllers\SystemLog\AssetStatusLogController;
 use App\Http\Controllers\Component\ComponentTypeController;
 use App\Http\Controllers\Hardware\HardwareTypeController;
 use App\Http\Controllers\SupplierVendor\BrandController;
+use App\Http\Controllers\AssetNumber\AssetTagController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -46,6 +47,19 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Asset Tag Master Data
+    Route::middleware(['auth', 'can:manage_asset_numberings'])->group(function () {
+        Route::get('/tag-aset', [AssetTagController::class, 'index'])->name('asset.tags.index');
+        Route::get('/tag-aset/tambah', [AssetTagController::class, 'create'])->name('asset.tags.create');
+        Route::post('/tag-aset', [AssetTagController::class, 'store'])->name('asset.tags.store');
+        Route::get('/tag-aset/{assetTag}/edit', [AssetTagController::class, 'edit'])->name('asset.tags.edit');
+        Route::put('/tag-aset/{assetTag}', [AssetTagController::class, 'update'])->name('asset.tags.update');
+        Route::delete('/tag-aset/{assetTag}', [AssetTagController::class, 'destroy'])->name('asset.tags.destroy');
+        Route::get('/tag-aset/trash', [AssetTagController::class, 'trashed'])->name('asset.tags.trashed');
+        Route::post('/tag-aset/{id}/restore', [AssetTagController::class, 'restore'])->name('asset.tags.restore');
+        Route::delete('/tag-aset/{id}/force-delete', [AssetTagController::class, 'forceDelete'])->name('asset.tags.force.delete');
+    });
 
     // Asset Status Master Data
     Route::middleware(['auth', 'can:manage_asset_statuses'])->group(function () {

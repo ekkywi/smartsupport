@@ -11,7 +11,7 @@ class AssetTag extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $table = [
+    protected $fillable = [
         'name',
         'asset_tag',
         'description',
