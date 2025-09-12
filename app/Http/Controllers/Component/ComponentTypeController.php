@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ComponentType;
 use App\Models\AssetTag;
+use App\Models\HardwareType;
 
 class ComponentTypeController extends Controller
 {
@@ -36,6 +37,14 @@ class ComponentTypeController extends Controller
             ]
         );
 
+        $tagUsedInHardware = HardwareType::withTrashed()
+            ->where('asset_tag_id', $request->asset_tag_id)
+            ->exists();
+
+        if ($tagUsedInHardware) {
+            return redirect()->back()->withErrors(['asset_tag_id' => 'Tag sudah digunakan di jenis aset lain. Silakan pilih tag yang berbeda.']);
+        }
+
         $componentType = ComponentType::create([
             'name' => $request->name,
             'asset_tag_id' => $request->asset_tag_id,
@@ -64,6 +73,15 @@ class ComponentTypeController extends Controller
                 'asset_tag_id.unique' => 'Tag jenis komponen sudah ada, atau pulihkan jenis komponen yang terhapus.',
             ]
         );
+
+        $tagUsedInHardware = HardwareType::withTrashed()
+            ->where('asset_tag_id', $request->asset_tag_id)
+            ->where('id', '!=', $componentType->id)
+            ->exists();
+
+        if ($tagUsedInHardware) {
+            return redirect()->back()->withErrors(['asset_tag_id' => 'Tag sudah digunakan di jenis aset lain. Silakan pilih tag yang berbeda.']);
+        }
 
         $componentType->update([
             'name' => $request->name,
