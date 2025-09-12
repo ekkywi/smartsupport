@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('hardware_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->unique();
-            $table->string('hardware_type_tag')->unique();
+            $table->foreignUuid('asset_tag_id')->constrained('asset_tags')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

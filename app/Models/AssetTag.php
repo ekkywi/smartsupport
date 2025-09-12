@@ -21,4 +21,9 @@ class AssetTag extends Model
     {
         return $this->hasMany(ComponentType::class);
     }
+
+    public function hardwareTypes()
+    {
+        return $this->hasMany(HardwareType::class);
+    }
 }

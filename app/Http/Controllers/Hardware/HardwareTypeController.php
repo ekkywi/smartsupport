@@ -5,18 +5,20 @@ namespace App\Http\Controllers\Hardware;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HardwareType;
+use App\Models\AssetTag;
 
 class HardwareTypeController extends Controller
 {
     public function index()
     {
-        $hardwareTypes = HardwareType::all();
+        $hardwareTypes = HardwareType::with('assetTag')->get();
         return view("contents.hardware-type", compact("hardwareTypes"));
     }
 
     public function create()
     {
-        return view('forms.hardware-type-form');
+        $assetTags = AssetTag::all();
+        return view('forms.hardware-type-form', compact('assetTags'));
     }
 
     public function store(Request $request)
@@ -24,23 +26,28 @@ class HardwareTypeController extends Controller
         request()->validate(
             [
                 'name' => 'required|unique:hardware_types,name',
-                'hardware_type_tag' => 'required|unique:hardware_types,hardware_type_tag',
+                'asset_tag_id' => 'required|unique:hardware_types,asset_tag_id',
             ],
             [
                 'name.required' => 'Nama jenis hardware wajib diisi.',
                 'name.unique' => 'Nama jenis hardware sudah ada, atau pulihkan jenis hardware yang terhapus.',
-                'hardware_type_tag.required' => 'Tag jenis hardware wajib diisi.',
-                'hardware_type_tag.unique' => 'Tag jenis hardware sudah ada, atau pulihkan jenis hardware yang terhapus.',
+                'asset_tag_id.required' => 'Tag jenis hardware wajib diisi.',
+                'asset_tag_id.unique' => 'Tag jenis hardware sudah ada, atau pulihkan jenis hardware yang terhapus.',
             ]
         );
 
-        HardwareType::create($request->all());
+        $hardwareType = HardwareType::create([
+            'name' => $request->name,
+            'asset_tag_id' => $request->asset_tag_id,
+        ]);
+
         return redirect()->route("hardware.types.index")->with("success", "Jenis hardware berhasil ditambahkan.");
     }
 
     public function edit(HardwareType $hardwareType)
     {
-        return view('forms.hardware-type-form', compact('hardwareType'));
+        $assetTags = AssetTag::all();
+        return view('forms.hardware-type-form', compact('hardwareType', 'assetTags'));
     }
 
     public function update(Request $request, HardwareType $hardwareType)
@@ -48,17 +55,21 @@ class HardwareTypeController extends Controller
         request()->validate(
             [
                 'name' => 'required|unique:hardware_types,name,' . $hardwareType->id,
-                'hardware_type_tag' => 'required|unique:hardware_types,hardware_type_tag,' . $hardwareType->id,
+                'asset_tag_id' => 'required|unique:hardware_types,asset_tag_id,' . $hardwareType->id,
             ],
             [
                 'name.required' => 'Nama jenis hardware wajib diisi.',
                 'name.unique' => 'Nama jenis hardware sudah ada, atau pulihkan jenis hardware yang terhapus.',
-                'hardware_type_tag.required' => 'Tag jenis hardware wajib diisi.',
-                'hardware_type_tag.unique' => 'Tag jenis hardware sudah ada, atau pulihkan jenis hardware yang terhapus.',
+                'asset_tag_id.required' => 'Tag jenis hardware wajib diisi.',
+                'asset_tag_id.unique' => 'Tag jenis hardware sudah ada, atau pulihkan jenis hardware yang terhapus.',
             ]
         );
 
-        $hardwareType->update($request->all());
+        $hardwareType->update([
+            'name' => $request->name,
+            'asset_tag_id' => $request->asset_tag_id,
+        ]);
+
         return redirect()->route("hardware.types.index")->with("success", "Jenis hardware berhasil diperbarui.");
     }
 

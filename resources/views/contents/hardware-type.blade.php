@@ -71,7 +71,7 @@
                                 @forelse ($hardwareTypes as $hardwareType)
                                     <tr>
                                         <td>{{ $hardwareType->name }}</td>
-                                        <td>{{ $hardwareType->hardware_type_tag }}</td>
+                                        <td>{{ $hardwareType->assetTag->asset_tag }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-primary" href="{{ route("hardware.types.edit", $hardwareType->id) }}"><i class="ti ti-pencil"></i> Edit</a>
                                             <button class="btn btn-sm btn-danger delete-btn" data-hardwaretype-id="{{ $hardwareType->id }}" type="button"><i class="ti ti-trash me-1"></i>

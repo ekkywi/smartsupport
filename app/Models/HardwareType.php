@@ -13,6 +13,11 @@ class HardwareType extends Model
 
     protected $fillable = [
         'name',
-        'hardware_type_tag',
+        'asset_tag_id',
     ];
+
+    public function assetTag()
+    {
+        return $this->belongsTo(AssetTag::class);
+    }
 }

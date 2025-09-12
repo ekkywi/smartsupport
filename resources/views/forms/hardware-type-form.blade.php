@@ -54,8 +54,15 @@
                                     <input class="form-control" id="name" name="name" placeholder="Nama Jenis Hardware" type="text" value="{{ old("name", isset($hardwareType) ? $hardwareType->name : "") }}">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="hardware_type_tag">Tag Jenis Hardware</label>
-                                    <input class="form-control" id="hardware_type_tag" name="hardware_type_tag" placeholder="Tag Jenis Hardware" type="text" value="{{ old("hardware_type_tag", isset($hardwareType) ? $hardwareType->hardware_type_tag : "") }}">
+                                    <label class="form-label text-default fw-semibold" for="asset_tag_id">Tag Jenis Hardware</label>
+                                    <select class="form-select" id="asset_tag_id" name="asset_tag_id">
+                                        <option value="">Pilih Tag Jenis Hardware</option>
+                                        @foreach ($assetTags as $tag)
+                                            <option {{ old("asset_tag_id", isset($hardwareType) ? $hardwareType->asset_tag_id : "") == $tag->id ? "selected" : "" }} value="{{ $tag->id }}">
+                                                {{ $tag->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
                                     <button class="btn btn-danger" onclick="goToIndex()" type="button"><i class="ti ti-x"></i> Batal</button>
