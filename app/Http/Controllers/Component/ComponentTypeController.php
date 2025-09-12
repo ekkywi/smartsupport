@@ -3,20 +3,22 @@
 namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
-use App\Models\ComponentType;
 use Illuminate\Http\Request;
+use App\Models\ComponentType;
+use App\Models\AssetTag;
 
 class ComponentTypeController extends Controller
 {
     public function index()
     {
-        $componentTypes = ComponentType::all();
+        $componentTypes = ComponentType::with('assetTag')->get();
         return view('contents.component-type', compact('componentTypes'));
     }
 
     public function create()
     {
-        return view('forms.component-type-form');
+        $assetTags = AssetTag::all();
+        return view('forms.component-type-form', compact('assetTags'));
     }
 
     public function store(Request $request)
@@ -24,19 +26,19 @@ class ComponentTypeController extends Controller
         $request->validate(
             [
                 'name' => 'required|string|unique:component_types,name',
-                'component_type_tag' => 'required|string|unique:component_types,component_type_tag',
+                'asset_tag_id' => 'required|string|unique:component_types,asset_tag_id',
             ],
             [
                 'name.required' => 'Nama jenis komponen wajib diisi.',
                 'name.unique' => 'Nama jenis komponen sudah ada, atau pulihkan jenis komponen yang terhapus.',
-                'component_type_tag.required' => 'Tag jenis komponen wajib diisi.',
-                'component_type_tag.unique' => 'Tag jenis komponen sudah ada, atau pulihkan jenis komponen yang terhapus.',
+                'asset_tag_id.required' => 'Tag jenis komponen wajib diisi.',
+                'asset_tag_id.unique' => 'Tag jenis komponen sudah ada, atau pulihkan jenis komponen yang terhapus.',
             ]
         );
 
         $componentType = ComponentType::create([
             'name' => $request->name,
-            'component_type_tag' => $request->component_type_tag,
+            'asset_tag_id' => $request->asset_tag_id,
         ]);
 
         return redirect()->route('component.types.index')->with('success', 'Jenis komponen berhasil ditambahkan.');
@@ -44,7 +46,8 @@ class ComponentTypeController extends Controller
 
     public function edit(ComponentType $componentType)
     {
-        return view('forms.component-type-form', compact('componentType'));
+        $assetTags = AssetTag::all();
+        return view('forms.component-type-form', compact('componentType', 'assetTags'));
     }
 
     public function update(Request $request, ComponentType $componentType)
@@ -52,19 +55,19 @@ class ComponentTypeController extends Controller
         $request->validate(
             [
                 'name' => 'required|string|unique:component_types,name,' . $componentType->id,
-                'component_type_tag' => 'required|string|unique:component_types,component_type_tag,' . $componentType->id,
+                'asset_tag_id' => 'required|string|unique:component_types,asset_tag_id,' . $componentType->id,
             ],
             [
                 'name.required' => 'Nama jenis komponen wajib diisi.',
                 'name.unique' => 'Nama jenis komponen sudah ada, atau pulihkan jenis komponen yang terhapus.',
-                'component_type_tag.required' => 'Tag jenis komponen wajib diisi.',
-                'component_type_tag.unique' => 'Tag jenis komponen sudah ada, atau pulihkan jenis komponen yang terhapus.',
+                'asset_tag_id.required' => 'Tag jenis komponen wajib diisi.',
+                'asset_tag_id.unique' => 'Tag jenis komponen sudah ada, atau pulihkan jenis komponen yang terhapus.',
             ]
         );
 
         $componentType->update([
             'name' => $request->name,
-            'component_type_tag' => $request->component_type_tag,
+            'asset_tag_id' => $request->asset_tag_id,
         ]);
 
         return redirect()->route('component.types.index')->with('success', 'Jenis komponen berhasil diperbarui.');
@@ -78,7 +81,7 @@ class ComponentTypeController extends Controller
 
     public function trashed()
     {
-        $trashedComponentTypes = ComponentType::onlyTrashed()->get();
+        $trashedComponentTypes = ComponentType::with('assetTag')->onlyTrashed()->get();
         return view('contents.component-type-trashed', compact('trashedComponentTypes'));
     }
 

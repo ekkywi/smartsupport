@@ -66,7 +66,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $componentType->name }}</td>
-                                        <td>{{ $componentType->component_type_tag }}</td>
+                                        <td>{{ $componentType->assetTag->asset_tag }}</td>
                                         <td>{{ $componentType->deleted_at ? $componentType->deleted_at->format("d-m-Y H:i") : "-" }}</td>
                                         <td>
                                             <form action="{{ route("component.types.restore", $componentType->id) }}" method="POST" style="display:inline;">

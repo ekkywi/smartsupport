@@ -54,8 +54,15 @@
                                     <input class="form-control" id="name" name="name" placeholder="Nama Jenis Komponen" type="text" value="{{ old("name", isset($componentType) ? $componentType->name : "") }}">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-label text-default fw-semibold" for="component_type_tag">Tag Jenis Komponen</label>
-                                    <input class="form-control" id="component_type_tag" name="component_type_tag" placeholder="Tag Jenis Komponen" type="text" value="{{ old("component_type_tag", isset($componentType) ? $componentType->component_type_tag : "") }}">
+                                    <label class="form-label text-default fw-semibold" for="asset_tag_id">Tag Jenis Komponen</label>
+                                    <select class="form-select" id="asset_tag_id" name="asset_tag_id">
+                                        <option value="">Pilih Tag Jenis Komponen</option>
+                                        @foreach ($assetTags as $tag)
+                                            <option {{ old("asset_tag_id", isset($componentType) ? $componentType->asset_tag_id : "") == $tag->id ? "selected" : "" }} value="{{ $tag->id }}">
+                                                {{ $tag->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
                                     <button class="btn btn-danger" onclick="goToIndex()" type="button"><i class="ti ti-x"></i> Batal</button>
@@ -118,7 +125,7 @@
     <script>
         function clearFormInputs() {
             document.getElementById('name').value = '';
-            document.getElementById('component_type_tag').value = '';
+            document.getElementById('asset_tag_id').value = '';
         }
 
         function goToIndex() {

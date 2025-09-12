@@ -74,7 +74,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $componentType->name }}</td>
-                                        <td>{{ $componentType->component_type_tag }}</td>
+                                        <td>{{ $componentType->assetTag->asset_tag }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-primary" href="{{ route("component.types.edit", $componentType->id) }}"><i class="ti ti-pencil"></i> Edit</a>
                                             <button class="btn btn-sm btn-danger delete-btn" data-component-type-id="{{ $componentType->id }}" type="button"><i class="ti ti-trash me-1"></i>

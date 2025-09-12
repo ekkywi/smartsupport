@@ -13,6 +13,11 @@ class ComponentType extends Model
 
     protected $fillable = [
         'name',
-        'component_type_tag',
+        'asset_tag_id',
     ];
+
+    public function assetTag()
+    {
+        return $this->belongsTo(AssetTag::class);
+    }
 }

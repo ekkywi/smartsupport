@@ -16,4 +16,9 @@ class AssetTag extends Model
         'asset_tag',
         'description',
     ];
+
+    public function componentTypes()
+    {
+        return $this->hasMany(ComponentType::class);
+    }
 }
