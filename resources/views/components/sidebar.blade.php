@@ -69,9 +69,6 @@
                                         </a>
                                         <ul class="slide-menu child2">
                                             <li class="slide">
-                                                <a class="side-menu__item" href="javascript:void(0);">Data Komponen</a>
-                                            </li>
-                                            <li class="slide">
                                                 <a class="side-menu__item" href="javascript:void(0);">Model Komponen</a>
                                             </li>
                                             <li class="slide">
@@ -85,9 +82,6 @@
                                         <a class="side-menu__item {{ request()->routeIs("hardware.types.*") ? "active" : "" }}" href="javascript:void(0);">Hardware
                                             <i class="fe fe-chevron-right side-menu__angle"></i></a>
                                         <ul class="slide-menu child2">
-                                            <li class="slide">
-                                                <a class="side-menu__item" href="javascript:void(0);">Data Hardware</a>
-                                            </li>
                                             <li class="slide">
                                                 <a class="side-menu__item" href="javascript:void(0);">Model Hardware</a>
                                             </li>
