@@ -105,8 +105,8 @@
                                     </li>
                                 @endcan
                                 @can("manage_suppliers_and_vendors")
-                                    <li class="slide has-sub {{ request()->routeIs("brands.*") ? "open" : "" }}">
-                                        <a class="side-menu__item {{ request()->routeIs("brands.*") ? "active" : "" }}" href="javascript:void(0);">
+                                    <li class="slide has-sub {{ request()->routeIs("brands.*", "suppliers.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("brands.*", "suppliers.*") ? "active" : "" }}" href="javascript:void(0);">
                                             Supplier dan Vendor
                                             <i class="fe fe-chevron-right side-menu__angle"></i>
                                         </a>
@@ -115,7 +115,7 @@
                                                 <a class="side-menu__item {{ request()->routeIs("brands.*") ? "active" : "" }}" href="{{ route("brands.index") }}">Merek</a>
                                             </li>
                                             <li class="slide">
-                                                <a class="side-menu__item" href="javascript:void(0);">Supplier</a>
+                                                <a class="side-menu__item {{ request()->routeIs("suppliers.*") ? "active" : "" }}" href="{{ route("suppliers.index") }}">Supplier</a>
                                             </li>
                                             <li class="slide">
                                                 <a class="side-menu__item" href="javascript:void(0);">Vendor</a>

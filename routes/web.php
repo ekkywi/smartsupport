@@ -19,6 +19,7 @@ use App\Http\Controllers\SystemLog\AssetStatusLogController;
 use App\Http\Controllers\Component\ComponentTypeController;
 use App\Http\Controllers\Hardware\HardwareTypeController;
 use App\Http\Controllers\SupplierVendor\BrandController;
+use App\Http\Controllers\SupplierVendor\SupplierController;
 use App\Http\Controllers\AssetNumber\AssetTagController;
 
 // Home
@@ -112,6 +113,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/merek/trash', [BrandController::class, 'trashed'])->name('brands.trashed');
         Route::post('/merek/{id}/restore', [BrandController::class, 'restore'])->name('brands.restore');
         Route::delete('/merek/{id}/force-delete', [BrandController::class, 'forceDelete'])->name('brands.force.delete');
+
+        // Supplier
+        Route::get('/supplier', [SupplierController::class, 'index'])->name('suppliers.index');
+        Route::get('/supplier/tambah', [SupplierController::class, 'create'])->name('suppliers.create');
+        Route::post('/supplier', [SupplierController::class, 'store'])->name('suppliers.store');
+        Route::get('/supplier/{supplier}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+        Route::put('/supplier/{supplier}', [SupplierController::class, 'update'])->name('suppliers.update');
+        Route::delete('/supplier/{supplier}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
+        Route::get('/supplier/trash', [SupplierController::class, 'trashed'])->name('suppliers.trashed');
+        Route::post('/supplier/{id}/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
+        Route::delete('/supplier/{id}/force-delete', [SupplierController::class, 'forceDelete'])->name('suppliers.force.delete');
     });
 
 
