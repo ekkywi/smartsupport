@@ -20,6 +20,7 @@ use App\Http\Controllers\Component\ComponentTypeController;
 use App\Http\Controllers\Hardware\HardwareTypeController;
 use App\Http\Controllers\SupplierVendor\BrandController;
 use App\Http\Controllers\SupplierVendor\SupplierController;
+use App\Http\Controllers\SupplierVendor\VendorController;
 use App\Http\Controllers\AssetNumber\AssetTagController;
 
 // Home
@@ -124,6 +125,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/supplier/trash', [SupplierController::class, 'trashed'])->name('suppliers.trashed');
         Route::post('/supplier/{id}/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
         Route::delete('/supplier/{id}/force-delete', [SupplierController::class, 'forceDelete'])->name('suppliers.force.delete');
+
+        // Vendor
+        Route::get('/vendor', [VendorController::class, 'index'])->name('vendors.index');
+        Route::get('/vendor/tambah', [VendorController::class, 'create'])->name('vendors.create');
+        Route::post('/vendor', [VendorController::class, 'store'])->name('vendors.store');
+        Route::get('/vendor/{vendor}/edit', [VendorController::class, 'edit'])->name('vendors.edit');
+        Route::put('/vendor/{vendor}', [VendorController::class, 'update'])->name('vendors.update');
+        Route::delete('/vendor/{vendor}', [VendorController::class, 'destroy'])->name('vendors.destroy');
+        Route::get('/vendor/trash', [VendorController::class, 'trashed'])->name('vendors.trashed');
+        Route::post('/vendor/{id}/restore', [VendorController::class, 'restore'])->name('vendors.restore');
+        Route::delete('/vendor/{id}/force-delete', [VendorController::class, 'forceDelete'])->name('vendors.force.delete');
     });
 
     // User Management

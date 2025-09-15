@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; {{ isset($supplier) ? "Edit" : "Tambah" }} Supplier
+    SmartSupport &mdash; {{ isset($vendor) ? "Edit" : "Tambah" }} Vendor
 @endsection
 
 @section("styles")
@@ -21,14 +21,14 @@
     <div class="container-fluid">
         {{-- Header & Breadcrumb Dinamis --}}
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">{{ isset($supplier) ? "Edit" : "Tambah" }} Supplier</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">{{ isset($vendor) ? "Edit" : "Tambah" }} Vendor</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item">Master Data Aset</li>
                         <li class="breadcrumb-item">Supplier dan Vendor</li>
-                        <li class="breadcrumb-item">Supplier</li>
-                        <li aria-current="page" class="breadcrumb-item active">{{ isset($supplier) ? "Edit" : "Tambah" }} Supplier</li>
+                        <li class="breadcrumb-item">Vendor</li>
+                        <li aria-current="page" class="breadcrumb-item active">{{ isset($vendor) ? "Edit" : "Tambah" }} Vendor</li>
                     </ol>
                 </nav>
             </div>
@@ -39,101 +39,101 @@
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Form {{ isset($supplier) ? "Edit" : "Tambah" }} Supplier
+                            Form {{ isset($vendor) ? "Edit" : "Tambah" }} Vendor
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{ isset($supplier) ? route("suppliers.update", $supplier->id) : route("suppliers.store") }}" autocomplete="off" class="row gy-4" method="POST">
+                        <form action="{{ isset($vendor) ? route("vendors.update", $vendor->id) : route("vendors.store") }}" autocomplete="off" class="row gy-4" method="POST">
                             @csrf
-                            @if (isset($supplier))
+                            @if (isset($vendor))
                                 @method("PUT")
                             @endif
                             <div class="col-xl-12">
-                                <h6 class="fw-semibold mb-3">Informasi Supplier</h6>
+                                <h6 class="fw-semibold mb-3">Informasi Vendor</h6>
                                 <hr>
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="mb-3">
-                                            <label class="form-label text-default fw-semibold" for="name">Nama Supplier</label>
-                                            <input class="form-control" id="name" name="name" placeholder="Nama Supplier" type="text" value="{{ old("name", isset($supplier) ? $supplier->name : "") }}">
+                                            <label class="form-label text-default fw-semibold" for="name">Nama Vendor</label>
+                                            <input class="form-control" id="name" name="name" placeholder="Nama Vendor" type="text" value="{{ old("name", isset($vendor) ? $vendor->name : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="mb-3">
-                                            <label class="form-label text-default fw-semibold" for="supplier_code">Kode Supplier</label>
-                                            <input class="form-control" id="supplier_code" name="supplier_code" placeholder="Kode Supplier" type="text" value="{{ old("supplier_code", isset($supplier) ? $supplier->supplier_code : "") }}">
+                                            <label class="form-label text-default fw-semibold" for="vendor_code">Kode Vendor</label>
+                                            <input class="form-control" id="vendor_code" name="vendor_code" placeholder="Kode Vendor" type="text" value="{{ old("vendor_code", isset($vendor) ? $vendor->vendor_code : "") }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-12">
-                                <h6 class="fw-semibold mb-3">Kontak Supplier</h6>
+                                <h6 class="fw-semibold mb-3">Kontak Vendor</h6>
                                 <hr>
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="contact_person">Kontak Person</label>
-                                            <input class="form-control" id="contact_person" name="contact_person" placeholder="Kontak Person" type="text" value="{{ old("contact_person", isset($supplier) ? $supplier->contact_person : "") }}">
+                                            <input class="form-control" id="contact_person" name="contact_person" placeholder="Kontak Person" type="text" value="{{ old("contact_person", isset($vendor) ? $vendor->contact_person : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="phone">Telepon</label>
-                                            <input class="form-control" id="phone" name="phone" placeholder="Telepon" type="text" value="{{ old("phone", isset($supplier) ? $supplier->phone : "") }}">
+                                            <input class="form-control" id="phone" name="phone" placeholder="Telepon" type="text" value="{{ old("phone", isset($vendor) ? $vendor->phone : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="email">Email</label>
-                                            <input class="form-control" id="email" name="email" placeholder="Email" type="email" value="{{ old("email", isset($supplier) ? $supplier->email : "") }}">
+                                            <input class="form-control" id="email" name="email" placeholder="Email" type="email" value="{{ old("email", isset($vendor) ? $vendor->email : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="website">Website</label>
-                                            <input class="form-control" id="website" name="website" placeholder="Website" type="text" value="{{ old("website", isset($supplier) ? $supplier->website : "") }}">
+                                            <input class="form-control" id="website" name="website" placeholder="Website" type="text" value="{{ old("website", isset($vendor) ? $vendor->website : "") }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-12">
-                                <h6 class="fw-semibold mb-3">Alamat Supplier</h6>
+                                <h6 class="fw-semibold mb-3">Alamat Vendor</h6>
                                 <hr>
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="city">Kota</label>
-                                            <input class="form-control" id="city" name="city" placeholder="Kota" type="text" value="{{ old("city", isset($supplier) ? $supplier->city : "") }}">
+                                            <input class="form-control" id="city" name="city" placeholder="Kota" type="text" value="{{ old("city", isset($vendor) ? $vendor->city : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="postal_code">Kode Pos</label>
-                                            <input class="form-control" id="postal_code" name="postal_code" placeholder="Kode Pos" type="text" value="{{ old("postal_code", isset($supplier) ? $supplier->postal_code : "") }}">
+                                            <input class="form-control" id="postal_code" name="postal_code" placeholder="Kode Pos" type="text" value="{{ old("postal_code", isset($vendor) ? $vendor->postal_code : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="province">Provinsi</label>
-                                            <input class="form-control" id="province" name="province" placeholder="Provinsi" type="text" value="{{ old("province", isset($supplier) ? $supplier->province : "") }}">
+                                            <input class="form-control" id="province" name="province" placeholder="Provinsi" type="text" value="{{ old("province", isset($vendor) ? $vendor->province : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
-                                            <label class="form-label text-default fw-seminold" for="country">Negara</label>
-                                            <input class="form-control" id="country" name="country" placeholder="Negara" type="text" value="{{ old("country", isset($supplier) ? $supplier->country : "") }}">
+                                            <label class="form-label text-default fw-semibold" for="country">Negara</label>
+                                            <input class="form-control" id="country" name="country" placeholder="Negara" type="text" value="{{ old("country", isset($vendor) ? $vendor->country : "") }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="address">Alamat</label>
-                                            <textarea class="form-control" id="address" name="address" placeholder="Alamat" rows="3">{{ old("address", isset($supplier) ? $supplier->address : "") }}</textarea>
+                                            <textarea class="form-control" id="address" name="address" placeholder="Alamat" rows="3">{{ old("address", isset($vendor) ? $vendor->address : "") }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-default fw-semibold" for="notes">Catatan</label>
-                                            <textarea class="form-control" id="notes" name="notes" placeholder="Catatan" rows="3">{{ old("notes", isset($supplier) ? $supplier->notes : "") }}</textarea>
+                                            <textarea class="form-control" id="notes" name="notes" placeholder="Catatan" rows="3">{{ old("notes", isset($vendor) ? $vendor->notes : "") }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@
         }
 
         function goToIndex() {
-            window.location.href = "{{ route("suppliers.index") }}";
+            window.location.href = "{{ route("vendors.index") }}";
         }
     </script>
 @endsection
