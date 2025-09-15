@@ -126,7 +126,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/supplier/{id}/force-delete', [SupplierController::class, 'forceDelete'])->name('suppliers.force.delete');
     });
 
-
     // User Management
     Route::middleware(['auth', 'can:manage_users'])->group(function () {
         // User

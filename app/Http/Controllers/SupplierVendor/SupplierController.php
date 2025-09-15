@@ -29,12 +29,12 @@ class SupplierController extends Controller
                 'phone' => 'nullable|string',
                 'email' => 'nullable|string|email',
                 'website' => 'nullable|string',
-                'address' => 'nullable|text',
+                'address' => 'nullable|string',
                 'postal_code' => 'nullable|string',
                 'city' => 'nullable|string',
                 'province' => 'nullable|string',
                 'country' => 'nullable|string',
-                'notes' => 'nullable|text',
+                'notes' => 'nullable|string',
             ],
             [
                 'supplier_code.required' => 'Kode supplier tidak boleh kosong.',
@@ -66,12 +66,12 @@ class SupplierController extends Controller
                 'phone' => 'nullable|string',
                 'email' => 'nullable|string|email',
                 'website' => 'nullable|string',
-                'address' => 'nullable|text',
+                'address' => 'nullable|string',
                 'postal_code' => 'nullable|string',
                 'city' => 'nullable|string',
                 'province' => 'nullable|string',
                 'country' => 'nullable|string',
-                'notes' => 'nullable|text',
+                'notes' => 'nullable|string',
             ],
             [
                 'supplier_code.required' => 'Kode supplier tidak boleh kosong.',
@@ -83,5 +83,32 @@ class SupplierController extends Controller
 
         $supplier->update($request->all());
         return redirect()->route('suppliers.index')->with('success', 'Data supplier berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $supplier = Supplier::findOrFail($id);
+        $supplier->delete();
+        return redirect()->route('suppliers.index')->with('success', 'Data supplier berhasil dihapus.');
+    }
+
+    public function trashed()
+    {
+        $trashedSuppliers = Supplier::onlyTrashed()->get();
+        return view('contents.supplier-trashed', compact('trashedSuppliers'));
+    }
+
+    public function restore($id)
+    {
+        $supplier = Supplier::onlyTrashed()->where('id', $id)->firstOrFail();
+        $supplier->restore();
+        return redirect()->route('suppliers.trashed')->with('success', 'Data supplier berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id)
+    {
+        $supplier = Supplier::onlyTrashed()->where('id', $id)->firstOrFail();
+        $supplier->forceDelete();
+        return redirect()->route('suppliers.trashed')->with('success', 'Data supplier berhasil dihapus permanen.');
     }
 }

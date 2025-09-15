@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
-            $table->text('address')->nullable();
+            $table->string('address')->nullable();
             $table->string('postal_code')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();
             $table->string('country')->nullable();
-            $table->text('notes')->nullable();
+            $table->string('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
