@@ -20,4 +20,9 @@ class ComponentType extends Model
     {
         return $this->belongsTo(AssetTag::class);
     }
+
+    public function componentModels()
+    {
+        return $this->hasMany(ComponentModel::class);
+    }
 }

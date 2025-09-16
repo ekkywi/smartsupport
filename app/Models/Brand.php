@@ -15,4 +15,9 @@ class Brand extends Model
         'name',
         'brand_tag',
     ];
+
+    public function componentModels()
+    {
+        return $this->hasMany(ComponentModel::class);
+    }
 }
