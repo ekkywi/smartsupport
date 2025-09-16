@@ -74,16 +74,14 @@ class BrandController extends Controller
         return view('contents.brand-trashed', compact('trashedBrands'));
     }
 
-    public function restore($id)
+    public function restore(Brand $brand)
     {
-        $brand = Brand::onlyTrashed()->where('id', $id)->firstOrFail();
         $brand->restore();
         return redirect()->route('brands.trashed')->with('success', 'Brand berhasil dipulihkan.');
     }
 
-    public function forceDelete($id)
+    public function forceDelete(Brand $brand)
     {
-        $brand = Brand::onlyTrashed()->where('id', $id)->firstOrFail();
         $brand->forceDelete();
         return redirect()->route('brands.trashed')->with('success', 'Brand berhasil dihapus permanen.');
     }

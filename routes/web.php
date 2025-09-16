@@ -23,6 +23,10 @@ use App\Http\Controllers\SupplierVendor\SupplierController;
 use App\Http\Controllers\SupplierVendor\VendorController;
 use App\Http\Controllers\AssetNumber\AssetTagController;
 
+use App\Models\Brand;
+use App\Models\Supplier;
+use App\Models\Vendor;
+
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -104,7 +108,11 @@ Route::middleware('auth')->group(function () {
 
     // Brand and Supplier Master Data
     Route::middleware(['auth', 'can:manage_suppliers_and_vendors'])->group(function () {
+
         // Brand
+        Route::bind('brand', function ($value) {
+            return Brand::withTrashed()->findOrFail($value);
+        });
         Route::get('/merek', [BrandController::class, 'index'])->name('brands.index');
         Route::get('/merek/tambah', [BrandController::class, 'create'])->name('brands.create');
         Route::post('/merek', [BrandController::class, 'store'])->name('brands.store');
@@ -112,10 +120,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/merek/{brand}', [BrandController::class, 'update'])->name('brands.update');
         Route::delete('/merek/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
         Route::get('/merek/trash', [BrandController::class, 'trashed'])->name('brands.trashed');
-        Route::post('/merek/{id}/restore', [BrandController::class, 'restore'])->name('brands.restore');
-        Route::delete('/merek/{id}/force-delete', [BrandController::class, 'forceDelete'])->name('brands.force.delete');
+        Route::post('/merek/{brand}/restore', [BrandController::class, 'restore'])->name('brands.restore');
+        Route::delete('/merek/{brand}/force-delete', [BrandController::class, 'forceDelete'])->name('brands.force.delete');
 
         // Supplier
+        Route::bind('supplier', function ($value) {
+            return Supplier::withTrashed()->findOrFail($value);
+        });
         Route::get('/supplier', [SupplierController::class, 'index'])->name('suppliers.index');
         Route::get('/supplier/tambah', [SupplierController::class, 'create'])->name('suppliers.create');
         Route::post('/supplier', [SupplierController::class, 'store'])->name('suppliers.store');
@@ -123,10 +134,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/supplier/{supplier}', [SupplierController::class, 'update'])->name('suppliers.update');
         Route::delete('/supplier/{supplier}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
         Route::get('/supplier/trash', [SupplierController::class, 'trashed'])->name('suppliers.trashed');
-        Route::post('/supplier/{id}/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
-        Route::delete('/supplier/{id}/force-delete', [SupplierController::class, 'forceDelete'])->name('suppliers.force.delete');
+        Route::post('/supplier/{supplier}/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
+        Route::delete('/supplier/{supplier}/force-delete', [SupplierController::class, 'forceDelete'])->name('suppliers.force.delete');
 
         // Vendor
+        Route::bind('vendor', function ($value) {
+            return Vendor::withTrashed()->findOrFail($value);
+        });
         Route::get('/vendor', [VendorController::class, 'index'])->name('vendors.index');
         Route::get('/vendor/tambah', [VendorController::class, 'create'])->name('vendors.create');
         Route::post('/vendor', [VendorController::class, 'store'])->name('vendors.store');
@@ -134,8 +148,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/vendor/{vendor}', [VendorController::class, 'update'])->name('vendors.update');
         Route::delete('/vendor/{vendor}', [VendorController::class, 'destroy'])->name('vendors.destroy');
         Route::get('/vendor/trash', [VendorController::class, 'trashed'])->name('vendors.trashed');
-        Route::post('/vendor/{id}/restore', [VendorController::class, 'restore'])->name('vendors.restore');
-        Route::delete('/vendor/{id}/force-delete', [VendorController::class, 'forceDelete'])->name('vendors.force.delete');
+        Route::post('/vendor/{vendor}/restore', [VendorController::class, 'restore'])->name('vendors.restore');
+        Route::delete('/vendor/{vendor}/force-delete', [VendorController::class, 'forceDelete'])->name('vendors.force.delete');
     });
 
     // User Management

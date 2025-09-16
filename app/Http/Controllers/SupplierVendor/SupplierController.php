@@ -48,15 +48,13 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index')->with('success', 'Data supplier berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(Supplier $supplier)
     {
-        $supplier = Supplier::findOrFail($id);
         return view('forms.supplier-form', compact('supplier'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Supplier $supplier)
     {
-        $supplier = Supplier::findOrFail($id);
 
         $request->validate(
             [
@@ -85,9 +83,8 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index')->with('success', 'Data supplier berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Supplier $supplier)
     {
-        $supplier = Supplier::findOrFail($id);
         $supplier->delete();
         return redirect()->route('suppliers.index')->with('success', 'Data supplier berhasil dihapus.');
     }
@@ -98,16 +95,14 @@ class SupplierController extends Controller
         return view('contents.supplier-trashed', compact('trashedSuppliers'));
     }
 
-    public function restore($id)
+    public function restore(Supplier $supplier)
     {
-        $supplier = Supplier::onlyTrashed()->where('id', $id)->firstOrFail();
         $supplier->restore();
         return redirect()->route('suppliers.trashed')->with('success', 'Data supplier berhasil dipulihkan.');
     }
 
-    public function forceDelete($id)
+    public function forceDelete(Supplier $supplier)
     {
-        $supplier = Supplier::onlyTrashed()->where('id', $id)->firstOrFail();
         $supplier->forceDelete();
         return redirect()->route('suppliers.trashed')->with('success', 'Data supplier berhasil dihapus permanen.');
     }

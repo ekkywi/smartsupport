@@ -44,4 +44,9 @@ class ServiceProviderController extends Controller
         ServiceProvider::create($request->all());
         return redirect()->route('service-providers.index')->with('success', 'Data penyedia layanan berhasil ditambahkan.');
     }
+
+    public function edit(ServiceProvider $serviceProvider)
+    {
+        return view('forms.service-provider-form', compact('serviceProvider'));
+    }
 }

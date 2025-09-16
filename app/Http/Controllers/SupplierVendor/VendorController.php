@@ -28,6 +28,7 @@ class VendorController extends Controller
                 'contact_person' => 'nullable|string',
                 'phone' => 'nullable|string',
                 'email' => 'nullable|string|email',
+                'website' => 'nullable|string|max:255',
                 'address' => 'nullable|string',
                 'postal_code' => 'nullable|string',
                 'city' => 'nullable|string',
@@ -47,16 +48,13 @@ class VendorController extends Controller
         return redirect()->route('vendors.index')->with('success', 'Data vendor berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(Vendor $vendor)
     {
-        $vendor = Vendor::findOrFail($id);
         return view('forms.vendor-form', compact('vendor'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Vendor $vendor)
     {
-        $vendor = Vendor::findOrFail($id);
-
         $request->validate(
             [
                 'vendor_code' => 'required|string|unique:vendors,vendor_code,' . $vendor->id,
@@ -64,6 +62,7 @@ class VendorController extends Controller
                 'contact_person' => 'nullable|string',
                 'phone' => 'nullable|string',
                 'email' => 'nullable|string|email',
+                'website' => 'nullable|string|max:255',
                 'address' => 'nullable|string',
                 'postal_code' => 'nullable|string',
                 'city' => 'nullable|string',
@@ -83,9 +82,8 @@ class VendorController extends Controller
         return redirect()->route('vendors.index')->with('success', 'Data vendor berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Vendor $vendor)
     {
-        $vendor = Vendor::findOrFail($id);
         $vendor->delete();
         return redirect()->route('vendors.index')->with('success', 'Data vendor berhasil dihapus.');
     }
@@ -96,16 +94,14 @@ class VendorController extends Controller
         return view('contents.vendor-trashed', compact('trashedVendors'));
     }
 
-    public function restore($id)
+    public function restore(Vendor $vendor)
     {
-        $vendor = Vendor::onlyTrashed()->where('id', $id)->firstOrFail();
         $vendor->restore();
         return redirect()->route('vendors.trashed')->with('success', 'Data vendor berhasil dipulihkan.');
     }
 
-    public function forceDelete($id)
+    public function forceDelete(Vendor $vendor)
     {
-        $vendor = Vendor::onlyTrashed()->where('id', $id)->firstOrFail();
         $vendor->forceDelete();
         return redirect()->route('vendors.trashed')->with('success', 'Data vendor berhasil dihapus permanen.');
     }
