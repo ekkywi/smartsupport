@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Supplier Terhapus
+    SmartSupport &mdash; Penyedia Jasa Terhapus
 @endsection
 
 @section("styles")
@@ -16,22 +16,22 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Supplier Terhapus (Trash)</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Penyedia Jasa Terhapus (Trash)</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item">Master Data Aset</li>
                         <li class="breadcrumb-item">Supplier dan Vendor</li>
-                        <li class="breadcrumb-item">Supplier</li>
-                        <li class="breadcrumb-item active">Supplier Terhapus</li>
+                        <li class="breadcrumb-item">Penyedia Jasa</li>
+                        <li class="breadcrumb-item active">Penyedia Jasa Terhapus</li>
                     </ol>
                 </nav>
             </div>
         </div>
 
         <div class="mb-3 d-flex flex-wrap gap-2">
-            <a class="btn btn-secondary mt-3" href="{{ route("suppliers.index") }}">
-                <i class="ti ti-arrow-left"></i> Kembali ke Data Supplier
+            <a class="btn btn-secondary mt-3" href="{{ route("service-providers.index") }}">
+                <i class="ti ti-arrow-left"></i> Kembali ke Data Penyedia Jasa
             </a>
         </div>
 
@@ -40,7 +40,7 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Daftar Supplier Terhapus
+                            Daftar Penyedia Jasa Terhapus
                         </div>
                     </div>
                     <div class="card-body">
@@ -64,32 +64,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($trashedSuppliers as $supplier)
+                                @forelse($trashedServiceProviders as $serviceProvider)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $supplier->name }}</td>
-                                        <td>{{ $supplier->contact_person }}</td>
-                                        <td>{{ $supplier->phone }}</td>
-                                        <td>{{ $supplier->notes }}</td>
+                                        <td>{{ $serviceProvider->name }}</td>
+                                        <td>{{ $serviceProvider->contact_person }}</td>
+                                        <td>{{ $serviceProvider->phone }}</td>
+                                        <td>{{ $serviceProvider->notes }}</td>
                                         <td>
-                                            <form action="{{ route("suppliers.restore", $supplier->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route("service-providers.restore", $serviceProvider->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 <button class="btn btn-success btn-sm" type="submit">
                                                     <i class="ti ti-history"></i> Restore
                                                 </button>
                                             </form>
-                                            <form action="{{ route("suppliers.force.delete", $supplier->id) }}" id="delete-form-{{ $supplier->id }}" method="POST" style="display: none;">
+                                            <form action="{{ route("service-providers.force.delete", $serviceProvider->id) }}" id="delete-form-{{ $serviceProvider->id }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>
-                                            <button class="btn btn-danger btn-sm delete-btn" data-supplier-id="{{ $supplier->id }}">
+                                            <button class="btn btn-danger btn-sm delete-btn" data-service-provider-id="{{ $serviceProvider->id }}">
                                                 <i class="ti ti-trash"></i> Hapus Permanen
                                             </button>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td class="text-center" colspan="6">Tidak ada data supplier yang terhapus.</td>
+                                        <td class="text-center" colspan="6">Tidak ada data penyedia jasa yang terhapus.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -154,7 +154,7 @@
             });
             $(document).on('click', '.delete-btn', function(e) {
                 e.preventDefault();
-                var supplierId = $(this).data('supplier-id');
+                var serviceProviderId = $(this).data('service-provider-id');
                 Swal.fire({
                     title: "Apakah Anda yakin?",
                     text: "Data yang dihapus tidak dapat dipulihkan!",
@@ -166,7 +166,7 @@
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        document.getElementById("delete-form-" + supplierId).submit();
+                        document.getElementById("delete-form-" + serviceProviderId).submit();
                     }
                 });
             });

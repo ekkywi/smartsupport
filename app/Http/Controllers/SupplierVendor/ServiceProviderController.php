@@ -11,7 +11,7 @@ class ServiceProviderController extends Controller
     public function index()
     {
         $serviceProviders = ServiceProvider::all();
-        return response()->json($serviceProviders);
+        return view('contents.service-provider', compact('serviceProviders'));
     }
 
     public function create()
@@ -48,5 +48,55 @@ class ServiceProviderController extends Controller
     public function edit(ServiceProvider $serviceProvider)
     {
         return view('forms.service-provider-form', compact('serviceProvider'));
+    }
+
+    public function update(Request $request, ServiceProvider $serviceProvider)
+    {
+        $request->validate([
+            'service_provider_code' => 'required|string|unique:service_providers,service_provider_code,' . $serviceProvider->id,
+            'name' => 'required|string',
+            'contact_person' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'email' => 'nullable|string|email',
+            'website' => 'nullable|string',
+            'address' => 'nullable|string',
+            'postal_code' => 'nullable|string',
+            'city' => 'nullable|string',
+            'province' => 'nullable|string',
+            'country' => 'nullable|string',
+            'notes' => 'nullable|string',
+        ], [
+            'service_provider_code.required' => 'Kode penyedia layanan tidak boleh kosong.',
+            'service_provider_code.unique' => 'Kode penyedia layanan sudah digunakan, silahkan gunakan kode lain.',
+            'name.required' => 'Nama penyedia layanan tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+        ]);
+
+        $serviceProvider->update($request->all());
+        return redirect()->route('service-providers.index')->with('success', 'Data penyedia layanan berhasil diperbarui.');
+    }
+
+    public function destroy(ServiceProvider $serviceProvider)
+    {
+        $serviceProvider->delete();
+        return redirect()->route('service-providers.index')->with('success', 'Data penyedia layanan berhasil dihapus.');
+    }
+
+    public function trashed()
+    {
+        $trashedServiceProviders = ServiceProvider::onlyTrashed()->get();
+        return view('contents.service-provider-trashed', compact('trashedServiceProviders'));
+    }
+
+    public function restore(ServiceProvider $serviceProvider)
+    {
+        $serviceProvider->restore();
+        return redirect()->route('service-providers.trashed')->with('success', 'Data penyedia layanan berhasil dipulihkan.');
+    }
+
+    public function forceDelete(ServiceProvider $serviceProvider)
+    {
+        $serviceProvider->forceDelete();
+        return redirect()->route('service-providers.trashed')->with('success', 'Data penyedia layanan berhasil dihapus permanen.');
     }
 }

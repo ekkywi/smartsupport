@@ -86,7 +86,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td class="text-center" colspan="6">Tidak ada data status asset yang terhapus.</td>
+                                        <td class="text-center" colspan="6">Tidak ada data merek yang terhapus.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

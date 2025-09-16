@@ -94,7 +94,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td class="text-center" colspan="6">Tidak ada data supplier.</td>
+                                        <td class="text-center" colspan="6">Tidak ada data vendor.</td>
                                     </tr>
                                 @endforelse
 

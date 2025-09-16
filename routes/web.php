@@ -1,5 +1,6 @@
 <?php
 
+// Controllers
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Auth\LoginController;
@@ -21,11 +22,14 @@ use App\Http\Controllers\Hardware\HardwareTypeController;
 use App\Http\Controllers\SupplierVendor\BrandController;
 use App\Http\Controllers\SupplierVendor\SupplierController;
 use App\Http\Controllers\SupplierVendor\VendorController;
+use App\Http\Controllers\SupplierVendor\ServiceProviderController;
 use App\Http\Controllers\AssetNumber\AssetTagController;
 
+// Models
 use App\Models\Brand;
 use App\Models\Supplier;
 use App\Models\Vendor;
+use App\Models\ServiceProvider;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -150,6 +154,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/vendor/trash', [VendorController::class, 'trashed'])->name('vendors.trashed');
         Route::post('/vendor/{vendor}/restore', [VendorController::class, 'restore'])->name('vendors.restore');
         Route::delete('/vendor/{vendor}/force-delete', [VendorController::class, 'forceDelete'])->name('vendors.force.delete');
+
+        // Service Provider
+        Route::bind('serviceProvider', function ($value) {
+            return ServiceProvider::withTrashed()->findOrFail($value);
+        });
+        Route::get('/penyedia-layanan', [ServiceProviderController::class, 'index'])->name('service-providers.index');
+        Route::get('/penyedia-layanan/tambah', [ServiceProviderController::class, 'create'])->name('service-providers.create');
+        Route::post('/penyedia-layanan', [ServiceProviderController::class, 'store'])->name('service-providers.store');
+        Route::get('/penyedia-layanan/{serviceProvider}/edit', [ServiceProviderController::class, 'edit'])->name('service-providers.edit');
+        Route::put('/penyedia-layanan/{serviceProvider}', [ServiceProviderController::class, 'update'])->name('service-providers.update');
+        Route::delete('/penyedia-layanan/{serviceProvider}', [ServiceProviderController::class, 'destroy'])->name('service-providers.destroy');
+        Route::get('/penyedia-layanan/trash', [ServiceProviderController::class, 'trashed'])->name('service-providers.trashed');
+        Route::post('/penyedia-layanan/{serviceProvider}/restore', [ServiceProviderController::class, 'restore'])->name('service-providers.restore');
+        Route::delete('/penyedia-layanan/{serviceProvider}/force-delete', [ServiceProviderController::class, 'forceDelete'])->name('service-providers.force.delete');
     });
 
     // User Management

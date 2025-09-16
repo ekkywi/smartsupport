@@ -38,8 +38,8 @@
                     </li>
 
                     @canany(["manage_asset_numberings", "manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_suppliers_and_vendors"])
-                        <li class="slide has-sub {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*") ? "active" : "" }}" href="javascript:void(0);">
+                        <li class="slide has-sub {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-data side-menu__icon"></i>
                                 <span class="side-menu__label">Master Data Aset</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -106,8 +106,8 @@
                                 @endcan
 
                                 @can("manage_suppliers_and_vendors")
-                                    <li class="slide has-sub {{ request()->routeIs("brands.*", "suppliers.*", "vendors.*") ? "open" : "" }}">
-                                        <a class="side-menu__item {{ request()->routeIs("brands.*", "suppliers.*", "vendors.*") ? "active" : "" }}" href="javascript:void(0);">
+                                    <li class="slide has-sub {{ request()->routeIs("brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "active" : "" }}" href="javascript:void(0);">
                                             Supplier dan Vendor
                                             <i class="fe fe-chevron-right side-menu__angle"></i>
                                         </a>
@@ -122,7 +122,7 @@
                                                 <a class="side-menu__item {{ request()->routeIs("vendors.*") ? "active" : "" }}" href="{{ route("vendors.index") }}">Vendor</a>
                                             </li>
                                             <li class="slide">
-                                                <a class="side-menu__item" href="javascript:void(0);">Penyedia Jasa</a>
+                                                <a class="side-menu__item {{ request()->routeIs("service-providers.*") ? "active" : "" }}" href="{{ route("service-providers.index") }}">Penyedia Jasa</a>
                                             </li>
                                         </ul>
                                     </li>
