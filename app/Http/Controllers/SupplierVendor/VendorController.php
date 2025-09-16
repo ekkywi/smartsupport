@@ -92,15 +92,15 @@ class VendorController extends Controller
 
     public function trashed()
     {
-        $vendors = Vendor::onlyTrashed()->get();
-        return view('contents.vendor-trashed', compact('vendors'));
+        $trashedVendors = Vendor::onlyTrashed()->get();
+        return view('contents.vendor-trashed', compact('trashedVendors'));
     }
 
     public function restore($id)
     {
         $vendor = Vendor::onlyTrashed()->where('id', $id)->firstOrFail();
         $vendor->restore();
-        return redirect()->route('vendors.index')->with('success', 'Data vendor berhasil dipulihkan.');
+        return redirect()->route('vendors.trashed')->with('success', 'Data vendor berhasil dipulihkan.');
     }
 
     public function forceDelete($id)
