@@ -38,8 +38,8 @@
                     </li>
 
                     @canany(["manage_asset_numberings", "manage_asset_statuses", "manage_asset_components", "manage_asset_hardwares", "manage_suppliers_and_vendors"])
-                        <li class="slide has-sub {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "open" : "" }}">
-                            <a class="side-menu__item {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "active" : "" }}" href="javascript:void(0);">
+                        <li class="slide has-sub {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.models.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "open" : "" }}">
+                            <a class="side-menu__item {{ request()->routeIs("asset.tags.*", "asset.status.*", "component.models.*", "component.types.*", "hardware.types.*", "brands.*", "suppliers.*", "vendors.*", "service-providers.*") ? "active" : "" }}" href="javascript:void(0);">
                                 <i class="bx bx-data side-menu__icon"></i>
                                 <span class="side-menu__label">Master Data Aset</span>
                                 <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -75,14 +75,14 @@
                                     </li>
                                 @endcan
                                 @can("manage_asset_components")
-                                    <li class="slide has-sub {{ request()->routeIs("component.types.*") ? "open" : "" }}">
-                                        <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="javascript:void(0);">
+                                    <li class="slide has-sub {{ request()->routeIs("component.models.*", "component.types.*") ? "open" : "" }}">
+                                        <a class="side-menu__item {{ request()->routeIs("component.models.*", "component.types.*") ? "active" : "" }}" href="javascript:void(0);">
                                             Komponen
                                             <i class="fe fe-chevron-right side-menu__angle"></i>
                                         </a>
                                         <ul class="slide-menu child2">
                                             <li class="slide">
-                                                <a class="side-menu__item" href="javascript:void(0);">Model Komponen</a>
+                                                <a class="side-menu__item {{ request()->routeIs("component.models.*") ? "active" : "" }}" href="{{ route("component.models.index") }}">Model Komponen</a>
                                             </li>
                                             <li class="slide">
                                                 <a class="side-menu__item {{ request()->routeIs("component.types.*") ? "active" : "" }}" href="{{ route("component.types.index") }}">Jenis Komponen</a>

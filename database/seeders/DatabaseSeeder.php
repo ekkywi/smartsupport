@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             AdminSeeder::class,
             AssetStatusSeeder::class,
+            AssetTagSeeder::class,
+            ComponentTypeSeeder::class,
         ]);
     }
 }

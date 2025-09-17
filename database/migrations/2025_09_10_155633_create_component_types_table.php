@@ -12,6 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->unique();
             $table->foreignUuid('asset_tag_id')->constrained('asset_tags')->onDelete('cascade');
+            $table->string('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

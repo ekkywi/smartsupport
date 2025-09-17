@@ -17,6 +17,7 @@ use App\Http\Controllers\Administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
 use App\Http\Controllers\AssetStatus\AssetStatusController;
 use App\Http\Controllers\SystemLog\AssetStatusLogController;
+use App\Http\Controllers\Component\ComponentModelController;
 use App\Http\Controllers\Component\ComponentTypeController;
 use App\Http\Controllers\Hardware\HardwareTypeController;
 use App\Http\Controllers\SupplierVendor\BrandController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\SupplierVendor\ServiceProviderController;
 use App\Http\Controllers\AssetNumber\AssetTagController;
 
 // Models
+use App\Models\ComponentModel;
 use App\Models\Brand;
 use App\Models\Supplier;
 use App\Models\Vendor;
@@ -86,6 +88,23 @@ Route::middleware('auth')->group(function () {
 
     // Component Master Data
     Route::middleware(['auth', 'can:manage_asset_components'])->group(function () {
+
+        // Component Model]
+        Route::bind('componentModel', function ($value) {
+            return ComponentModel::withTrashed()->findOrFail($value);
+        });
+        Route::get('/model-komponen', [ComponentModelController::class, 'index'])->name('component.models.index');
+        Route::get('/model-komponen/tambah', [ComponentModelController::class, 'create'])->name('component.models.create');
+        Route::post('/model-komponen', [ComponentModelController::class, 'store'])->name('component.models.store');
+        Route::get('/model-komponen/{componentModel}/edit', [ComponentModelController::class, 'edit'])->name('component.models.edit');
+        Route::put('/model-komponen/{componentModel}', [ComponentModelController::class, 'update'])->name('component.models.update');
+        Route::delete('/model-komponen/{componentModel}', [ComponentModelController::class, 'destroy'])->name('component.models.destroy');
+        Route::get('/model-komponen/{componentModel}', [ComponentModelController::class, 'show'])->name('component.models.show');
+        Route::get('/model-komponen/trash', [ComponentModelController::class, 'trashed'])->name('component.models.trashed');
+        Route::post('/model-komponen/{componentModel}/restore', [ComponentModelController::class, 'restore'])->name('component.models.restore');
+        Route::delete('/model-komponen/{componentModel}/force-delete', [ComponentModelController::class, 'forceDelete'])->name('component.models.force.delete');
+
+        // Component Type
         Route::get('/tipe-komponen', [ComponentTypeController::class, 'index'])->name('component.types.index');
         Route::get('/tipe-komponen/tambah', [ComponentTypeController::class, 'create'])->name('component.types.create');
         Route::post('/tipe-komponen', [ComponentTypeController::class, 'store'])->name('component.types.store');

@@ -14,6 +14,7 @@ class ComponentType extends Model
     protected $fillable = [
         'name',
         'asset_tag_id',
+        'description',
     ];
 
     public function assetTag()
