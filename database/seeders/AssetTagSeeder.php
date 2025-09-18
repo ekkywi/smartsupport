@@ -17,14 +17,29 @@ class AssetTagSeeder extends Seeder
                 'description' => 'Random Access Memory (RAM)'
             ],
             [
-                'name' => 'Hard Disk',
-                'asset_tag' => 'H',
-                'description' => 'Hard Disk Drive (HDD)'
+                'name' => 'HDD',
+                'asset_tag' => 'SHD',
+                'description' => 'Media penyimpanan data (Hard Disk Drive)'
             ],
             [
                 'name' => 'SSD',
-                'asset_tag' => 'S',
+                'asset_tag' => 'SSD',
                 'description' => 'Solid State Drive (SSD)'
+            ],
+            [
+                'name' => 'FlashDrive',
+                'asset_tag' => 'SFD',
+                'description' => 'Flash Drive (SFD)'
+            ],
+            [
+                'name' => 'SDCard',
+                'asset_tag' => 'SDC',
+                'description' => 'Secure Digital Card (SD Card)'
+            ],
+            [
+                'name' => 'MicroSD',
+                'asset_tag' => 'SMS',
+                'description' => 'Micro Secure Digital Card (MicroSD)'
             ],
             [
                 'name' => 'Motherboard',
@@ -32,7 +47,7 @@ class AssetTagSeeder extends Seeder
                 'description' => 'Papan induk komputer'
             ],
             [
-                'name' => 'Power Supply',
+                'name' => 'PowerSupply',
                 'asset_tag' => 'P',
                 'description' => 'Unit catu daya komputer'
             ],

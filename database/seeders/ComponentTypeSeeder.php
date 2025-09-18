@@ -13,10 +13,13 @@ class ComponentTypeSeeder extends Seeder
     {
         $componentsType = [
             'RAM' => 'Random Access Memory (RAM)',
-            'Hard Disk' => 'Hard Disk Drive (HDD)',
+            'HDD' => 'Hard Disk Drive (HDD)',
             'SSD' => 'Solid State Drive (SSD)',
+            'FlashDrive' => 'Media penyimpanan portabel',
+            'SDCard' => 'Kartu memori untuk perangkat elektronik',
+            'MicroSD' => 'Kartu memori berukuran kecil',
             'Motherboard' => 'Papan induk komputer',
-            'Power Supply' => 'Unit catu daya komputer',
+            'PowerSupply' => 'Unit catu daya komputer',
             'CPU' => 'Central Processing Unit (CPU)',
             'GPU' => 'Graphics Processing Unit (GPU)'
         ];
