@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; {{ isset($componentType) ? "Edit" : "Tambah" }} Model Komponen
+    SmartSupport &mdash; {{ isset($componentModel) ? "Edit" : "Tambah" }} Model Komponen
 @endsection
 
 @section("styles")
@@ -61,11 +61,11 @@
                                         <input class="form-control" id="component_model_code" name="component_model_code" placeholder="Kode Model Komponen" type="text" value="{{ old("component_model_code", isset($componentModel) ? $componentModel->component_model_code : "") }}">
                                     </div>
                                     <div class="col-xl-6 col-lg-8 col-md-8 col-sm-12 mb-3">
-                                        <label class="form-label text-default fw-semibold" for="component_type">Jenis Komponen</label>
-                                        <select class="form-select" id="component_type" name="component_type">
-                                            <option value="">Pilih Jenis Komponen</option>
+                                        <label class="form-label text-default fw-semibold" for="component_type_id">Jenis Komponen</label>
+                                        <select class="form-select" id="component_type_id" name="component_type_id">
+                                            <option value="">Pilih Tipe Komponen</option>
                                             @foreach ($componentTypes as $componentType)
-                                                <option value="{{ $componentType->name }}">
+                                                <option {{ old("component_type_id", isset($componentModel) ? $componentModel->component_type_id : "") == $componentType->id ? "selected" : "" }} value="{{ $componentType->id }}">
                                                     {{ $componentType->name }}
                                                 </option>
                                             @endforeach
@@ -101,7 +101,7 @@
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
                                     <button class="btn btn-danger" onclick="goToIndex()" type="button"><i class="ti ti-x"></i> Batal</button>
                                     <button class="btn btn-secondary" onclick="clearFormInputs()" type="button"><i class="ti ti-trash"></i> Hapus</button>
-                                    <button class="btn btn-primary" type="submit"><i class="ti ti-check"></i> {{ isset($componentType) ? "Update" : "Simpan" }}</button>
+                                    <button class="btn btn-primary" type="submit"><i class="ti ti-check"></i> {{ isset($componentModel) ? "Update" : "Simpan" }}</button>
                                 </div>
                             </div>
                         </form>
@@ -168,6 +168,9 @@
         }
     </script>
     <script>
+        // Mapping UUID ke nama tipe dari backend
+        const componentTypeMap = @json($componentTypes->pluck("name", "id"));
+
         const specFields = {
             RAM: `
         <div class="mb-3">
@@ -447,36 +450,92 @@
             </select>
         </div>
     `,
-
             CPU: `
         <div class="mb-3">
             <label class="form-label text-default fw-semibold">Jumlah Core</label>
-            <input class="form-control mb-2" type="text" name="specs[core]" placeholder="Jumlah Core">
+            <input class="form-control mb-2" type="number" name="specs[core]" placeholder="Contoh: 6">
         </div>
         <div class="mb-3">
             <label class="form-label text-default fw-semibold">Jumlah Thread</label>
-            <input class="form-control mb-2" type="text" name="specs[thread]" placeholder="Jumlah Thread">
+            <input class="form-control mb-2" type="number" name="specs[thread]" placeholder="Contoh: 12">
         </div>
         <div class="mb-3">
-            <label class="form-label text-default fw-semibold">Kecepatan (GHz)</label>
-            <input class="form-control mb-2" type="text" name="specs[speed]" placeholder="Kecepatan (GHz)">
+            <label class="form-label text-default fw-semibold">Kecepatan Dasar (GHz)</label>
+            <input class="form-control mb-2" type="number" step="0.01" name="specs[speed]" placeholder="Contoh: 3.6">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Kecepatan Boost (GHz)</label>
+            <input class="form-control mb-2" type="number" step="0.01" name="specs[boost_speed]" placeholder="Contoh: 4.2">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Socket</label>
+            <input class="form-control mb-2" type="text" name="specs[socket]" placeholder="Contoh: LGA1200, AM4">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">TDP (Watt)</label>
+            <input class="form-control mb-2" type="number" name="specs[tdp]" placeholder="Contoh: 65">
+        </div>
+    `,
+            GPU: `
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">VRAM (GB)</label>
+            <input class="form-control mb-2" type="number" name="specs[vram]" placeholder="Contoh: 8">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Tipe Memory</label>
+            <select class="form-select mb-2" name="specs[memory_type]">
+                <option value="">Pilih Tipe Memory</option>
+                <option value="GDDR5">GDDR5</option>
+                <option value="GDDR6">GDDR6</option>
+                <option value="GDDR6X">GDDR6X</option>
+                <option value="HBM2">HBM2</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Base Clock (MHz)</label>
+            <input class="form-control mb-2" type="number" name="specs[base_clock]" placeholder="Contoh: 1320">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Boost Clock (MHz)</label>
+            <input class="form-control mb-2" type="number" name="specs[boost_clock]" placeholder="Contoh: 1777">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Interface</label>
+            <select class="form-select mb-2" name="specs[interface]">
+                <option value="">Pilih Interface</option>
+                <option value="PCIe 3.0">PCIe 3.0</option>
+                <option value="PCIe 4.0">PCIe 4.0</option>
+                <option value="PCIe 5.0">PCIe 5.0</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Output Port</label>
+            <input class="form-control mb-2" type="text" name="specs[output_port]" placeholder="Contoh: HDMI, DisplayPort, DVI, VGA">
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-default fw-semibold">Power Consumption (Watt)</label>
+            <input class="form-control mb-2" type="number" name="specs[power]" placeholder="Contoh: 170">
         </div>
     `
-            // Tambahkan tipe lain sesuai kebutuhan
         };
-        document.addEventListener('DOMContentLoaded', function() {
-            const select = document.getElementById('component_type');
-            select.addEventListener('change', function() {
-                // value langsung nama tipe
-                const name = select.value;
-                document.getElementById('spec-fields').innerHTML = specFields[name] || '';
-            });
 
-            // Jika edit/old value
-            const name = select.value;
-            if (specFields[name]) {
-                document.getElementById('spec-fields').innerHTML = specFields[name];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('component_type_id');
+            const modelInput = document.getElementById('component_type_model');
+
+            // Fungsi update spec dan hidden field
+            function updateFields() {
+                const id = select.value;
+                const typeName = componentTypeMap[id] || '';
+                document.getElementById('spec-fields').innerHTML = specFields[typeName] || '';
+                modelInput.value = typeName;
             }
+
+            select.addEventListener('change', updateFields);
+
+            // Untuk edit/old value (langsung render jika sudah terisi)
+            updateFields();
         });
     </script>
 @endsection
