@@ -19,7 +19,6 @@
 
 @section("content")
     <div class="container-fluid">
-        {{-- Header & Breadcrumb Dinamis --}}
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
             <h1 class="page-title fw-semibold fs-18 mb-0">{{ isset($componentModel) ? "Edit" : "Tambah" }} Model Komponen</h1>
             <div class="ms-md-1 ms-0">
@@ -70,8 +69,9 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        <!-- Input hidden untuk tipe komponen, terisi otomatis JS -->
+                                        <input id="component_type_model" name="component_type_model" type="hidden" value="{{ old("component_type_model", isset($componentModel) ? $componentModel->component_type_model : "") }}">
                                     </div>
-
                                     <div class="col-xl-6 col-lg-8 col-md-8 col-sm-12 mb-3">
                                         <label class="form-label text-default fw-semibold" for="brand_id">Merek Komponen</label>
                                         <select class="form-select" id="brand_id" name="brand_id">
@@ -97,7 +97,6 @@
                                         <textarea class="form-control" id="description" name="description" rows="3">{{ old("description", isset($componentModel) ? $componentModel->description : "") }}</textarea>
                                     </div>
                                 </div>
-
                                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
                                     <button class="btn btn-danger" onclick="goToIndex()" type="button"><i class="ti ti-x"></i> Batal</button>
                                     <button class="btn btn-secondary" onclick="clearFormInputs()" type="button"><i class="ti ti-trash"></i> Hapus</button>
@@ -109,7 +108,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 
@@ -168,9 +166,10 @@
         }
     </script>
     <script>
+        const oldSpecs = @json(old("specs", isset($componentModel) ? $componentModel->specs : []));
         // Mapping UUID ke nama tipe dari backend
         const componentTypeMap = @json($componentTypes->pluck("name", "id"));
-
+        // SpecFields: Kode sama seperti sebelumnya
         const specFields = {
             RAM: `
         <div class="mb-3">
@@ -519,23 +518,39 @@
     `
         };
 
-
         document.addEventListener('DOMContentLoaded', function() {
             const select = document.getElementById('component_type_id');
             const modelInput = document.getElementById('component_type_model');
 
-            // Fungsi update spec dan hidden field
             function updateFields() {
                 const id = select.value;
                 const typeName = componentTypeMap[id] || '';
                 document.getElementById('spec-fields').innerHTML = specFields[typeName] || '';
                 modelInput.value = typeName;
+
+                if (oldSpecs && typeof oldSpecs === 'object') {
+                    Object.entries(oldSpecs).forEach(([key, value]) => {
+                        const input = document.querySelector(`[name="specs[${key}]"]`);
+                        if (input) {
+                            if (input.tagName === 'SELECT') {
+                                if (value !== null && value !== "") {
+                                    input.value = value;
+                                    input.dispatchEvent(new Event('change'));
+                                } else {
+                                    input.selectedIndex = 0;
+                                    input.dispatchEvent(new Event('change'));
+                                }
+                            } else {
+                                input.value = value !== null ? value : "";
+                            }
+                        }
+                    });
+                }
             }
 
             select.addEventListener('change', updateFields);
-
-            // Untuk edit/old value (langsung render jika sudah terisi)
             updateFields();
+            console.log('oldSpecs:', oldSpecs);
         });
     </script>
 @endsection

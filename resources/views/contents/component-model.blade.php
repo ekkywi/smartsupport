@@ -81,11 +81,11 @@
                                         <td>{{ $componentModel->brand->name }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-info" href="{{ route("component.models.show", $componentModel->id) }}"><i class="ti ti-eye"></i> Detail</a>
-                                            <a class="btn btn-sm btn-primary" href="{{ route("component.types.edit", $componentModel->id) }}"><i class="ti ti-pencil"></i> Edit</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route("component.models.edit", $componentModel->id) }}"><i class="ti ti-pencil"></i> Edit</a>
                                             <button class="btn btn-sm btn-danger delete-btn" data-component-type-id="{{ $componentModel->id }}" type="button"><i class="ti ti-trash me-1"></i>
                                                 Hapus
                                             </button>
-                                            <form action="{{ route("component.types.destroy", $componentModel->id) }}" id="delete-form-{{ $componentModel->id }}" method="POST" style="display: none;">
+                                            <form action="{{ route("component.models.destroy", $componentModel->id) }}" id="delete-form-{{ $componentModel->id }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>
