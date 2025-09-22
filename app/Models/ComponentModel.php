@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Str;
 
 class ComponentModel extends Model
 {
@@ -23,6 +25,26 @@ class ComponentModel extends Model
     protected $casts = [
         'specs' => 'array',
     ];
+
+    protected function formattedSpecs(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if (empty($this->specs)) {
+                    return [];
+                }
+
+                $formatted = [];
+                foreach ($this->specs as $key => $value) {
+                    $formatted[] = [
+                        'label' => Str::headline($key),
+                        'value' => $value,
+                    ];
+                }
+                return $formatted;
+            }
+        );
+    }
 
     public function componentType()
     {

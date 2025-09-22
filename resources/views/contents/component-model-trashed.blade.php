@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("title")
-    SmartSupport &mdash; Data Jenis Komponen Terhapus (Trash)
+    SmartSupport &mdash; Data Model Komponen Terhapus (Trash)
 @endsection
 
 @section("styles")
@@ -16,22 +16,22 @@
 @section("content")
     <div class="container-fluid">
         <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-            <h1 class="page-title fw-semibold fs-18 mb-0">Jenis Komponen Terhapus (Trash)</h1>
+            <h1 class="page-title fw-semibold fs-18 mb-0">Model Komponen Terhapus (Trash)</h1>
             <div class="ms-md-1 ms-0">
                 <nav>
                     <ol class="breadcrumb breadcrumb-style2 mb-0">
                         <li class="breadcrumb-item">Master Data Aset</li>
                         <li class="breadcrumb-item">Komponen</li>
-                        <li class="breadcrumb-item">Jenis Komponen</li>
-                        <li aria-current="page" class="breadcrumb-item active">Jenis Komponen Terhapus</li>
+                        <li class="breadcrumb-item">Model Komponen</li>
+                        <li aria-current="page" class="breadcrumb-item active">Model Komponen Terhapus</li>
                     </ol>
                 </nav>
             </div>
         </div>
 
         <div class="mb-3 d-flex flex-wrap gap-2">
-            <a class="btn btn-secondary mt-3" href="{{ route("component.types.index") }}">
-                <i class="ti ti-arrow-left"></i> Kembali ke Data Jenis Komponen
+            <a class="btn btn-secondary mt-3" href="{{ route("component.models.index") }}">
+                <i class="ti ti-arrow-left"></i> Kembali ke Data Model Komponen
             </a>
         </div>
 
@@ -40,7 +40,7 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            Data Jenis Komponen Terhapus
+                            Data Model Komponen Terhapus
                         </div>
                     </div>
                     <div class="card-body">
@@ -56,30 +56,32 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Tag Jenis Komponen</th>
+                                    <th>Kode Model Komponen</th>
+                                    <th>Tipe Komponen</th>
                                     <th>Dihapus Pada</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($trashedComponentTypes as $componentType)
+                                @forelse($trashedComponentModels as $componentModel)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $componentType->name }}</td>
-                                        <td>{{ $componentType->assetTag->asset_tag }}</td>
-                                        <td>{{ $componentType->deleted_at ? $componentType->deleted_at->format("d-m-Y H:i") : "-" }}</td>
+                                        <td>{{ $componentModel->name }}</td>
+                                        <td>{{ $componentModel->component_model_code }}</td>
+                                        <td>{{ $componentModel->componentType->name ?? "-" }}</td>
+                                        <td>{{ $componentModel->deleted_at ? $componentModel->deleted_at->format("d-m-Y H:i") : "-" }}</td>
                                         <td>
-                                            <form action="{{ route("component.types.restore", $componentType->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route("component.models.restore", $componentModel->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 <button class="btn btn-success btn-sm" type="submit">
                                                     <i class="ti ti-history"></i> Restore
                                                 </button>
                                             </form>
-                                            <form action="{{ route("component.types.force.delete", $componentType->id) }}" id="delete-form-{{ $componentType->id }}" method="POST" style="display: none;">
+                                            <form action="{{ route("component.models.force.delete", $componentModel->id) }}" id="delete-form-{{ $componentModel->id }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>
-                                            <button class="btn btn-danger btn-sm delete-btn" data-componenttype-id="{{ $componentType->id }}">
+                                            <button class="btn btn-danger btn-sm delete-btn" data-componentmodel-id="{{ $componentModel->id }}">
                                                 <i class="ti ti-trash"></i> Hapus Permanen
                                             </button>
                                         </td>
@@ -151,7 +153,7 @@
             });
             $(document).on('click', '.delete-btn', function(e) {
                 e.preventDefault();
-                var componentTypeId = $(this).data('componenttype-id');
+                var componentModelId = $(this).data('componentmodel-id');
                 Swal.fire({
                     title: "Apakah Anda yakin?",
                     text: "Data yang dihapus tidak dapat dipulihkan!",
@@ -163,7 +165,7 @@
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        document.getElementById("delete-form-" + componentTypeId).submit();
+                        document.getElementById("delete-form-" + componentModelId).submit();
                     }
                 });
             });

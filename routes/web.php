@@ -96,13 +96,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/model-komponen', [ComponentModelController::class, 'index'])->name('component.models.index');
         Route::get('/model-komponen/tambah', [ComponentModelController::class, 'create'])->name('component.models.create');
         Route::post('/model-komponen', [ComponentModelController::class, 'store'])->name('component.models.store');
+        Route::get('/model-komponen/trash', [ComponentModelController::class, 'trashed'])->name('component.models.trashed');
         Route::get('/model-komponen/{componentModel}/edit', [ComponentModelController::class, 'edit'])->name('component.models.edit');
         Route::put('/model-komponen/{componentModel}', [ComponentModelController::class, 'update'])->name('component.models.update');
         Route::delete('/model-komponen/{componentModel}', [ComponentModelController::class, 'destroy'])->name('component.models.destroy');
         Route::get('/model-komponen/{componentModel}', [ComponentModelController::class, 'show'])->name('component.models.show');
-        Route::get('/model-komponen/trash', [ComponentModelController::class, 'trashed'])->name('component.models.trashed');
-        Route::post('/model-komponen/{componentModel}/restore', [ComponentModelController::class, 'restore'])->name('component.models.restore');
+        Route::post('/model-komponen/{componentModel}/restore', [ComponentModelController::class, 'restore'])->name('component.models.restore')->withTrashed();
         Route::delete('/model-komponen/{componentModel}/force-delete', [ComponentModelController::class, 'forceDelete'])->name('component.models.force.delete');
+        Route::get('/model-komponen/{componentModel}/detail', [ComponentModelController::class, 'show'])->name('component.models.show');
 
         // Component Type
         Route::get('/tipe-komponen', [ComponentTypeController::class, 'index'])->name('component.types.index');

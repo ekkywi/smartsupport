@@ -103,4 +103,26 @@ class ComponentModelController extends Controller
         $componentModel->delete();
         return redirect()->route('component.models.index')->with('success', 'Model komponen berhasil dihapus.');
     }
+
+    public function trashed()
+    {
+        $trashedComponentModels = ComponentModel::onlyTrashed()->with(['componentType'])->get();
+        return view('contents.component-model-trashed', compact('trashedComponentModels'));
+    }
+    public function restore(ComponentModel $componentModel)
+    {
+        $componentModel->restore();
+        return redirect()->route('component.models.trashed')->with('success', 'Model komponen berhasil dipulihkan.');
+    }
+
+    public function forceDelete(ComponentModel $componentModel)
+    {
+        $componentModel->forceDelete();
+        return redirect()->route('component.models.trashed')->with('success', 'Model komponen berhasil dihapus permanen.');
+    }
+
+    public function show(ComponentModel $componentModel)
+    {
+        return view('contents.component-model-detail', compact('componentModel'));
+    }
 }

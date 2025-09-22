@@ -158,7 +158,12 @@
     <script>
         function clearFormInputs() {
             document.getElementById('name').value = '';
-            document.getElementById('asset_tag_id').value = '';
+            document.getElementById('component_model_code').value = '';
+            document.getElementById('component_type_id').value = '';
+            document.getElementById('brand_id').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('spec-fields').innerHTML = '';
+
         }
 
         function goToIndex() {
