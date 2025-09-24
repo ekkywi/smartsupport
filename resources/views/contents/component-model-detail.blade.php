@@ -75,9 +75,8 @@
                             </div>
                         </div>
 
-                        <hr>
-
                         <h5 class="mt-4 text-primary">Spesifikasi Detail</h5>
+                        <hr>
                         @if ($componentModel->specs && count((array) $componentModel->specs) > 0)
                             <div class="list-group">
                                 @foreach ($componentModel->formatted_specs as $spec)
